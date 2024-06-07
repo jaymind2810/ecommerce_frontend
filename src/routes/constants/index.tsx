@@ -29,23 +29,23 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineShoppingCart />
 	},
 	{
-		key: 'customers',
-		label: 'Customers',
-		path: '/panel/customers',
+		key: 'users',
+		label: 'Users',
+		path: '/panel/users',
 		icon: <HiOutlineUsers />
 	},
-	{
-		key: 'transactions',
-		label: 'Transactions',
-		path: '/panel/transactions',
-		icon: <HiOutlineDocumentText />
-	},
-	{
-		key: 'messages',
-		label: 'Messages',
-		path: '/panel/messages',
-		icon: <HiOutlineAnnotation />
-	}
+	// {
+	// 	key: 'transactions',
+	// 	label: 'Transactions',
+	// 	path: '/panel/transactions',
+	// 	icon: <HiOutlineDocumentText />
+	// },
+	// {
+	// 	key: 'messages',
+	// 	label: 'Messages',
+	// 	path: '/panel/messages',
+	// 	icon: <HiOutlineAnnotation />
+	// }
 ]
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [

@@ -5,6 +5,7 @@ import Register from '../pages/AdminPanel/Register'
 import Dashboard from '../pages/AdminPanel/Dashboard'
 import AllProducts from "../pages/AdminPanel/Products/Products"
 import Allorders from "../pages/AdminPanel/Orders/Orders"
+import AllUsers from "../pages/AdminPanel/Users/Users"
 
 export default function RouterList () {
     return (
@@ -19,18 +20,37 @@ export default function RouterList () {
                             } 
                         />
                         <Route 
-                            // path="products" 
-                            path="/panel/:products" 
+                            path="products" 
+                            // path="/panel/products" 
                             element={
                                 <AllProducts />
                             } 
                         />
                         <Route  
-                            path="/panel/:orders" 
+                            path="/panel/orders" 
                             element={
-                                <Allorders />
+                                <React.Suspense fallback={<></>}>
+                                    <Allorders />
+                                </React.Suspense>           
                             } 
                         />
+                        <Route  
+                            path="/panel/users" 
+                            element={
+                                <React.Suspense fallback={<></>}>
+                                    <AllUsers />
+                                </React.Suspense>           
+                            } 
+                        />
+                        {/* <Route  
+                            path="/panel/orders" 
+                            element={
+                                <React.Suspense fallback={<></>}>
+                                    <Allorders />
+                                </React.Suspense>           
+                            } 
+                        /> */}
+
                     </Route>
                     <Route path="/register" element={<Register />} />
                 </Routes>
