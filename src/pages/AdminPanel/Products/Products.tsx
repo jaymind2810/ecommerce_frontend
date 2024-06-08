@@ -69,11 +69,12 @@ const AllProducts = () => {
 	
 	useEffect(() => {
 		getAllProducts().then((res) => {
+			console.log(res, "-----------res-------")
 			if (res.status === 200) {
 				setProductsData(res.data.data)
 			} 
 		});
-	})
+	}, [])
 
 	return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
