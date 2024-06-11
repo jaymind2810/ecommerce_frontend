@@ -31,25 +31,26 @@ export default function SignIn() {
           dispatch(actionStart());
           signInRequest(values).then((res) => {
             console.log(res, "-----------ssssdsd")
-            dispatch(actionEnd());
-                if (res.data.status === 200) {
-                    console.log("HERE-----")
-                    dispatch(
-                        successToast({
-                        toast: true,
-                        message: res.data.message,
-                        })
-                    );
-                    navigate("/panel");
-                } else {
-                    console.log("---------aje tosrt--------")
-                    dispatch(
-                        errorToast({
-                        toast: true,
-                        message: res.data.error,
-                        })
-                    );
-                }
+            if (res.status === 200) {
+                localStorage.setItem("token", res.data.access)
+                localStorage.setItem("userId", res.data.userId)
+                localStorage.setItem("user", res.data.user)
+                dispatch(actionEnd());
+                dispatch(
+                    successToast({
+                    toast: true,
+                    message: res.data.message,
+                    })
+                );
+                navigate("/panel");
+            } else {
+                dispatch(
+                    errorToast({
+                    toast: true,
+                    message: res.data.error,
+                    })
+                );
+            }
           }).catch((error) => {
             dispatch(errorToast({
                 toast: true,
@@ -82,7 +83,7 @@ export default function SignIn() {
                         <div>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
                             <input 
-                                type="email" 
+                                type="char" 
                                 name="username" 
                                 id="username" 
                                 onChange={formik.handleChange}
