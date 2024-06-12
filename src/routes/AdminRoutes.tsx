@@ -8,7 +8,7 @@ import AllUsers from "../pages/AdminPanel/Users/Users"
 import SignIn from "../pages/Auth/Login"
 import SignUp from "../pages/Auth/Register"
 
-export default function RouterList () {
+export default function AdminRouterList () {
     return (
         <BrowserRouter>
                 <Routes>
