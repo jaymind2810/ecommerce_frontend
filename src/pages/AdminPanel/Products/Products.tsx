@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
-import { getAllProducts } from '../requests/AdminRequest'
+import { getAllProducts } from '../../../requests/AdminPanel/AdminRequest'
 import { ProductsDataType } from '../type/products'
 // import { getOrderStatus } from '../lib/helpers'
 

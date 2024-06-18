@@ -9,6 +9,7 @@ import SignIn from "../pages/Auth/Login"
 import SignUp from "../pages/Auth/Register"
 import WebLayout from "../pages/WebPanel/components/WebLayout"
 import Home from "../pages/WebPanel/Home"
+import ProductDetail from "../pages/WebPanel/Products/ProductDetails"
 
 export default function RouterList () {
     return (
@@ -76,6 +77,14 @@ export default function RouterList () {
                             index 
                             element={
                                 <Home />
+                            } 
+                        />
+                        <Route  
+                            path="/product-detail/" 
+                            element={
+                                <React.Suspense fallback={<></>}>
+                                    <ProductDetail />
+                                </React.Suspense>           
                             } 
                         />
                     </Route>
