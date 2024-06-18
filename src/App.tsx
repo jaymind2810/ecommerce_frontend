@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-import RouterList from './routes/AdminRoutes';
-import WebRouterList from './routes/WebRoutes';
-import AuthRouterList from './routes/AuthRoutes';
+import RouterList from './routes/routes';
 import Toast from './components/Toast';
 
 function App() {
@@ -11,8 +9,6 @@ function App() {
       {/* ============== Routes ============= */}
       
       <RouterList />
-      <WebRouterList />
-      <AuthRouterList />
 
       {/* ======= Notification Toast ===========  */}
       <Toast />

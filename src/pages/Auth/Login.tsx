@@ -26,8 +26,6 @@ export default function SignIn() {
             .required('** Required **')
         }),
         onSubmit: (values) => {
-        //   alert(JSON.stringify(values, null, 2));
-          console.log(values, "---Login -----_Values--Confirm --------")
           dispatch(actionStart());
           signInRequest(values).then((res) => {
             console.log(res, "-----------ssssdsd")
@@ -39,15 +37,15 @@ export default function SignIn() {
                 dispatch(
                     successToast({
                     toast: true,
-                    message: res.data.message,
+                    message: "Login Successfully !!",
                     })
                 );
-                navigate("/panel");
+                navigate("/");
             } else {
                 dispatch(
                     errorToast({
                     toast: true,
-                    message: res.data.error,
+                    message: res.data.detail,
                     })
                 );
             }

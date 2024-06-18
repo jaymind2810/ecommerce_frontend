@@ -7,8 +7,10 @@ import Allorders from "../pages/AdminPanel/Orders/Orders"
 import AllUsers from "../pages/AdminPanel/Users/Users"
 import SignIn from "../pages/Auth/Login"
 import SignUp from "../pages/Auth/Register"
+import WebLayout from "../pages/WebPanel/components/WebLayout"
+import Home from "../pages/WebPanel/Home"
 
-export default function AdminRouterList () {
+export default function RouterList () {
     return (
         <BrowserRouter>
                 <Routes>
@@ -53,6 +55,7 @@ export default function AdminRouterList () {
                         /> */}
 
                     </Route>
+
                     {/* ==============AuthetiCation Page ================ */}
                     <Route 
                         path="/login"
@@ -66,6 +69,16 @@ export default function AdminRouterList () {
                             <SignUp />
                         } 
                     />
+
+                    {/* ================= Web Panel ========================= */}
+                    <Route path="/" element={<WebLayout />}>
+                        <Route 
+                            index 
+                            element={
+                                <Home />
+                            } 
+                        />
+                    </Route>
                 </Routes>
         </BrowserRouter>
     )
