@@ -1,14 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
+import Checkout from "../Checkout/Checkout";
+import { useNavigate } from "react-router";
 
 
 const ProductDetail = () => {
+
+    const navigate = useNavigate()
+
+    // const [isCheckout, setIsCheckout] = useState(false);
+
+    const handleOnBuyNow = () => {
+        console.log("-------------Checkout page ------------")
+        navigate('/product/checkout')
+    }
+
     return (
         <>
 
  <section className="py-10 lg:py-24 relative ">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-            <div className="">
+                <div className="">
                     {/* <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" */}
                     <div 
                         className="swiper product-prev mb-6">
@@ -17,7 +29,7 @@ const ProductDetail = () => {
                                 <img src="https://pagedone.io/asset/uploads/1700471851.png"
                                     alt="Yellow Travel Bag image" className="mx-auto"/>
                             </div>
-                            <div className="swiper-slide">
+                            {/* <div className="swiper-slide">
                                 <img src="https://pagedone.io/asset/uploads/1711514857.png"
                                     alt="Yellow Travel Bag image" className="mx-auto"/>
                             </div>
@@ -28,7 +40,7 @@ const ProductDetail = () => {
                             <div className="swiper-slide">
                                 <img src="https://pagedone.io/asset/uploads/1711514892.png"
                                     alt="Yellow Travel Bag image" className="mx-auto"/>
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>
@@ -38,7 +50,7 @@ const ProductDetail = () => {
                                 <img src="https://pagedone.io/asset/uploads/1700471871.png" alt="Travel Bag image"
                                     className=" cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
                             </div>
-                            <div className="swiper-slide">
+                            {/* <div className="swiper-slide">
                                 <img src="https://pagedone.io/asset/uploads/1711514930.png" alt="Travel Bag image"
                                     className=" cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
                             </div>
@@ -49,7 +61,7 @@ const ProductDetail = () => {
                             <div className="swiper-slide">
                                 <img src="https://pagedone.io/asset/uploads/1700471925.png" alt="Travel Bag image"
                                     className=" cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -243,7 +255,9 @@ const ProductDetail = () => {
 
                                 </button>
                                 <button
-                                    className="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+                                    className="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400"
+                                    onClick={handleOnBuyNow}
+                                    >
                                     Buy Now
                                 </button>
                             </div>
@@ -252,7 +266,6 @@ const ProductDetail = () => {
                     </div>
 
                 </div>
-                
 
 
             </div>

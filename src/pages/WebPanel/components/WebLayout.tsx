@@ -5,12 +5,10 @@ import WebHeader from './Shared/WebHeader'
 import WebFooter from './Shared/WebFooter'
 
 export default function WebLayout() {
-
-	const [webBanner, setWebBanner] = useState(true);
 	
 	return (
 		<div className="">
-			<WebBanner />
+			<WebBanner/>
 			<WebHeader />
                 <Outlet />
 			<WebFooter/>

@@ -1,9 +1,18 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import React from "react";
+import React, {useState} from "react";
+
+interface WebBannerProps {
+  setWebBanner: Boolean 
+}
+
 
 const WebBanner = () => {
+
+  const [webBanner, setWebBanner] = useState(true);
+
   return (
     <>
+    { webBanner &&
       <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
         <div
           className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
@@ -52,12 +61,14 @@ const WebBanner = () => {
           <button
             type="button"
             className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
+            onClick={()=>setWebBanner(false)}
           >
             <span className="sr-only">Dismiss</span>
             <XMarkIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
           </button>
         </div>
       </div>
+    }
     </>
   );
 };
