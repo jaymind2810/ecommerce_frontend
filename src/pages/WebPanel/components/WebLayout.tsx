@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom'
 import WebBanner from './Shared/WebBanner'
 import WebHeader from './Shared/WebHeader'
 import WebFooter from './Shared/WebFooter'
+import WebNewsLetterPanel from './Shared/WebNewsLetter';
+
 
 export default function WebLayout() {
 	
@@ -11,6 +13,7 @@ export default function WebLayout() {
 			<WebBanner/>
 			<WebHeader />
                 <Outlet />
+			<WebNewsLetterPanel/>
 			<WebFooter/>
 		</div>
 	)

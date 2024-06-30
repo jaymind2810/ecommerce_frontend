@@ -3,7 +3,7 @@ import { axiosGet, axiosPost, axiosPut, axiosPatch, axiosDelete } from "../../ax
 
 
 export const createPaymentIntent = async () => {
-  return await axiosGet("/api/create-payment-intent/");
+  return await axiosPost("/api/create-payment-intent/");
 };
 
 // export const getCoords = async () => {

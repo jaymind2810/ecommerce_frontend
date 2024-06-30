@@ -22,6 +22,11 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
+import { useNavigate } from "react-router";
+import { CgProfile } from "react-icons/cg";
+import UserIcon from "./../../../../images/user.png"
+import CartIcon from "./../../../../images/cart.png"
+import SearchIcon from "./../../../../images/search.png"
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -42,11 +47,15 @@ function classNames(...classes:any) {
 export default function WebHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  const navigate = useNavigate()
+
   return (
-    <header className="bg-gray-100">
+    <header className="bg-gray-300">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a 
+          className="-m-1.5 p-1.5 cursor-pointer"
+          onClick={() => {navigate('/')}}>
             <span className="sr-only">Your Company</span>
             <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
           </a>
@@ -63,9 +72,9 @@ export default function WebHeader() {
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <PopoverButton className="flex items-center gap-x-1 font-semibold leading-6 text-gray-900">
               Product
-              <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+              <ChevronDownIcon className="h-5 w-5 flex-none text-gray-900" aria-hidden="true" />
             </PopoverButton>
 
             <Transition
@@ -87,7 +96,7 @@ export default function WebHeader() {
                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
                       <div className="flex-auto">
-                        <a href={item.href} className="block font-semibold text-gray-900">
+                        <a href={item.href} className="block font-semibold text-gray-700">
                           {item.name}
                           <span className="absolute inset-0" />
                         </a>
@@ -101,7 +110,7 @@ export default function WebHeader() {
                     <a
                       key={item.name}
                       href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-100"
                     >
                       <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                       {item.name}
@@ -112,23 +121,34 @@ export default function WebHeader() {
             </Transition>
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="#" className="font-semibold leading-6 text-gray-900">
             Features
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="#" className="font-semibold leading-6 text-gray-900">
             Marketplace
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="#" className="font-semibold leading-6 text-gray-900">
             Company
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="inline-block rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-center font-medium text-white hover:bg-indigo-700">
-            <Link to={"/login"}>Sign in</Link>
-          </a>
-          <a href="#" className="inline-block rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-center font-medium text-white hover:bg-indigo-700">
-            <Link to={"/register"}>Sign up</Link>
-          </a>
+          <div className="flex -space-x-1 overflow-hidden ml-2 cursor-pointer">
+            <img
+              className="inline-block h-8 w-8 rounded-full ring-white"
+              src={CartIcon}
+              alt=""
+            />
+          </div>
+          <div className="flex -space-x-1 overflow-hidden ml-4">
+            <p className="content-center">{" | "}</p>
+          </div>
+          <div className="flex -space-x-1 overflow-hidden ml-4 cursor-pointer">
+            <img
+              className="inline-block h-8 w-8 rounded-full ring-white"
+              src={UserIcon}
+              alt=""
+            />
+          </div>
         </div>
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -158,7 +178,7 @@ export default function WebHeader() {
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
-                      <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                      <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-50">
                         Product
                         <ChevronDownIcon
                           className={classNames(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
@@ -171,7 +191,7 @@ export default function WebHeader() {
                             key={item.name}
                             as="a"
                             href={item.href}
-                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-100 hover:bg-gray-50"
                           >
                             {item.name}
                           </DisclosureButton>
@@ -182,19 +202,19 @@ export default function WebHeader() {
                 </Disclosure>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-50"
                 >
                   Features
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-50"
                 >
                   Marketplace
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-50"
                 >
                   Company
                 </a>
@@ -202,7 +222,7 @@ export default function WebHeader() {
               <div className="py-6">
                 <a
                   href=""
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-50"
                 >
                   Log in
                 </a>
