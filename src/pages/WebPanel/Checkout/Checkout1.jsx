@@ -1,25 +1,4 @@
-
 import { successToast, errorToast } from "../../../store/toast/actions-creation";
-// import React from "react";
-// // import List from "./PaymentComponents/List";
-
-
-// const Checkout = () => {
-//     return (
-//         <>
-//         <h3>Checkout Page</h3>
-//         {/* <List/> */}
-
-
-
-//         </>
-//     )
-// }
-
-// export default Checkout
-
-
-
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -33,7 +12,7 @@ import CheckoutForm from "./CheckoutForm";
 // This is your test publishable API key.
 const stripePromise = loadStripe("pk_test_51POKT1P2KIYLyQddR05bnqupTv8qwyFRH8T36VSCBhoarWNOwxVwH1OePtNfK2yLNeSshtRF1TmC9YFjUmoCDwWg00biGjjnBL");
 
-export default function Checkout() {
+export default function Checkout1() {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {

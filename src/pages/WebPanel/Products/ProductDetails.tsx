@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import Checkout from "../Checkout/Checkout";
 import { useNavigate } from "react-router";
+import CustomerReview from "./CustomerReview/CustomerReview";
+import RelatedProducts from "./RelatedProducts";
 
 
 const ProductDetail = () => {
@@ -17,8 +19,41 @@ const ProductDetail = () => {
     return (
         <>
 
- <section className="py-10 lg:py-24 relative ">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="py-10 relative ">
+
+
+
+        <nav className="flex mx-auto max-w-7xl px-4 p-2" aria-label="Breadcrumb">
+            <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <li className="inline-flex items-center">
+                <a href="#" className="inline-flex items-center text-md font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                    {/* <svg className="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                    </svg> */}
+                    Home
+                </a>
+                </li>
+                <li>
+                <div className="flex items-center">
+                    <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    </svg>
+                    <a href="#" className="ms-1 text-md font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Projects</a>
+                </div>
+                </li>
+                <li aria-current="page">
+                <div className="flex items-center">
+                    <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    </svg>
+                    <span className="ms-1 text-md font-medium text-gray-500 md:ms-2 dark:text-gray-400">Flowbite</span>
+                </div>
+                </li>
+            </ol>
+        </nav>
+
+
+        <div className="mx-auto max-w-7xl px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
                 <div className="">
                     {/* <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" */}
@@ -65,8 +100,8 @@ const ProductDetail = () => {
                         </div>
                     </div>
                 </div>
-                <div className="pro-detail w-full flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
-                    <p className="font-medium text-lg text-indigo-600 mb-4">Travel &nbsp; / &nbsp; Menswear</p>
+                <div className="pro-detail w-full flex flex-col order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+                    {/* <p className="font-medium text-lg text-indigo-600 mb-4">Travel &nbsp; / &nbsp; Menswear</p> */}
                     <h2 className="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">Yellow Summer Travel Bag
                     </h2>
                     <div className="flex flex-col sm:flex-row sm:items-center mb-6">
@@ -190,20 +225,20 @@ const ProductDetail = () => {
                                 <p className="font-medium text-lg leading-8 text-gray-900 mb-4">Bag size</p>
                                 <div className="grid grid-cols-2 min-[400px]:grid-cols-3 gap-3">
                                     <button
-                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
+                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
                                         cm (S)</button>
                                     <button
-                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">67
+                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">67
                                         cm (M)</button>
                                     <button
-                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">77
+                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">77
                                         cm (L)</button>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                                <div className="flex items-center justify-center w-full">
+                            <div className="flex flex-row mb-8">
+                                <div className="flex items-center w-56">
                                     <button
-                                        className="group py-4 px-6 border border-gray-400 rounded-l-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
+                                        className="group p-1.5 border border-gray-400 rounded-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
                                         <svg className="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
                                             width="22" height="22" viewBox="0 0 22 22" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -216,10 +251,10 @@ const ProductDetail = () => {
                                         </svg>
                                     </button>
                                     <input type="text"
-                                        className="font-semibold text-gray-900 text-lg py-[13px] px-6 w-full lg:max-w-[118px] border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0"
+                                        className="font-semibold text-gray-900 text-lg lg:max-w-[50px] border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0"
                                         placeholder="1"/>
                                     <button
-                                        className="group py-4 px-6 border border-gray-400 rounded-r-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
+                                        className="group p-1.5 border border-gray-400 rounded-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
                                         <svg className="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
                                             width="22" height="22" viewBox="0 0 22 22" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -233,29 +268,29 @@ const ProductDetail = () => {
                                     </button>
                                 </div>
                                 <button
-                                    className="group py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">
+                                    className="group py-2 rounded-md bg-gray-100 text-gray-600 font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">
                                     <svg className="stroke-indigo-600 transition-all duration-500" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M10.7394 17.875C10.7394 18.6344 10.1062 19.25 9.32511 19.25C8.54402 19.25 7.91083 18.6344 7.91083 17.875M16.3965 17.875C16.3965 18.6344 15.7633 19.25 14.9823 19.25C14.2012 19.25 13.568 18.6344 13.568 17.875M4.1394 5.5L5.46568 12.5908C5.73339 14.0221 5.86724 14.7377 6.37649 15.1605C6.88573 15.5833 7.61377 15.5833 9.06984 15.5833H15.2379C16.6941 15.5833 17.4222 15.5833 17.9314 15.1605C18.4407 14.7376 18.5745 14.0219 18.8421 12.5906L19.3564 9.84059C19.7324 7.82973 19.9203 6.8243 19.3705 6.16215C18.8207 5.5 17.7979 5.5 15.7522 5.5H4.1394ZM4.1394 5.5L3.66797 2.75"
-                                            stroke="" stroke-width="1.6" stroke-linecap="round" />
+                                            stroke="#4b5563" stroke-width="1.6" stroke-linecap="round" />
                                     </svg>
                                     Add to cart</button>
                             </div>
                             <div className="flex items-center gap-3">
                                 <button
-                                    className="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
+                                    className="group transition-all duration-500 p-3 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
                                         fill="none">
                                         <path
                                             d="M4.47084 14.3196L13.0281 22.7501L21.9599 13.9506M13.0034 5.07888C15.4786 2.64037 19.5008 2.64037 21.976 5.07888C24.4511 7.5254 24.4511 11.4799 21.9841 13.9265M12.9956 5.07888C10.5204 2.64037 6.49824 2.64037 4.02307 5.07888C1.54789 7.51738 1.54789 11.4799 4.02307 13.9184M4.02307 13.9184L4.04407 13.939M4.02307 13.9184L4.46274 14.3115"
-                                            stroke="#4F46E5" stroke-width="1.6" stroke-miterlimit="10"
-                                            stroke-linecap="round" stroke-linejoin="round" />
+                                            stroke="#4b5563" stroke-width="1.6" stroke-miterlimit="10"
+                                            stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
 
                                 </button>
                                 <button
-                                    className="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400"
+                                    className="text-center w-full px-5 py-2.5 rounded-md bg-gray-800 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-800 hover:shadow-indigo-400"
                                     onClick={handleOnBuyNow}
                                     >
                                     Buy Now
@@ -271,6 +306,8 @@ const ProductDetail = () => {
             </div>
         </div>
     </section>
+    <CustomerReview />
+    <RelatedProducts/>
 
 {/* <script>
         var swiper = new Swiper(".product-thumb", {
