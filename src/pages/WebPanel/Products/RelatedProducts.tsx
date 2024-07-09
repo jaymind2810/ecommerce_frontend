@@ -59,7 +59,7 @@ const RelatedProducts = () => {
         <section className="py-8 pb-16">
         <div className="bg-white">
           <div className="mx-auto max-w-2xl px-4 py-8 lg:max-w-7xl">
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-left">
+            <h2 className="text-2xl font-bold tracking-tight text-gray-700 text-left">
             Customers also purchased
             </h2>
 
@@ -90,7 +90,7 @@ const RelatedProducts = () => {
                         <Link to={"/product-detail/"}>{product.color}</Link>
                       </p>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-gray-700">
                       {product.price}
                     </p>
                   </div>

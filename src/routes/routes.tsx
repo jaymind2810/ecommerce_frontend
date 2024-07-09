@@ -17,6 +17,7 @@ import WebLayout from "../pages/WebPanel/components/WebLayout"
 import Home from "../pages/WebPanel/Home"
 import ProductDetail from "../pages/WebPanel/Products/ProductDetails"
 import Checkout from "../pages/WebPanel/Checkout/Checkout"
+import Cart from "../pages/WebPanel/Cart/Cart"
 
 import PaymentSuccess from "../pages/WebPanel/Checkout/SuccessPayment"
 import PaymentFail from "../pages/WebPanel/Checkout/FailPayment"
@@ -95,6 +96,14 @@ export default function RouterList () {
                             element={
                                 <React.Suspense fallback={<></>}>
                                     <ProductDetail />
+                                </React.Suspense>           
+                            } 
+                        />
+                        <Route  
+                            path="/product/cart" 
+                            element={
+                                <React.Suspense fallback={<></>}>
+                                    <Cart />
                                 </React.Suspense>           
                             } 
                         />

@@ -10,6 +10,7 @@ const ProductDetail = () => {
     const navigate = useNavigate()
 
     // const [isCheckout, setIsCheckout] = useState(false);
+    const [productQuantity, setProductQuantity] = useState(1);
 
     const handleOnBuyNow = () => {
         console.log("-------------Checkout page ------------")
@@ -19,10 +20,7 @@ const ProductDetail = () => {
     return (
         <>
 
-    <section className="py-10 relative ">
-
-
-
+    <section className="py-10 ">
         <nav className="flex mx-auto max-w-7xl px-4 p-2" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <li className="inline-flex items-center">
@@ -102,11 +100,11 @@ const ProductDetail = () => {
                 </div>
                 <div className="pro-detail w-full flex flex-col order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
                     {/* <p className="font-medium text-lg text-indigo-600 mb-4">Travel &nbsp; / &nbsp; Menswear</p> */}
-                    <h2 className="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">Yellow Summer Travel Bag
+                    <h2 className="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-700 ">Yellow Summer Travel Bag
                     </h2>
                     <div className="flex flex-col sm:flex-row sm:items-center mb-6">
                         <h6
-                            className="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5">
+                            className="font-manrope font-semibold text-2xl leading-9 text-gray-700  pr-5 sm:border-r border-gray-200 mr-5">
                             $220</h6>
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-1">
@@ -187,7 +185,7 @@ const ProductDetail = () => {
                         your journey.
                     </p>
                     <div className="block w-full">
-                        <p className="font-medium text-lg leading-8 text-gray-900 mb-4">Bag Color</p>
+                        <p className="font-medium text-lg leading-8 text-gray-700  mb-4">Bag Color</p>
                         <div className="text">
                             <div className="flex items-center justify-start gap-3 md:gap-6 relative mb-6 ">
                                 <button data-ui="checked active"
@@ -222,23 +220,26 @@ const ProductDetail = () => {
 
                             </div>
                             <div className="block w-full mb-6">
-                                <p className="font-medium text-lg leading-8 text-gray-900 mb-4">Bag size</p>
-                                <div className="grid grid-cols-2 min-[400px]:grid-cols-3 gap-3">
+                                <p className="font-medium text-lg leading-8 text-gray-700  mb-4">Bag size</p>
+                                <div className="grid grid-cols-2 min-[100px]:grid-cols-4 gap-3">
                                     <button
-                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
+                                        className="border border-gray-200 text-gray-700 py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
                                         cm (S)</button>
                                     <button
-                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">67
+                                        className="border border-gray-200 text-gray-700 py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">67
                                         cm (M)</button>
                                     <button
-                                        className="border border-gray-200 text-gray-900 text-lg py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">77
+                                        className="border border-gray-200 text-gray-700 py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">77
                                         cm (L)</button>
                                 </div>
                             </div>
                             <div className="flex flex-row mb-8">
-                                <div className="flex items-center w-56">
+                                <div className="flex items-center mr-8">
                                     <button
-                                        className="group p-1.5 border border-gray-400 rounded-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
+                                        className="group p-1 border border-gray-400 rounded-md bg-gray-100 hover:bg-gray-200 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50"
+                                        onClick={
+                                            () => setProductQuantity(productQuantity >= 2 ? productQuantity - 1 : 1)
+                                        }>
                                         <svg className="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
                                             width="22" height="22" viewBox="0 0 22 22" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -250,14 +251,19 @@ const ProductDetail = () => {
                                                 stroke-linecap="round" />
                                         </svg>
                                     </button>
-                                    <input type="text"
-                                        className="font-semibold text-gray-900 text-lg lg:max-w-[50px] border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0"
-                                        placeholder="1"/>
+                                    <p className="px-2 w-10 font-semibold text-gray-700  text-lg lg:max-w-[50px] border-gray-400 bg-transparent placeholder:text-gray-700  text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0">
+                                        {productQuantity}
+                                    </p>
                                     <button
-                                        className="group p-1.5 border border-gray-400 rounded-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
-                                        <svg className="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
+                                        className="group p-1 border border-gray-400 rounded-md bg-gray-100 hover:bg-gray-200 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
+                                        <svg 
+                                            className="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
                                             width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            onClick={
+                                                () => setProductQuantity(productQuantity + 1)
+                                            }
+                                            >
                                             <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6"
                                                 stroke-linecap="round" />
                                             <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
@@ -268,7 +274,7 @@ const ProductDetail = () => {
                                     </button>
                                 </div>
                                 <button
-                                    className="group py-2 rounded-md bg-gray-100 text-gray-600 font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">
+                                    className="group py-2 rounded-md bg-gray-100 text-gray-600 font-semibold text-lg w-56 flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">
                                     <svg className="stroke-indigo-600 transition-all duration-500" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -279,7 +285,7 @@ const ProductDetail = () => {
                             </div>
                             <div className="flex items-center gap-3">
                                 <button
-                                    className="group transition-all duration-500 p-3 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
+                                    className="group transition-all duration-500 p-2.5 mr-5 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
                                         fill="none">
                                         <path

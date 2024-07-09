@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -31,6 +31,7 @@ import { CgProfile } from "react-icons/cg";
 import UserIcon from "./../../../../images/user.png";
 import CartIcon from "./../../../../images/cart.png";
 import SearchIcon from "./../../../../images/search.png";
+import CartPopup from "../../Cart/CartPopup/CartPopup";
 
 const products = [
   {
@@ -75,13 +76,29 @@ function classNames(...classes: any) {
 
 export default function WebHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isCartPopupOpen, setIsCartPopupOpen] = useState(false);
 
   const navigate = useNavigate();
+  // const cartRef = useRef<HTMLElement | any>();
+
+  // const handleClickOutside = (event: any) => {
+  //   if (!cartRef?.current?.contains(event.target)) {
+  //     setIsCartPopupOpen(false);
+  //   } 
+  // };
+
+  // useEffect(() => {
+  //   const listener = document.addEventListener('click', handleClickOutside);
+  //   return () => document.removeEventListener('click', handleClickOutside);
+  // }, [isCartPopupOpen]);
+
+
 
   return (
-    <header className="bg-gray-300">
+    <>
+    <header className="bg-gray-300 relative">
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between py-4"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -111,10 +128,10 @@ export default function WebHeader() {
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 font-semibold leading-6 text-gray-900">
+            <PopoverButton className="flex items-center gap-x-1 font-semibold leading-6 text-gray-800">
               Product
               <ChevronDownIcon
-                className="h-5 w-5 flex-none text-gray-900"
+                className="h-5 w-5 flex-none text-gray-800"
                 aria-hidden="true"
               />
             </PopoverButton>
@@ -172,13 +189,13 @@ export default function WebHeader() {
             </Transition>
           </Popover>
 
-          <a href="#" className="font-semibold leading-6 text-gray-900">
+          <a href="#" className="font-semibold leading-6 text-gray-800">
             Features
           </a>
-          <a href="#" className="font-semibold leading-6 text-gray-900">
+          <a href="#" className="font-semibold leading-6 text-gray-800">
             Marketplace
           </a>
-          <a href="#" className="font-semibold leading-6 text-gray-900">
+          <a href="#" className="font-semibold leading-6 text-gray-800">
             Company
           </a>
         </PopoverGroup>
@@ -191,6 +208,7 @@ export default function WebHeader() {
               viewBox="2 2 20 20"
               fill="#fff"
               xmlns="http://www.w3.org/2000/svg"
+              onClick={() => setIsCartPopupOpen(!isCartPopupOpen)}
             >
               <path
                 fill="#fff"
@@ -200,12 +218,8 @@ export default function WebHeader() {
                 stroke-linecap="round"
               ></path>
             </svg>
-            {/* <img
-              className="inline-block h-8 w-8 rounded-full ring-white"
-              src={CartIcon}
-              alt=""
-            /> */}
           </div>
+          
           <div className="flex -space-x-1 overflow-hidden ml-4">
             <p className="content-center">{" | "}</p>
           </div>
@@ -306,5 +320,19 @@ export default function WebHeader() {
         </DialogPanel>
       </Dialog>
     </header>
+
+    {
+      isCartPopupOpen && 
+      <div className="absolute flex justify-center items-center right-0">
+        <CartPopup isCartPopupOpen={isCartPopupOpen} setIsCartPopupOpen={setIsCartPopupOpen} />
+        {/* <div className="bg-white p-6 rounded shadow-lg">
+          <h2 className="text-lg font-bold mb-4">This is a Popup</h2>
+          <button onClick={() => setIsCartPopupOpen(!isCartPopupOpen)} className="bg-red-500 text-white px-4 py-2 cursor-pointer rounded">
+            Close Popup
+          </button>
+        </div> */}
+      </div>
+    }
+    </>
   );
 }
