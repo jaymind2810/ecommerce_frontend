@@ -15,7 +15,7 @@ const WebBanner = () => {
     <>
     { webBanner &&
     
-      <div className="relative isolate flex gap-x-6 overflow-hidden bg-gray-900 px-6 py-1 sm:px-3.5">
+      <div className="relative isolate flex gap-x-6 overflow-hidden bg-gray-800 px-6 py-1 sm:px-3.5">
         <div className="mx-64 flex max-w-7xl w-full" aria-label="Global">
           <div className="flex justify-between grid grid-cols-3 w-full">
             <div className="flex flex-1 justify-start col-start-1">
@@ -32,7 +32,7 @@ const WebBanner = () => {
                 <Link to={"/login"}>Sign in</Link>
               </a>
               <p className="inline-block text-white py-1 text-center font-medium content-center mx-2">{"|"}</p>
-              <a href="#" className="inline-block text-white border-1 px-2 py-1 text-center font-medium content-center">
+              <a href="#" className="inline-block text-white border-1 pl-2 py-1 text-center font-medium content-center">
                 <Link to={"/register"}>Sign up</Link>
               </a>
             </div>

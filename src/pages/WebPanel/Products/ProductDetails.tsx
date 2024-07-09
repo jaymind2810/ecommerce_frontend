@@ -274,7 +274,7 @@ const ProductDetail = () => {
                                     </button>
                                 </div>
                                 <button
-                                    className="group py-2 rounded-md bg-gray-100 text-gray-600 font-semibold text-lg w-56 flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">
+                                    className="group py-2 border border-gray-400 rounded-md bg-gray-100 text-gray-600 font-semibold text-lg w-56 flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-200 hover:shadow-indigo-200">
                                     <svg className="stroke-indigo-600 transition-all duration-500" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -285,7 +285,7 @@ const ProductDetail = () => {
                             </div>
                             <div className="flex items-center gap-3">
                                 <button
-                                    className="group transition-all duration-500 p-2.5 mr-5 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
+                                    className="group border border-gray-400 transition-all duration-500 p-2.5 mr-5 rounded-lg bg-gray-100 hover:bg-gray-200 hover:shadow-sm hover:shadow-indigo-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
                                         fill="none">
                                         <path
@@ -296,7 +296,7 @@ const ProductDetail = () => {
 
                                 </button>
                                 <button
-                                    className="text-center w-full px-5 py-2.5 rounded-md bg-gray-800 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-800 hover:shadow-indigo-400"
+                                    className="text-center w-56 px-5 py-2.5 rounded-md bg-gray-800 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-800 hover:shadow-indigo-400"
                                     onClick={handleOnBuyNow}
                                     >
                                     Buy Now

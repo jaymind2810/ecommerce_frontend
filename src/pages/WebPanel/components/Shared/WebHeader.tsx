@@ -324,13 +324,7 @@ export default function WebHeader() {
     {
       isCartPopupOpen && 
       <div className="absolute flex justify-center items-center right-0">
-        <CartPopup isCartPopupOpen={isCartPopupOpen} setIsCartPopupOpen={setIsCartPopupOpen} />
-        {/* <div className="bg-white p-6 rounded shadow-lg">
-          <h2 className="text-lg font-bold mb-4">This is a Popup</h2>
-          <button onClick={() => setIsCartPopupOpen(!isCartPopupOpen)} className="bg-red-500 text-white px-4 py-2 cursor-pointer rounded">
-            Close Popup
-          </button>
-        </div> */}
+        <CartPopup setIsCartPopupOpen={setIsCartPopupOpen} />
       </div>
     }
     </>

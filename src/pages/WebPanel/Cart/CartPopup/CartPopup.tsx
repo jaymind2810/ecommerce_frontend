@@ -2,12 +2,10 @@ import React,{ useState } from "react";
 import { useNavigate } from "react-router";
 
 interface CartPopupProps {
-    isCartPopupOpen: boolean | any,
     setIsCartPopupOpen: any
 }
 
 const CartPopup: React.FC<CartPopupProps> = ({
-    isCartPopupOpen,
     setIsCartPopupOpen
 }) => {
 
@@ -16,7 +14,7 @@ const CartPopup: React.FC<CartPopupProps> = ({
 
     return (
         <>
-        <div className="w-[600px] px-4 md:px-5 lg-6 mx-auto bg-white p-6 rounded shadow-lg z-20">
+        <div className="w-[600px] px-4 md:px-5 lg-6 mx-auto bg-white p-6 rounded border border-gray-200 shadow-lg z-20">
             <h2 className="title p-2 font-manrope font-bold text-2xl leading-10 text-center text-gray-700 bg-gray-300">Shopping Cart
             </h2>
             <div className="hidden lg:grid grid-cols-2 py-2">
@@ -111,9 +109,9 @@ const CartPopup: React.FC<CartPopupProps> = ({
                             setIsCartPopupOpen(false)
                         }
                     }>
-                    <span className="px-2 font-semibold py-1 leading-8 text-indigo-600">Add Coupon Code</span>
+                    <span className="px-2 font-semibold py-1 leading-8 text-gray-700">Add Coupon Code</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                        <path d="M8.25324 5.49609L13.7535 10.9963L8.25 16.4998" stroke="#4f46e5" stroke-width="1.6"
+                        <path d="M8.25324 5.49609L13.7535 10.9963L8.25 16.4998" stroke="#374151" stroke-width="1.6"
                             stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>

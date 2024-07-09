@@ -98,7 +98,7 @@ export default function SignIn() {
                             <div className="flex justify-between">
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <a href="#" className="font-semibold text-gray-700 hover:text-indigo-700">
                                         Forgot password?
                                     </a>
                                 </div>
@@ -120,7 +120,7 @@ export default function SignIn() {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center rounded-md bg-gray-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Sign in
                             </button>
@@ -129,7 +129,7 @@ export default function SignIn() {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?{' '}
-                        <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                        <a href="#" className="font-semibold leading-6 text-gray-700 hover:text-indigo-700">
                             <Link to={"/register"}>Sign up</Link>
                         </a>
                     </p>
