@@ -36,6 +36,7 @@ import CartPopup from "../../Cart/CartPopup/CartPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "./../../../../store"
 import { logout } from "../../../../store/user/action-Creation";
+import { successToast } from "../../../../store/toast/actions-creation";
 
 
 const products = [
@@ -94,6 +95,12 @@ const WebHeader = () => {
     localStorage.removeItem('userId')
     dispatch(logout())
     setIsProfileMenu(false)
+    dispatch(
+        successToast({
+        toast: true,
+        message: "Log out Successfully !!",
+        })
+    );
     navigate('/')
   }
 
@@ -223,6 +230,12 @@ const WebHeader = () => {
               ></path>
             </svg>
           </div>
+          {
+            isCartPopupOpen && 
+            <div className="absolute flex justify-center items-center mt-8 right-4 rounded-lg ring-1 ring-black ring-opacity-5 bg-white shadow-lg">
+              <CartPopup setIsCartPopupOpen={setIsCartPopupOpen} />
+            </div>
+          }
           
           <div className="flex -space-x-1 overflow-hidden ml-4">
             <p className="content-center">{" | "}</p>
@@ -252,7 +265,7 @@ const WebHeader = () => {
           </div>
           { user.isLoggedIn && isProfileMenu && 
             <>
-              <div className="absolute z-10 mt-8 w-56 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+              <div className="absolute z-10 mt-8 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                 <div className="py-1" role="none">
                   <p className="block px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 hover:text-indigo-700">{user?.first_name}{" "}{user?.last_name}</p>
                 </div>
@@ -262,7 +275,7 @@ const WebHeader = () => {
                 </div>
                 <div className="py-1" role="none">
                   <a 
-                  className="block px-4 cursor-pointer py-1 text-sm font-semibold text-gray-700 hover:bg-gray-100" role="menuitem" id="menu-item-6"
+                  className="block px-4 cursor-pointer py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100" role="menuitem" id="menu-item-6"
                   onClick={logoutHandler}>
                     <img
                       className="inline-block h-5 w-5 mr-2 ring-white"
@@ -366,12 +379,7 @@ const WebHeader = () => {
       </Dialog>
     </header>
 
-    {
-      isCartPopupOpen && 
-      <div className="absolute flex justify-center items-center right-0">
-        <CartPopup setIsCartPopupOpen={setIsCartPopupOpen} />
-      </div>
-    }
+    
 
     
     </>

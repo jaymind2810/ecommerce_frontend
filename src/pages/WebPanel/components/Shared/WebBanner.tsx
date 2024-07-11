@@ -6,6 +6,7 @@ import { State } from "./../../../../store"
 import { logout } from "../../../../store/user/action-Creation";
 import { useNavigate } from "react-router-dom";
 import LogOutIcon from "./../../../../images/logout.svg";
+import { successToast } from "../../../../store/toast/actions-creation";
 
 interface WebBannerProps {
   setWebBanner: Boolean 
@@ -25,6 +26,12 @@ const WebBanner = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
     dispatch(logout())
+    dispatch(
+        successToast({
+        toast: true,
+        message: "Log out Successfully !!",
+        })
+    );
     navigate('/')
   }
 
@@ -44,12 +51,12 @@ const WebBanner = () => {
             <div className="flex flex-1 justify-center text-white">
               <div className="inline-block content-center font-normal">Get free delivery on orders over $100</div>
             </div>
-            <div className="flex flex-1 justify-end">
+            <div className="flex flex-1 justify-end item-center py-1">
               { user && user?.isLoggedIn ? (
                   <>
-                    <p className="px-4 py-2 font-normal text-white">Welcome, {user?.first_name}{" "}{user?.last_name} ..!!</p>
+                    <p className="px-4 font-normal py-1 text-white">Welcome, {user?.first_name}{" "}{user?.last_name} ..!!</p>
                     <a 
-                      className="block cursor-pointer py-2 text-sm font-semibold" role="menuitem" id="menu-item-6"
+                      className="block cursor-pointer text-sm py-1 font-semibold" role="menuitem" id="menu-item-6"
                       onClick={logoutHandler}>
                         <svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Capa_1"  viewBox="-18.85 -18.85 508.90 508.90" stroke="#FFFFFF" stroke-width="23.56">
                           <g id="SVGRepo_bgCarrier" stroke-width="0"/>
