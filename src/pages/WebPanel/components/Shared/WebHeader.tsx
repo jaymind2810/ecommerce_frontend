@@ -31,7 +31,12 @@ import { CgProfile } from "react-icons/cg";
 import UserIcon from "./../../../../images/user.png";
 import CartIcon from "./../../../../images/cart.png";
 import SearchIcon from "./../../../../images/search.png";
+import LogOutIcon from "./../../../../images/logout.svg";
 import CartPopup from "../../Cart/CartPopup/CartPopup";
+import { useDispatch, useSelector } from "react-redux";
+import { State } from "./../../../../store"
+import { logout } from "../../../../store/user/action-Creation";
+
 
 const products = [
   {
@@ -74,24 +79,23 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function WebHeader() {
+const WebHeader = () => {
+  const user = useSelector((state: State) => state.user)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isCartPopupOpen, setIsCartPopupOpen] = useState(false);
+  const [isProfileMenu, setIsProfileMenu] = useState(false);
 
   const navigate = useNavigate();
-  // const cartRef = useRef<HTMLElement | any>();
+  const dispatch = useDispatch();
 
-  // const handleClickOutside = (event: any) => {
-  //   if (!cartRef?.current?.contains(event.target)) {
-  //     setIsCartPopupOpen(false);
-  //   } 
-  // };
-
-  // useEffect(() => {
-  //   const listener = document.addEventListener('click', handleClickOutside);
-  //   return () => document.removeEventListener('click', handleClickOutside);
-  // }, [isCartPopupOpen]);
-
+  const logoutHandler = () => {
+    console.log("Here---")
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+    dispatch(logout())
+    setIsProfileMenu(false)
+    navigate('/')
+  }
 
 
   return (
@@ -223,13 +227,54 @@ export default function WebHeader() {
           <div className="flex -space-x-1 overflow-hidden ml-4">
             <p className="content-center">{" | "}</p>
           </div>
-          <div className="flex -space-x-1 overflow-hidden ml-4 cursor-pointer">
-            <img
-              className="inline-block h-8 w-8 rounded-full ring-white"
-              src={UserIcon}
-              alt=""
-            />
+          <div 
+            className="flex -space-x-1 overflow-hidden ml-4 cursor-pointer"
+            onClick={ () => setIsProfileMenu(!isProfileMenu)}>
+            {
+              user && user?.user_photo ? (
+                <>
+                  <img
+                    className="inline-block h-8 w-8 rounded-full ring-white"
+                    src={process.env.REACT_APP_API_URL + user.user_photo}
+                    alt=""
+                  />
+                </>
+              ) : (
+                <>
+                  <img
+                    className="inline-block h-8 w-8 rounded-full ring-white"
+                    src={UserIcon}
+                    alt=""
+                  />
+                </>
+              )
+            }
           </div>
+          { user.isLoggedIn && isProfileMenu && 
+            <>
+              <div className="absolute z-10 mt-8 w-56 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                <div className="py-1" role="none">
+                  <p className="block px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 hover:text-indigo-700">{user?.first_name}{" "}{user?.last_name}</p>
+                </div>
+                <div className="py-1" role="none">
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-indigo-700" role="menuitem" id="menu-item-0">Edit</a>
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-indigo-700" role="menuitem" id="menu-item-1">Duplicate</a>
+                </div>
+                <div className="py-1" role="none">
+                  <a 
+                  className="block px-4 cursor-pointer py-1 text-sm font-semibold text-gray-700 hover:bg-gray-100" role="menuitem" id="menu-item-6"
+                  onClick={logoutHandler}>
+                    <img
+                      className="inline-block h-5 w-5 mr-2 ring-white"
+                      src={LogOutIcon}
+                      alt=""
+                    />
+                    Log out
+                  </a>
+                </div>
+              </div>
+            </>
+          }
         </div>
       </nav>
       <Dialog
@@ -327,6 +372,10 @@ export default function WebHeader() {
         <CartPopup setIsCartPopupOpen={setIsCartPopupOpen} />
       </div>
     }
+
+    
     </>
   );
 }
+
+export default WebHeader

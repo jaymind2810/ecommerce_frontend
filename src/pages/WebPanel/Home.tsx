@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { State } from "./../../store";
+import { userProfileData } from "./../../requests/WebPanel/UserRequest"
+import { logout, setCurrentUser } from "../../store/user/action-Creation";
+import { actionEnd, actionStart } from "../../store/loader/actions-creations";
 
 
 const Home = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch();
+
+  const user = useSelector((state: State) => state.user);
+
+  console.log(user, "------User------")
+
+
+  useEffect(()=> {
+    const userId:any = localStorage.getItem("userId");
+    if (userId) {
+      actionStart()
+      userProfileData({
+        user_id : userId
+      }).then((res) => {
+        if (res.data.status === 'success' ) {
+          dispatch(setCurrentUser(res.data.data)) 
+        }
+      })
+      actionEnd()
+    }
+  }, [user?.isLoggedIn])
 
   const products = [
     {

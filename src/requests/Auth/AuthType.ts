@@ -6,7 +6,7 @@ export interface SignupFormValues {
     password2: string;
   }
 
-  export interface SignInFormValues {
-    username: string;
-    password: string;
-  }
+export interface SignInFormValues {
+  username: string;
+  password: string;
+}

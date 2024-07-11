@@ -14,6 +14,7 @@ const CartPopup: React.FC<CartPopupProps> = ({
 
     return (
         <>
+        {/* <div className="w-[600px] px-4 md:px-5 lg-6 mx-auto bg-white p-6 rounded border border-gray-200 shadow-lg z-20"> */}
         <div className="w-[600px] px-4 md:px-5 lg-6 mx-auto bg-white p-6 rounded border border-gray-200 shadow-lg z-20">
             <h2 className="title p-2 font-manrope font-bold text-2xl leading-10 text-center text-gray-700 bg-gray-300">Shopping Cart
             </h2>

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 import loaderReducer from "./loader/reducer/reducer";
-// import userReducer from "./user/reducer/reducer";
+import userReducer from "./user/reducer/reducer";
 import toastReducer from "./toast/reducer/toast";
 // import boxReducer, { BoxOverlayReducer } from "./box/reducer/reducer";
 // import LatLngReducer from "./LatLng/reducer/reducer";
@@ -13,7 +13,7 @@ import toastReducer from "./toast/reducer/toast";
 // import CreatePostReducer from "./createPost/reducer/reducer";
 
 const reducers = combineReducers({
-  // user: userReducer,
+  user: userReducer,
   toast: toastReducer,
   loader: loaderReducer,
   // box: boxReducer,
