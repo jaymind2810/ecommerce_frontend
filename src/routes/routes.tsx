@@ -92,7 +92,7 @@ export default function RouterList () {
                             } 
                         />
                         <Route  
-                            path="/product-detail/" 
+                            path="/product-detail/:productID" 
                             element={
                                 <React.Suspense fallback={<></>}>
                                     <ProductDetail />

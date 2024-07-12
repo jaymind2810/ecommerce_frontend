@@ -1,21 +1,44 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Checkout from "../Checkout/Checkout";
-import { useNavigate } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import CustomerReview from "./CustomerReview/CustomerReview";
-import RelatedProducts from "./RelatedProducts";
+import TrendingProducts from "./TrendingProducts/TrendingProducts";
+import { getProductDetail, getAllProducts } from "../../../requests/WebPanel/ProductsRequests";
+import { ProductsDataType, ProductImagesType } from "../Type/ProductTypes";
+
+interface ProductDetailProps {
+    currentProduct: any,
+    setCurrentProduct: boolean
+}
 
 
 const ProductDetail = () => {
-
     const navigate = useNavigate()
-
-    // const [isCheckout, setIsCheckout] = useState(false);
+    const params = useParams()
     const [productQuantity, setProductQuantity] = useState(1);
+    const [currentProduct, setCurrentProduct] = useState<ProductsDataType>();
 
     const handleOnBuyNow = () => {
-        console.log("-------------Checkout page ------------")
         navigate('/product/checkout')
     }
+
+    useEffect(()=> {
+        getProductDetail({
+            'product_id' : params.productID
+        }).then((res)=> {
+            console.log(res.data.data, "------res.data-----")
+            if (res.data.status === "success") {
+                setCurrentProduct(res.data.data)
+            }
+        })
+    }, [params.productID])
+
+
+    const addToCartHandler = () => {
+        console.log("-------Here---------")
+    }
+
+
 
     return (
         <>
@@ -59,53 +82,38 @@ const ProductDetail = () => {
                         className="swiper product-prev mb-6">
                         <div className="swiper-wrapper">
                             <div className="swiper-slide">
-                                <img src="https://pagedone.io/asset/uploads/1700471851.png"
-                                    alt="Yellow Travel Bag image" className="mx-auto"/>
+                            { currentProduct && 
+                                <img src={process.env.REACT_APP_API_URL + currentProduct?.product_photo}
+                                    alt={currentProduct?.name} className="mx-auto"/>
+                            }
                             </div>
                             {/* <div className="swiper-slide">
                                 <img src="https://pagedone.io/asset/uploads/1711514857.png"
-                                    alt="Yellow Travel Bag image" className="mx-auto"/>
-                            </div>
-                            <div className="swiper-slide">
-                                <img src="https://pagedone.io/asset/uploads/1711514875.png"
-                                    alt="Yellow Travel Bag image" className="mx-auto"/>
-                            </div>
-                            <div className="swiper-slide">
-                                <img src="https://pagedone.io/asset/uploads/1711514892.png"
                                     alt="Yellow Travel Bag image" className="mx-auto"/>
                             </div> */}
                         </div>
 
                     </div>
                     <div className="swiper product-thumb max-w-[608px] mx-auto">
-                        <div className="swiper-wrapper">
-                            <div className="swiper-slide">
-                                <img src="https://pagedone.io/asset/uploads/1700471871.png" alt="Travel Bag image"
-                                    className=" cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
-                            </div>
-                            {/* <div className="swiper-slide">
-                                <img src="https://pagedone.io/asset/uploads/1711514930.png" alt="Travel Bag image"
-                                    className=" cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
-                            </div>
-                            <div className="swiper-slide">
-                                <img src="https://pagedone.io/asset/uploads/1700471908.png" alt="Travel Bag image"
-                                    className=" cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
-                            </div>
-                            <div className="swiper-slide">
-                                <img src="https://pagedone.io/asset/uploads/1700471925.png" alt="Travel Bag image"
-                                    className=" cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
-                            </div> */}
+                        <div className="flex swiper-wrapper">
+                            {currentProduct && currentProduct?.product_images && currentProduct?.product_images.map((product_image: ProductImagesType) => (
+                                <div className="swiper-slide m-2" key={product_image?.id}>
+                                    <img src={process.env.REACT_APP_API_URL + product_image?.image} alt=""
+                                        className=" w-24 h-24 cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600"/>
+                                </div>        
+                            ))}
+                            
                         </div>
                     </div>
                 </div>
                 <div className="pro-detail w-full flex flex-col order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
                     {/* <p className="font-medium text-lg text-indigo-600 mb-4">Travel &nbsp; / &nbsp; Menswear</p> */}
-                    <h2 className="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-700 ">Yellow Summer Travel Bag
+                    <h2 className="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-700 ">{currentProduct?.name}
                     </h2>
                     <div className="flex flex-col sm:flex-row sm:items-center mb-6">
                         <h6
                             className="font-manrope font-semibold text-2xl leading-9 text-gray-700  pr-5 sm:border-r border-gray-200 mr-5">
-                            $220</h6>
+                            $ {currentProduct?.unit_price}</h6>
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-1">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -180,9 +188,7 @@ const ProductDetail = () => {
 
                     </div>
                     <p className="text-gray-500 text-base font-normal mb-8 ">
-                        the perfect companion for your next adventure! Embrace the spirit of sunny escapades with this
-                        vibrant and versatile bag designed to cater to your travel needs while adding a pop of color to
-                        your journey.
+                        {currentProduct?.short_text}
                     </p>
                     <div className="block w-full">
                         <p className="font-medium text-lg leading-8 text-gray-700  mb-4">Bag Color</p>
@@ -274,7 +280,8 @@ const ProductDetail = () => {
                                     </button>
                                 </div>
                                 <button
-                                    className="group py-2 border border-gray-400 rounded-md bg-gray-100 text-gray-600 font-semibold text-lg w-56 flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-200 hover:shadow-indigo-200">
+                                    className="group py-2 border border-gray-400 rounded-md bg-gray-100 text-gray-600 font-semibold text-lg w-56 flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-200 hover:shadow-indigo-200"
+                                    onClick={addToCartHandler}>
                                     <svg className="stroke-indigo-600 transition-all duration-500" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -313,7 +320,7 @@ const ProductDetail = () => {
         </div>
     </section>
     <CustomerReview />
-    <RelatedProducts/>
+    <TrendingProducts/>
 
 {/* <script>
         var swiper = new Swiper(".product-thumb", {

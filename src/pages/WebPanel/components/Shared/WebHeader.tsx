@@ -244,7 +244,7 @@ const WebHeader = () => {
             className="flex -space-x-1 overflow-hidden ml-4 cursor-pointer"
             onClick={ () => setIsProfileMenu(!isProfileMenu)}>
             {
-              user && user?.user_photo ? (
+              user.isLoggedIn && user?.user_photo ? (
                 <>
                   <img
                     className="inline-block h-8 w-8 rounded-full ring-white"

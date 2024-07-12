@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React,{ useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 interface CartPopupProps {
@@ -8,7 +8,6 @@ interface CartPopupProps {
 const CartPopup: React.FC<CartPopupProps> = ({
     setIsCartPopupOpen
 }) => {
-
     const navigate = useNavigate()
     const [productQuantity, setProductQuantity] = useState(1);
 
@@ -87,6 +86,7 @@ const CartPopup: React.FC<CartPopupProps> = ({
                         $120.00</h6>
                 </div>
             </div>
+
             <div className="bg-gray-50 rounded-xl p-4 w-full mb-4 max-lg:max-w-xl max-lg:mx-auto">
                 <div className="flex items-center justify-between w-full mb-4">
                     <p className="font-normal text-md leading-8 text-gray-500">Sub Total</p>
