@@ -1,5 +1,9 @@
 import React,{ useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { getCartItemsDetails } from "../../../../requests/WebPanel/CartRequests";
+import { useSelector } from "react-redux";
+import { State } from "./../../../../store"
+import { CartItemDataType, ProductCartDataType } from "../../Type/CartTypes";
 
 interface CartPopupProps {
     setIsCartPopupOpen: any
@@ -9,7 +13,31 @@ const CartPopup: React.FC<CartPopupProps> = ({
     setIsCartPopupOpen
 }) => {
     const navigate = useNavigate()
+    const user = useSelector((state: State) => state.user)
+
     const [productQuantity, setProductQuantity] = useState(1);
+    const [currentCartData, setCurrentCartData] = useState<CartItemDataType[]>([]);
+
+    useEffect(() => {
+        getCartItemsDetails({
+            user_id : user.id
+        }).then((res) => {
+            if (res.status === 200) {
+                console.log(res.data.data, "=======res.data========")
+                setCurrentCartData(res.data.data)
+            }
+        })
+    }, [user.id])
+
+    const incrementProductQuantity = (item: CartItemDataType) => {
+        console.log(item, "Item=")
+        item?.quantity + 1
+        
+    }
+
+    const decrementProductQuantity = (item: CartItemDataType) => {
+        item?.quantity >= 2 ? item?.quantity - 1 : 1
+    }
 
     return (
         <>
@@ -18,39 +46,33 @@ const CartPopup: React.FC<CartPopupProps> = ({
             <h2 className="title p-2 font-manrope font-bold text-2xl leading-10 text-center text-gray-700 bg-gray-300">Shopping Cart
             </h2>
             <div className="hidden lg:grid grid-cols-2 py-2">
-                <div className="font-normal text-md leading-8 text-gray-500">Product</div>
-                <p className="font-normal text-md leading-8 text-gray-500 flex items-center justify-between">
-                    <span className="w-full max-w-[200px] text-center">Delivery Charge</span>
+                <div className="font-medium justify-between leading-8 text-gray-600 text-lg">Product</div>
+                <p className="font-medium leading-8 text-gray-600 text-lg flex items-center justify-between">
                     <span className="w-full max-w-[260px] text-center">Quantity</span>
                     <span className="w-full max-w-[200px] text-center">Total</span>
                 </p>
             </div>
-
+            { currentCartData?.map((item: CartItemDataType) => (
             <div className="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-4">
                 <div
                     className="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
-                    <div className="img-box"><img src="https://pagedone.io/asset/uploads/1701162850.png" alt="perfume bottle image" className="xl:w-[140px]"/></div>
+                    <div className="img-box"><img src={process.env.REACT_APP_API_URL + item?.product?.product_photo} alt="perfume bottle image" className="xl:w-[140px]"/></div>
                     <div className="pro-data w-full max-w-sm ">
-                        <h5 className="font-semibold text-md leading-8 text-gray-700  max-[550px]:text-center">Latest N-5
-                            Perfuam
+                        <h5 className="font-semibold text-md leading-8 text-gray-700  max-[550px]:text-center">
+                            {item?.product?.name}
                         </h5>
                         <p
                             className="font-normal text-gray-500 max-[550px]:text-center">
-                            Perfumes</p>
-                        <h6 className="font-medium leading-8 text-indigo-600  max-[550px]:text-center">$120.00</h6>
+                            {item?.product?.category}</p>
+                        <h6 className="font-medium leading-8 text-indigo-600  max-[550px]:text-center">$ {item?.product?.unit_price}</h6>
                     </div>
                 </div>
                 <div
                     className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-2">
-                    <h6 className="font-manrope font-bold text-lg leading-9 text-gray-700  w-full max-w-[176px] text-center">
-                        $15.00 <span className="text-sm text-gray-300 ml-3 lg:hidden whitespace-nowrap">(Delivery
-                            Charge)</span></h6>
                     <div className="flex items-center w-full mx-auto justify-center">
                         <button
                             className="group rounded-md border border-gray-200 flex bg-gray-100 hover:bg-gray-200 items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                            onClick={
-                                () => setProductQuantity(productQuantity >= 2 ? productQuantity - 1 : 1)
-                            }>
+                            onClick={() => decrementProductQuantity(item)}>
                             <svg className="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
                                 xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
                                 fill="none">
@@ -62,13 +84,11 @@ const CartPopup: React.FC<CartPopupProps> = ({
                             </svg>
                         </button>
                         <p className="px-2 w-10 font-semibold text-gray-700  text-lg lg:max-w-[50px] border-gray-400 bg-transparent placeholder:text-gray-700  text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0">
-                            {productQuantity}
+                            {item?.quantity}
                         </p>
                         <button
                             className="group rounded-md border border-gray-200 flex bg-gray-100 hover:bg-gray-200 items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                            onClick={
-                                () => setProductQuantity(productQuantity + 1)
-                            }>
+                            onClick={() => incrementProductQuantity(item)}>
                             <svg className="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
                                 xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
                                 fill="none">
@@ -86,7 +106,7 @@ const CartPopup: React.FC<CartPopupProps> = ({
                         $120.00</h6>
                 </div>
             </div>
-
+            ))}
             <div className="bg-gray-50 rounded-xl p-4 w-full mb-4 max-lg:max-w-xl max-lg:mx-auto">
                 <div className="flex items-center justify-between w-full mb-4">
                     <p className="font-normal text-md leading-8 text-gray-500">Sub Total</p>
