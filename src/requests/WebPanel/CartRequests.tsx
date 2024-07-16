@@ -22,3 +22,13 @@ export const updateCartItemsDetails = async (data: GetCartItemData) => {
 export const removeItemsFromCart = async (data: GetCartItemData) => {
   return await axiosDelete(`/cart-items/${data['user_id']}/`, data);
 };
+
+interface CartItemData {
+  user: any
+  product : any;
+  quantity : any;
+}
+
+export const addCartItems = async (data: CartItemData) => {
+  return await axiosPost("/cart-items/", data);
+};

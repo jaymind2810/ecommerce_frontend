@@ -89,6 +89,19 @@ const WebHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const ProfilePopupRef = useRef<HTMLElement | any>();
+
+  const handleClickOutside = (event: any) => { 
+    if (!ProfilePopupRef?.current?.contains(event.target)) {
+      setIsProfileMenu(false)
+    }
+  };
+
+  useEffect(() => {
+    const listener = document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isProfileMenu]); // Re-attach listener on state change
+
   const logoutHandler = () => {
     console.log("Here---")
     localStorage.removeItem('token')
@@ -265,7 +278,12 @@ const WebHeader = () => {
           </div>
           { user.isLoggedIn && isProfileMenu && 
             <>
-              <div className="absolute z-10 mt-8 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+              <div 
+                className="absolute z-10 mt-8 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu" 
+                aria-orientation="vertical" 
+                aria-labelledby="menu-button"
+                ref={ProfilePopupRef}>
                 <div className="py-1" role="none">
                   <p className="block px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 hover:text-indigo-700">{user?.first_name}{" "}{user?.last_name}</p>
                 </div>
