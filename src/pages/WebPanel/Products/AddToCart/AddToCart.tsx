@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCartItems } from '../../../../requests/WebPanel/CartRequests';
 import { State } from '../../../../store';
 import { successToast, errorToast } from '../../../../store/toast/actions-creation';
+import { ActionType } from '../../../../store/cart/action-Types';
 
 interface AddToCartButtonProps {
   currentProduct: ProductsDataType | any;
@@ -20,6 +21,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ currentProduct }) => 
         quantity: 1
     }).then((res) => {
       if (res.data.status === "success") {
+        console.log(res.data, "=====resData--")
+        // dispatch({ type: ActionType.ADD_TO_CART, payload: res.data })
         dispatch(
           successToast({
           toast: true,

@@ -5,6 +5,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { createPaymentIntent } from "../../../requests/WebPanel/PaymentRequests";
 import CheckoutProgressBar from "../components/CheckoutProgressBar/CheckoutProgressBar";
+import axios from "axios";
+import SelectField from "../components/FormComponents/SelectField";
 
 // import CheckoutForm from "./CheckoutForm";
 // import "./App.css";
@@ -13,6 +15,43 @@ import CheckoutProgressBar from "../components/CheckoutProgressBar/CheckoutProgr
 
 export default function Checkout() {
   const [clientSecret, setClientSecret] = useState("");
+  const [allCountryData, setAllCountryData] = useState([]);
+  const [countryValue, setCountryValue] = useState('Select');
+  const [allStateValue, setAllStateValue] = useState<any>([]);
+  const [stateValue, setStateValue] = useState('Select');
+
+  useEffect(() => {
+    const baseURL = "https://countriesnow.space/api/v0.1/countries/states";
+    axios.get(baseURL).then((response) => {
+      setAllCountryData(response.data.data);
+    });
+  }, [])
+
+  // console.log(allCountryData, "-------allCountryData------")
+
+  const countryHandleChange = (e:any) => {
+    console.log(e.target.value, "--------Event Hit------")
+    setCountryValue(e.target.value);
+    const country_data:any = allCountryData.find((country:any) => country.name === e.target.value);
+    console.log(country_data, "--------country_data------")
+    country_data && setAllStateValue(country_data?.states)
+  }
+
+  // useEffect(() => {
+  //   // if (countryValue !== 'Select') {
+  //     const country_data:any = allCountryData.find((item:any) => { item.name === countryValue})
+  //     console.log(country_data, "------country_data------")
+  //     country_data && setAllStateValue(country_data?.states)
+  //   // }
+  // },[countryValue])
+
+  const stateHandleChange = (e:any) => {
+    console.log(e.target.value, "--------Event Hit------")
+    setStateValue(e.target.value);
+  }
+
+  // console.log(selectCountryValue, "--------selectValue------")
+  
 
   return (
     <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
@@ -37,21 +76,58 @@ export default function Checkout() {
                   <label  className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> Your email* </label>
                   <input type="email" id="your_email" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="name@flowbite.com" required />
                 </div>
-
+                {/* { allCountryData &&
                 <div>
                   <div className="mb-2 flex items-center gap-2">
                     <label className="block text-sm font-medium text-gray-700 dark:text-white"> Country* </label>
                   </div>
-                  <select id="select-country-input-3" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
-                    <option selected>United States</option>
-                    <option value="AS">Australia</option>
-                    <option value="FR">France</option>
-                    <option value="ES">Spain</option>
-                    <option value="UK">United Kingdom</option>
+                  <select 
+                    id="select-country-input-3" 
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                    value={selectValue} onChange={(e) => countryHandleChange(e)}
+                    >
+                      <option value="Select">Select</option>
+                      {allCountryData && allCountryData.map((item: any) => {
+                        return (
+                          <option value={item?.name}>{item?.name}</option>
+                        )
+                      })}
                   </select>
                 </div>
+                } */}
 
-                <div>
+                <SelectField 
+                  labelClassName={"block text-sm font-medium text-gray-700 dark:text-white mb-2"}
+                  labelName={"Country Name*"}
+                  selectClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  selectOptionData={allCountryData}
+                  handleChange={countryHandleChange}
+                  selectedSelectValue={countryValue}
+                />
+
+                <SelectField 
+                  labelClassName={"block text-sm font-medium text-gray-700 dark:text-white mb-2"}
+                  labelName={"State Name*"}
+                  selectClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  selectOptionData={allStateValue}
+                  handleChange={stateHandleChange}
+                  selectedSelectValue={stateValue}
+                />
+
+                {/* <div>
+                  <div className="mb-2 flex items-center gap-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-white"> State* </label>
+                  </div>
+                  <select id="select-city-input-3" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+                    <option selected>San Francisco</option>
+                    <option value="NY">New York</option>
+                    <option value="LA">Los Angeles</option>
+                    <option value="CH">Chicago</option>
+                    <option value="HU">Houston</option>
+                  </select>
+                </div> */}
+
+                {/* <div>
                   <div className="mb-2 flex items-center gap-2">
                     <label className="block text-sm font-medium text-gray-700 dark:text-white"> City* </label>
                   </div>
@@ -62,7 +138,7 @@ export default function Checkout() {
                     <option value="CH">Chicago</option>
                     <option value="HU">Houston</option>
                   </select>
-                </div>
+                </div> */}
 
                 <div>
                   <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> Phone Number* </label>

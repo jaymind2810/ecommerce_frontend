@@ -6,11 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ActionType } from '../../../../store/cart/action-Types';
 import { State } from '../../../../store';
 
-interface CartItemProps {
+interface CartPopupItemProps {
     item: CartItemType;
 }
 
-const CartPopupItem: React.FC<CartItemProps> = ({ item }) => {
+const CartPopupItem: React.FC<CartPopupItemProps> = ({ item }) => {
 
     const user = useSelector((state: State) => state.user)
     const cart = useSelector((state: State) => state.cart)

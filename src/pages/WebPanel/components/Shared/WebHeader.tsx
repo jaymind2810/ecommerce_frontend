@@ -37,6 +37,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { State } from "./../../../../store"
 import { logout } from "../../../../store/user/action-Creation";
 import { successToast } from "../../../../store/toast/actions-creation";
+import { getCartItemsDetails } from "../../../../requests/WebPanel/CartRequests";
+import { ActionType } from "../../../../store/cart/action-Types";
 
 
 const products = [
@@ -82,25 +84,35 @@ function classNames(...classes: any) {
 
 const WebHeader = () => {
   const user = useSelector((state: State) => state.user)
+  const cart = useSelector((state: State) => state.cart)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isCartPopupOpen, setIsCartPopupOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const ProfilePopupRef = useRef<HTMLElement | any>();
+  const CartPopupRef = useRef<HTMLElement | any>();
+
+  useEffect(() => {
+    setCartCount(cart?.cart?.length)
+  }, [cart]);
 
   const handleClickOutside = (event: any) => {
     if (!ProfilePopupRef?.current?.contains(event.target)) {
       setIsProfileMenu(false)
+    }
+    if (!CartPopupRef?.current?.contains(event.target)) {
+      setIsCartPopupOpen(false)
     }
   };
 
   useEffect(() => {
     const listener = document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, [isProfileMenu]); // Re-attach listener on state change
+  }, [isProfileMenu, isCartPopupOpen]); // Re-attach listener on state change
 
   const logoutHandler = () => {
     console.log("Here---")
@@ -242,20 +254,24 @@ const WebHeader = () => {
                   <path d="M408.5 842.1c7.2 0 13.1 5.9 13.1 13.1s-5.9 13.1-13.1 13.1-13.1-5.9-13.1-13.1 5.9-13.1 13.1-13.1m0-60c-40.4 0-73.1 32.7-73.1 73.1s32.7 73.1 73.1 73.1 73.1-32.7 73.1-73.1-32.7-73.1-73.1-73.1zM823.1 842.1c7.2 0 13.1 5.9 13.1 13.1s-5.9 13.1-13.1 13.1-13.1-5.9-13.1-13.1 5.9-13.1 13.1-13.1m0-60c-40.4 0-73.1 32.7-73.1 73.1s32.7 73.1 73.1 73.1 73.1-32.7 73.1-73.1-32.7-73.1-73.1-73.1z" fill="#45484C"></path>
                 </g>
               </svg>
+              <span className="align-middle bg-sky-500 h-5 item-center rounded-full text-sm text-center w-5 z-50">{cartCount}</span>
             </div>
             {
               isCartPopupOpen &&
-              <div className="absolute flex justify-center items-center mt-8 right-4 rounded-lg ring-1 ring-black ring-opacity-5 bg-white shadow-lg">
+              <div 
+                className="absolute flex justify-center items-center mt-8 right-4 rounded-lg ring-1 ring-black ring-opacity-5 bg-white shadow-lg"
+                ref={CartPopupRef}
+                >
                 <CartPopup setIsCartPopupOpen={setIsCartPopupOpen} />
               </div>
             }
 
-            <div className="flex -space-x-1 overflow-hidden ml-4">
+            <div className="flex -space-x-1 overflow-hidden ml-2">
               <p className="content-center">{" | "}</p>
             </div>
             <div
               className="flex -space-x-1 overflow-hidden ml-4 cursor-pointer"
-              onClick={() => setIsProfileMenu(!isProfileMenu)}>
+              onClick={() => setIsProfileMenu(true)}>
               {
                 user.isLoggedIn && user?.user_photo ? (
                   <>
