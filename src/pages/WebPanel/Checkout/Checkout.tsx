@@ -7,6 +7,7 @@ import { createPaymentIntent } from "../../../requests/WebPanel/PaymentRequests"
 import CheckoutProgressBar from "../components/CheckoutProgressBar/CheckoutProgressBar";
 import axios from "axios";
 import SelectField from "../components/FormComponents/SelectField";
+import InputField from "../components/FormComponents/InputField";
 
 // import CheckoutForm from "./CheckoutForm";
 // import "./App.css";
@@ -20,6 +21,8 @@ export default function Checkout() {
   const [allStateValue, setAllStateValue] = useState<any>([]);
   const [stateValue, setStateValue] = useState('Select');
 
+  const [userAddress, setUserAddress] = useState([]);
+
   useEffect(() => {
     const baseURL = "https://countriesnow.space/api/v0.1/countries/states";
     axios.get(baseURL).then((response) => {
@@ -27,31 +30,19 @@ export default function Checkout() {
     });
   }, [])
 
-  // console.log(allCountryData, "-------allCountryData------")
-
   const countryHandleChange = (e:any) => {
-    console.log(e.target.value, "--------Event Hit------")
     setCountryValue(e.target.value);
     const country_data:any = allCountryData.find((country:any) => country.name === e.target.value);
-    console.log(country_data, "--------country_data------")
     country_data && setAllStateValue(country_data?.states)
   }
 
-  // useEffect(() => {
-  //   // if (countryValue !== 'Select') {
-  //     const country_data:any = allCountryData.find((item:any) => { item.name === countryValue})
-  //     console.log(country_data, "------country_data------")
-  //     country_data && setAllStateValue(country_data?.states)
-  //   // }
-  // },[countryValue])
-
   const stateHandleChange = (e:any) => {
-    console.log(e.target.value, "--------Event Hit------")
     setStateValue(e.target.value);
   }
 
-  // console.log(selectCountryValue, "--------selectValue------")
-  
+  const inputfieldHandle = (e:any) => {
+    setStateValue(e.target.value);
+  }
 
   return (
     <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
@@ -67,34 +58,56 @@ export default function Checkout() {
              
             <h2 className="text-xl font-semibold text-gray-700 dark:text-white mb-4">Delivery Details</h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label  className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> Your name </label>
-                  <input type="text" id="your_name" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Bonnie Green" required />
-                </div>
 
-                <div>
-                  <label  className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> Your email* </label>
-                  <input type="email" id="your_email" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="name@flowbite.com" required />
-                </div>
-                {/* { allCountryData &&
-                <div>
-                  <div className="mb-2 flex items-center gap-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white"> Country* </label>
-                  </div>
-                  <select 
-                    id="select-country-input-3" 
-                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                    value={selectValue} onChange={(e) => countryHandleChange(e)}
-                    >
-                      <option value="Select">Select</option>
-                      {allCountryData && allCountryData.map((item: any) => {
-                        return (
-                          <option value={item?.name}>{item?.name}</option>
-                        )
-                      })}
-                  </select>
-                </div>
-                } */}
+                <InputField
+                  labelClassName={"mb-2 block text-sm font-medium text-gray-700 dark:text-white"}
+                  labelName={"Your Name*"}
+                  inputClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  inputType={"text"}
+                  placeHolder={"Your Name"}
+                  handleChange={inputfieldHandle}
+                  isRequired={"false"}
+                />
+
+                <InputField
+                  labelClassName={"mb-2 block text-sm font-medium text-gray-700 dark:text-white"}
+                  labelName={"Your Email*"}
+                  inputClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  inputType={"email"}
+                  placeHolder={"sample@email.com"}
+                  handleChange={inputfieldHandle}
+                  isRequired={"true"}
+                />
+
+                <InputField
+                  labelClassName={"mb-2 block text-sm font-medium text-gray-700 dark:text-white"}
+                  labelName={"Phone Number*"}
+                  inputClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  inputType={"text"}
+                  placeHolder={"Phone Number"}
+                  handleChange={inputfieldHandle}
+                  isRequired={"true"}
+                />
+
+                <InputField
+                  labelClassName={"mb-2 block text-sm font-medium text-gray-700 dark:text-white"}
+                  labelName={"Street"}
+                  inputClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  inputType={"text"}
+                  placeHolder={"Street"}
+                  handleChange={inputfieldHandle}
+                  isRequired={"false"}
+                />
+
+                <InputField
+                  labelClassName={"mb-2 block text-sm font-medium text-gray-700 dark:text-white"}
+                  labelName={"City"}
+                  inputClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  inputType={"text"}
+                  placeHolder={"City Name"}
+                  handleChange={inputfieldHandle}
+                  isRequired={"false"}
+                />
 
                 <SelectField 
                   labelClassName={"block text-sm font-medium text-gray-700 dark:text-white mb-2"}
@@ -107,47 +120,31 @@ export default function Checkout() {
 
                 <SelectField 
                   labelClassName={"block text-sm font-medium text-gray-700 dark:text-white mb-2"}
-                  labelName={"State Name*"}
+                  labelName={"State Name"}
                   selectClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
                   selectOptionData={allStateValue}
                   handleChange={stateHandleChange}
                   selectedSelectValue={stateValue}
                 />
 
-                {/* <div>
-                  <div className="mb-2 flex items-center gap-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white"> State* </label>
-                  </div>
-                  <select id="select-city-input-3" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
-                    <option selected>San Francisco</option>
-                    <option value="NY">New York</option>
-                    <option value="LA">Los Angeles</option>
-                    <option value="CH">Chicago</option>
-                    <option value="HU">Houston</option>
-                  </select>
-                </div> */}
+                <InputField
+                  labelClassName={"mb-2 block text-sm font-medium text-gray-700 dark:text-white"}
+                  labelName={"Postal Code"}
+                  inputClassName={"block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"}
+                  inputType={"text"}
+                  placeHolder={"Postal Code"}
+                  handleChange={inputfieldHandle}
+                  isRequired={"true"}
+                />
 
                 {/* <div>
-                  <div className="mb-2 flex items-center gap-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white"> City* </label>
-                  </div>
-                  <select id="select-city-input-3" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
-                    <option selected>San Francisco</option>
-                    <option value="NY">New York</option>
-                    <option value="LA">Los Angeles</option>
-                    <option value="CH">Chicago</option>
-                    <option value="HU">Houston</option>
-                  </select>
-                </div> */}
-
-                <div>
                   <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> Phone Number* </label>
                   <div className="flex items-center">
                     <button id="dropdown-phone-button-3" data-dropdown-toggle="dropdown-phone-3" className="z-10 inline-flex shrink-0 items-center rounded-s-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-center text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-700" type="button">
                       <svg fill="none" aria-hidden="true" className="me-2 h-4 w-4" viewBox="0 0 20 15">
                         <rect width="19.6" height="14" y=".5" fill="#fff" rx="2" />
                         <mask id="a" width="20" height="15" x="0" y="0" maskUnits="userSpaceOnUse">
-                          <rect width="19.6" height="14" y=".5" fill="#fff" rx="2" />
+                          <rect width="19.6" height="14" y=".5" fll="#fff" rx="2" />
                         </mask>
                         <g mask="url(#a)">
                           <path fill="#D02F44" fill-rule="evenodd" d="M19.6.5H0v.933h19.6V.5zm0 1.867H0V3.3h19.6v-.933zM0 4.233h19.6v.934H0v-.934zM19.6 6.1H0v.933h19.6V6.1zM0 7.967h19.6V8.9H0v-.933zm19.6 1.866H0v.934h19.6v-.934zM0 11.7h19.6v.933H0V11.7zm19.6 1.867H0v.933h19.6v-.933z" clip-rule="evenodd" />
@@ -339,22 +336,7 @@ export default function Checkout() {
                       <input type="text" id="phone-input" className="z-20 block w-full rounded-e-lg border border-s-0 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:border-s-gray-700  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required />
                     </div>
                   </div>
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> Email </label>
-                  <input type="email" id="email" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="name@flowbite.com" required />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> Company name </label>
-                  <input type="text" id="company_name" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Flowbite LLC" required />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"> VAT number </label>
-                  <input type="text" id="vat_number" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-700 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="DE42313253" required />
-                </div>
+                </div> */}
 
                 <div className="sm:col-span-2">
                   <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
