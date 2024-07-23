@@ -94,7 +94,7 @@ const CartItem: React.FC<CartItemProps> = ({
 
                   <div className="w-full min-w-0 flex-1 space-y-2 md:order-2 md:max-w-md">
                     <a href="#" className="text-sm font-medium text-gray-700  hover:underline dark:text-white">{item?.product?.name}, {item?.product?.short_text}</a>
-                    <div className="text-sm font-medium text-gray-700  hover:underline dark:text-white">$ {item?.product?.unit_price}</div>
+                    <div className="text-sm font-medium text-indigo-600  hover:underline dark:text-white">$ {item?.product?.unit_price}</div>
 
                     <div className="flex items-center gap-4">
                       <button type="button" className="border border-gray-400 dark:hover:text-white dark:text-gray-400 font-medium bg-gray-100 hover:bg-gray-200 hover:text-gray-700 inline-flex items-center px-1 py-1 rounded-lg text-gray-500 text-sm">

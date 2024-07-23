@@ -45,7 +45,7 @@ const CartPopup: React.FC<CartPopupProps> = ({
         <>
             {/* <div className="w-[600px] px-4 md:px-5 lg-6 mx-auto bg-white p-6 rounded border border-gray-200 shadow-lg z-20"> */}
             <div className="w-[520px] px-4 md:px-5 lg-6 mx-auto bg-white p-6 rounded-lg border-gray-200 shadow-lg z-20">
-                <h2 className="title p-1 rounded-lg font-manrope font-bold text-xl leading-10 text-center text-gray-700 bg-gray-300">Shopping Cart
+                <h2 className="title p-1 rounded-lg font-manrope font-bold text-xl leading-10 text-center text-gray-700 bg-gray-300">SHOPPING CART
                 </h2>
                 {cart.cart.length === 0 ? (
                     <>
