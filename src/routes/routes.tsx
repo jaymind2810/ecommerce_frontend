@@ -19,6 +19,7 @@ import ProductDetail from "../pages/WebPanel/Products/ProductDetails"
 import Checkout from "../pages/WebPanel/Checkout/Checkout"
 import Cart from "../pages/WebPanel/Cart/Cart"
 
+import Payment from "../pages/WebPanel/Payment/Payment"
 import PaymentSuccess from "../pages/WebPanel/Checkout/SuccessPayment"
 import PaymentFail from "../pages/WebPanel/Checkout/FailPayment"
 
@@ -116,7 +117,15 @@ export default function RouterList () {
                             } 
                         />
                         <Route  
-                            path="/product/paymentSuccess/" 
+                            path="/payment" 
+                            element={
+                                <React.Suspense fallback={<></>}>
+                                    <Payment />
+                                </React.Suspense>           
+                            } 
+                        />
+                        <Route  
+                            path="/paymentSuccess/" 
                             element={
                                 <React.Suspense fallback={<></>}>
                                     <PaymentSuccess />
@@ -125,7 +134,7 @@ export default function RouterList () {
                         />
 
                         <Route  
-                            path="/product/paymentError/" 
+                            path="/paymentError/" 
                             element={
                                 <React.Suspense fallback={<></>}>
                                     <PaymentFail />

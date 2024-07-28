@@ -35,9 +35,9 @@ const AddressForm = () => {
 
     return (
         <>
-            <div className="space-y-4 p-6 rounded-lg border border-gray-200">
+            <div className="space-y-4 p-6 rounded-lg">
              
-             <h2 className="text-xl font-semibold text-gray-700 dark:text-white mb-4">Delivery Details</h2>
+             <h2 className="text-xl font-semibold text-gray-700 dark:text-white mb-4">ADD ADDRESS</h2>
              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                <InputField
@@ -323,16 +323,13 @@ const AddressForm = () => {
              </div>
              <div className="flex gap-4 justify-end pt-2 sm:col-span-2 ">
                  <button 
-                    className="flex w-15 right-0 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+                    className="flex w-15 right-0 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
                 >
                    Cancel
                  </button>
                  <button 
-                    className="flex w-15 right-0 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+                    className="flex w-15 right-0 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
                 >
-                   <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
-                   </svg>
                    Add
                  </button>
                </div>

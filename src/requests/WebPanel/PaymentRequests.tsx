@@ -6,4 +6,12 @@ export const createPaymentIntent = async () => {
   return await axiosPost("/api/create-payment-intent/");
 };
 
+interface CreateStripeCustomerType {
+  user_id: any,
+}
+
+export const createCardToken = async (data:CreateStripeCustomerType) => {
+  return await axiosPost("api/create-stripe-customer/", data);
+};
+
 
