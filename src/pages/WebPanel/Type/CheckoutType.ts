@@ -9,3 +9,17 @@ export interface UserAddressDataType {
     phone_number?: string;
     email?: string;
 } 
+
+export interface AddressFormValueType {
+    user_id: number | any,
+    name?: string
+    street?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    postal_code?: string;
+    phone_number?: string;
+    email?: string;
+} 
+
+

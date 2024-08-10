@@ -1,0 +1,7 @@
+export enum ActionType {
+  // === Address Form =======
+  SET_USER_All_ADDRESS = "SET_USER_All_ADDRESS",
+  ADD_NEW_ADDRESS = "ADD_NEW_ADDRESS",
+  UPDATE_ADDRESS = "UPDATE_ADDRESS",
+  DELETE_ADDRESS = "DELETE_ADDRESS",
+}

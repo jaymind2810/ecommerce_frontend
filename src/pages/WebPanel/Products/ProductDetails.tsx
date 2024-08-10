@@ -50,7 +50,7 @@ const ProductDetail = () => {
                 <li>
                 <div className="flex items-center">
                     <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                     </svg>
                     <a href="#" className="ms-1 text-md font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Projects</a>
                 </div>
@@ -58,7 +58,7 @@ const ProductDetail = () => {
                 <li aria-current="page">
                 <div className="flex items-center">
                     <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                     </svg>
                     <span className="ms-1 text-md font-medium text-gray-500 md:ms-2 dark:text-gray-400">Flowbite</span>
                 </div>
@@ -187,7 +187,7 @@ const ProductDetail = () => {
                         <p className="font-medium text-lg leading-8 text-gray-700  mb-4">Bag Color</p>
                         <div className="text">
                             <div className="flex items-center justify-start gap-3 md:gap-6 relative mb-6 ">
-                                <button data-ui="checked active"
+                                <button data-ui=" active"
                                     className="p-2.5 border border-gray-200 rounded-full transition-all duration-300 hover:border-emerald-500 :border-emerald-500">
                                     <svg width="20" height="20" viewBox="0 0 40 40" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -242,12 +242,12 @@ const ProductDetail = () => {
                                         <svg className="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
                                             width="22" height="22" viewBox="0 0 22 22" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M16.5 11H5.5" stroke="" stroke-width="1.6"
-                                                stroke-linecap="round" />
-                                            <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                                stroke-linecap="round" />
-                                            <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                                stroke-linecap="round" />
+                                            <path d="M16.5 11H5.5" stroke="" strokeWidth="1.6"
+                                                strokeLinecap="round" />
+                                            <path d="M16.5 11H5.5" stroke="" strokeOpacity="0.2" strokeWidth="1.6"
+                                                strokeLinecap="round" />
+                                            <path d="M16.5 11H5.5" stroke="" strokeOpacity="0.2" strokeWidth="1.6"
+                                                strokeLinecap="round" />
                                         </svg>
                                     </button>
                                     <p className="px-2 w-10 font-semibold text-gray-700  text-lg lg:max-w-[50px] border-gray-400 bg-transparent placeholder:text-gray-700  text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0">
@@ -263,12 +263,12 @@ const ProductDetail = () => {
                                                 () => setProductQuantity(productQuantity + 1)
                                             }
                                             >
-                                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6"
-                                                stroke-linecap="round" />
-                                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                                                stroke-width="1.6" stroke-linecap="round" />
-                                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                                                stroke-width="1.6" stroke-linecap="round" />
+                                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" strokeWidth="1.6"
+                                                strokeLinecap="round" />
+                                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" strokeOpacity="0.2"
+                                                strokeWidth="1.6" strokeLinecap="round" />
+                                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" strokeOpacity="0.2"
+                                                strokeWidth="1.6" strokeLinecap="round" />
                                         </svg>
                                     </button>
                                 </div>

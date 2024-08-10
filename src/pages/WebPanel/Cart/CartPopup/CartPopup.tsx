@@ -93,8 +93,8 @@ const CartPopup: React.FC<CartPopupProps> = ({
                         }>
                         <span className="px-2 font-semibold py-1 leading-8 text-gray-700 text-sm">Add Coupon Code</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                            <path d="M8.25324 5.49609L13.7535 10.9963L8.25 16.4998" stroke="#374151" stroke-width="1.6"
-                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.25324 5.49609L13.7535 10.9963L8.25 16.4998" stroke="#374151" strokeWidth="1.6"
+                                strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </button>
                     <button
@@ -108,8 +108,8 @@ const CartPopup: React.FC<CartPopupProps> = ({
                         Checkout
                         <svg className="ml-2" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22"
                             fill="none">
-                            <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" stroke-width="1.6"
-                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" strokeWidth="1.6"
+                                strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </button>
                 </div>

@@ -6,3 +6,7 @@ import { GetUserData } from './UserRequestType'
 export const userProfileData = async (data: GetUserData) => {
     return await axiosGet("/auth/user/", data);
 };
+
+export const getUserAllData = async (data: GetUserData) => {
+    return await axiosGet(`/auth/getuseralldata/${data['user_id']}/`);
+};

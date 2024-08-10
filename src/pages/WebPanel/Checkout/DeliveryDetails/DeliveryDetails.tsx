@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from "react";
 import AddressCard from "./AddressCard/AddressCard";
-import AddressForm from "./AddressForm/AddressForm";
 import { getUserAllAddress } from "../../../../requests/WebPanel/CheckoutRequests";
 import { State } from "../../../../store";
 import { useSelector } from "react-redux";
 import { UserAddressDataType } from "../../Type/CheckoutType";
+import { AddressFormType } from "../../../../store/address/reducer/reducer";
+import AddressForm from "./AddressForm/AddressForm";
 
 
 const DeliveryDetails = () => {
 
     const user = useSelector((state: State) => state.user)
+    const address = useSelector((state: State) => state.address)
 
-    const [userAllAddress, setUserAllAddress] = useState<UserAddressDataType[]>([]);
     const [addNewAddress, setAddNewAddress] = useState(false);
-
-    useEffect(() => {
-        getUserAllAddress({
-            user_id :user?.id
-        }).then((res) => {
-            if (res.status == 200) {
-                setUserAllAddress(res.data)
-            }
-        })
-    }, [])
-
 
     return (
         <>
@@ -31,9 +21,9 @@ const DeliveryDetails = () => {
               <h3 className="text-xl font-semibold text-gray-700 dark:text-white">SHIPPING ADDRESS</h3>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                { userAllAddress && userAllAddress.map((address:UserAddressDataType) => {
+                { address && address?.address_details?.map((add:AddressFormType) => {
                     return (
-                            <AddressCard address={address}/>
+                            <AddressCard address={add} key={add.id}/>
                         )
                     })
                 }
@@ -46,12 +36,12 @@ const DeliveryDetails = () => {
                     onClick={()=> setAddNewAddress(true)}
                 >
                    <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
+                     <path stroke="currentColor" strokeWidth="2" d="M5 12h14m-7 7V5" />
                    </svg>
                    Add new address
                  </button>
                </div>
-               {addNewAddress && <AddressForm/>}
+               {addNewAddress && <AddressForm user={user}/>}
             </div>
             
         </>

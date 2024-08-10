@@ -4,6 +4,7 @@ import loaderReducer from "./loader/reducer/reducer";
 import userReducer from "./user/reducer/reducer";
 import toastReducer from "./toast/reducer/toast";
 import cartReducer from "./cart/reducer/reducer";
+import addressReducer from "./address/reducer/reducer";
 // import boxReducer, { BoxOverlayReducer } from "./box/reducer/reducer";
 // import LatLngReducer from "./LatLng/reducer/reducer";
 // import MapReducer from "./map/reducer/reducer";
@@ -16,6 +17,7 @@ const reducers = combineReducers({
   user: userReducer,
   toast: toastReducer,
   loader: loaderReducer,
+  address: addressReducer,
   cart: cartReducer,
   // box: boxReducer,
   // boxOverlay: BoxOverlayReducer,

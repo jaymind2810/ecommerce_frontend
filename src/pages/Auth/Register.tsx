@@ -59,22 +59,6 @@ export default function SignUp() {
                     );
                     navigate("/login");
                 }
-                // } else if (res.data.password) {
-                // dispatch(
-                //     warningToast({
-                //     toast: true,
-                //     message: res.data.password,
-                //     })
-                // );
-                // } else if (res.data.status === 500) {
-                // dispatch(
-                //     warningToast({
-                //     toast: true,
-                //     message: res.data.message,
-                //     })
-                // );
-                // }
-                // dispatch(actionEnd());
             })
             .catch((error) => {
                 console.log(error)

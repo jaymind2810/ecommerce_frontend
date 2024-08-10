@@ -1,18 +1,51 @@
 import React from "react";
+import { deleteUserAddress } from "../../../../../requests/WebPanel/CheckoutRequests";
+import { actionEnd, actionStart } from "../../../../../store/loader/actions-creations";
+import { successToast, warningToast } from "../../../../../store/toast/actions-creation";
+import { useDispatch } from "react-redux";
+import { AddressFormType } from "../../../../../store/address/reducer/reducer";
+import { deleteAddress } from "../../../../../store/address/action-Creation";
 
 interface AddressCardProps {
     address: any
 }
 
-
 const AddressCard:React.FC<AddressCardProps> = ({
     address,
 }) => {
+
+    const dispatch = useDispatch();
+
+    const handleDeleteAddress = (address: AddressFormType) =>{
+        dispatch(actionStart());
+        deleteUserAddress(address?.id)
+        .then((res) => {
+            if (res.status === 204) {
+                dispatch(
+                    successToast({
+                    toast: true,
+                    message: "Address deleted Successfully...!!",
+                    })
+                );
+                dispatch(deleteAddress(address));
+                dispatch(actionEnd());
+            } else {
+                dispatch(
+                    warningToast({
+                    toast: true,
+                    message: "Something Went Wrong",
+                    })
+                );
+                dispatch(actionEnd());
+            }
+        })
+    }
+
     return (
         <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
             <div className="flex items-start">
                 <div className="flex h-5 items-center">
-                    <input id="credit-card" aria-describedby="credit-card-text" type="radio" name="payment-method" value="" className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" checked />
+                    <input id="credit-card" aria-describedby="credit-card-text" type="radio" name="payment-method" value="" className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
                 </div>
 
                 <div className="ms-4 text-sm">
@@ -25,7 +58,11 @@ const AddressCard:React.FC<AddressCardProps> = ({
             </div>
 
             <div className="mt-4 flex items-center gap-2">
-                <button type="button" className="text-sm font-medium text-red-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Delete</button>
+                <button 
+                    type="button" 
+                    className="text-sm font-medium text-red-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white"
+                    onClick={() => handleDeleteAddress(address)}    
+                >Delete</button>
 
                 <div className="h-3 w-px shrink-0 bg-gray-500 dark:bg-gray-700"></div>
 

@@ -73,7 +73,7 @@ const CartItem: React.FC<CartItemProps> = ({
                           className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
                           onClick={decrementQuantity}>
                         <svg className="h-2.5 w-2.5 text-gray-700  dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                       </button>
                       <p className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-700  focus:outline-none focus:ring-0 dark:text-white">
@@ -83,7 +83,7 @@ const CartItem: React.FC<CartItemProps> = ({
                           className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
                           onClick={incrementQuantity}>
                         <svg className="h-2.5 w-2.5 text-gray-700  dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
                       </button>
                     </div>
@@ -99,7 +99,7 @@ const CartItem: React.FC<CartItemProps> = ({
                     <div className="flex items-center gap-4">
                       <button type="button" className="border border-gray-400 dark:hover:text-white dark:text-gray-400 font-medium bg-gray-100 hover:bg-gray-200 hover:text-gray-700 inline-flex items-center px-1 py-1 rounded-lg text-gray-500 text-sm">
                         <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
                         </svg>
                         Add to Favorites
                       </button>
@@ -108,7 +108,7 @@ const CartItem: React.FC<CartItemProps> = ({
                             className="bg-gray-100 border border-gray-400 dark:text-red-500 font-medium hover:bg-gray-200 inline-flex items-center px-2 py-1 rounded-lg text-red-600 text-sm"
                             onClick={() => removeFromCart(item)}>
                         <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6" />
                         </svg>
                         Remove
                       </button>
