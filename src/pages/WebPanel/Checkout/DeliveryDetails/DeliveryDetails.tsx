@@ -8,12 +8,22 @@ import { AddressFormType } from "../../../../store/address/reducer/reducer";
 import AddressForm from "./AddressForm/AddressForm";
 
 
-const DeliveryDetails = () => {
+interface DeliveryDetailsTypeProps {
+
+}
+
+
+const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
+  
+) => {
 
     const user = useSelector((state: State) => state.user)
     const address = useSelector((state: State) => state.address)
 
     const [addNewAddress, setAddNewAddress] = useState(false);
+    const [intialValue, setIntialValue] = useState<AddressFormType>();
+
+    console.log(intialValue, "-------Initial Value00000000000")
 
     return (
         <>
@@ -23,7 +33,12 @@ const DeliveryDetails = () => {
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 { address && address?.address_details?.map((add:AddressFormType) => {
                     return (
-                            <AddressCard address={add} key={add.id}/>
+                            <AddressCard 
+                              key={add.id}
+                              address={add}
+                              setIntialValue={setIntialValue}
+                              setAddNewAddress={setAddNewAddress}
+                            />
                         )
                     })
                 }
@@ -41,7 +56,13 @@ const DeliveryDetails = () => {
                    Add new address
                  </button>
                </div>
-               {addNewAddress && <AddressForm user={user}/>}
+               {addNewAddress && intialValue &&
+                  <AddressForm 
+                    user={user}
+                    // setAddNewAddress={setAddNewAddress}
+                    intialValue={intialValue}
+                  />
+               }
             </div>
             
         </>

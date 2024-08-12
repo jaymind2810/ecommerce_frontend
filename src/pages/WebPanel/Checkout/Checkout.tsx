@@ -12,6 +12,7 @@ import SelectField from "../components/FormComponents/SelectField";
 import InputField from "../components/FormComponents/InputField";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { AddressFormType } from "../../../store/address/reducer/reducer";
 
 // import CheckoutForm from "./CheckoutForm";
 // import "./App.css";

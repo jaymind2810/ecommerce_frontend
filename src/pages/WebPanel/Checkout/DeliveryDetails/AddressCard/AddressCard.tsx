@@ -7,11 +7,15 @@ import { AddressFormType } from "../../../../../store/address/reducer/reducer";
 import { deleteAddress } from "../../../../../store/address/action-Creation";
 
 interface AddressCardProps {
-    address: any
+    address: any;
+    setIntialValue: (value: AddressFormType) => void;
+    setAddNewAddress: (flag: boolean) => void;
 }
 
 const AddressCard:React.FC<AddressCardProps> = ({
     address,
+    setIntialValue,
+    setAddNewAddress,
 }) => {
 
     const dispatch = useDispatch();
@@ -66,7 +70,14 @@ const AddressCard:React.FC<AddressCardProps> = ({
 
                 <div className="h-3 w-px shrink-0 bg-gray-500 dark:bg-gray-700"></div>
 
-                <button type="button" className="text-sm font-medium text-indigo-700 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Edit</button>
+                <button 
+                    type="button" 
+                    className="text-sm font-medium text-indigo-700 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white"
+                    onClick={() => {
+                        setIntialValue(address)
+                        setAddNewAddress(true)
+                    }}
+                >Edit</button>
             </div>
         </div>
     )

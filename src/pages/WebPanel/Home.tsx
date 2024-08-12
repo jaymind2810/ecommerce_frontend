@@ -20,20 +20,16 @@ const Home = () => {
   const [trendingProductsData, setTrendingProductsData] = useState<ProductsDataType[]>([]);
   const user = useSelector((state: State) => state.user);
 
-  console.log(user, "-------After----------")
-
   useEffect(()=> {
     const userId:any = localStorage.getItem("userId");
     if (userId) {
       actionStart()
-      console.log(userId, "------__UserID----------")
       getUserAllData({
         user_id : userId
       }).then((res) => {
         console.log(res, "----------res---data----------")
         if (res.status === 200 ) {
           res.data.data['user']['isLoggedIn'] = true
-          console.log(res.data.data['user'], "-----------res.data.data['user']----------")
           dispatch(setCurrentUser(res.data.data['user']))
           dispatch(setUserAllAddress(res.data.data['address_details']))
           dispatch(setCartData(res.data.data['cart_items']))

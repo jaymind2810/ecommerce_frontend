@@ -17,11 +17,15 @@ import { addNewAddress } from "../../../../../store/address/action-Creation";
 
 
 interface AddressFormProps {
-  user: any
+  user: any;
+  // setAddNewAddress: any;
+  intialValue: any;
 }
 
 const AddressForm: React.FC<AddressFormProps> = (
-  user
+  user,
+  // setAddNewAddress,
+  intialValue,
 ) => {
 
     const [allCountryData, setAllCountryData] = useState([]);
@@ -31,6 +35,9 @@ const AddressForm: React.FC<AddressFormProps> = (
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    console.log(intialValue, "--------_Initial Value-------")
+    
   
     useEffect(() => {
       const baseURL = "https://countriesnow.space/api/v0.1/countries/states";
@@ -53,14 +60,16 @@ const AddressForm: React.FC<AddressFormProps> = (
       enableReinitialize: true,
       initialValues: {
         user_id: user.user.id,
-        name: '',
-        email: '',
-        phone_number: '',
-        street: '',
-        city: '',
+        name: intialValue ? intialValue?.name : '' ,
+        email: intialValue ? intialValue?.email : '',
+        phone_number: intialValue ? intialValue?.phone_number : '',
+        street: intialValue ? intialValue?.street : '',
+        city: intialValue ? intialValue?.city : '',
+        // country: intialValue ? intialValue?.country : countryValue,
         country: countryValue,
+        // state: intialValue ? intialValue?.state : stateValue,
         state: stateValue,
-        postal_code: '',
+        postal_code: intialValue ? intialValue?.postal_code : '',
       },
       validationSchema: Yup.object({
         name: Yup.string()
@@ -276,11 +285,12 @@ const AddressForm: React.FC<AddressFormProps> = (
                
              </div>
              <div className="flex gap-4 justify-end pt-2 sm:col-span-2 ">
-                 <button 
+                 <p 
                     className="flex w-15 right-0 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                >
+                    // onClick={()=> {setAddNewAddress(false)}}
+                 >
                    Cancel
-                 </button>
+                 </p>
                  <button 
                     type="submit"
                     className="flex w-15 right-0 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
