@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import InputField from "../../../components/FormComponents/InputField";
 import SelectField from "../../../components/FormComponents/SelectField";
 import { useFormik } from "formik";
+import { Country, State as states }  from 'country-state-city';
 import * as Yup from 'yup';
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,16 +41,19 @@ const AddressForm: React.FC<AddressFormProps> = (
     
   
     useEffect(() => {
-      const baseURL = "https://countriesnow.space/api/v0.1/countries/states";
-      axios.get(baseURL).then((response) => {
-        setAllCountryData(response.data.data);
-      });
+      // const baseURL = "https://countriesnow.space/api/v0.1/countries/states";
+      // axios.get(baseURL).then((response) => {
+      //   setAllCountryData(response.data.data);
+      // });
+      const all_country:any = Country.getAllCountries()
+      setAllCountryData(all_country)
     }, [])
   
     const countryHandleChange = (e:any) => {
       setCountryValue(e.target.value);
       const country_data:any = allCountryData.find((country:any) => country.name === e.target.value);
-      country_data && setAllStateValue(country_data?.states)
+      const allCountryStates = states.getStatesOfCountry(country_data?.isoCode)
+      country_data && setAllStateValue(allCountryStates)
     }
   
     const stateHandleChange = (e:any) => {
@@ -139,7 +143,7 @@ const AddressForm: React.FC<AddressFormProps> = (
 
     return (
         <>
-            <div className="space-y-4 p-6 rounded-lg">
+            <div className="w-[520px] px-4 md:px-5 lg-6 mx-auto bg-white p-6 rounded-lg border-gray-200 shadow-lg z-20">
              
              <h2 className="text-xl font-semibold text-gray-700 dark:text-white mb-4">ADD ADDRESS</h2>
              <form 

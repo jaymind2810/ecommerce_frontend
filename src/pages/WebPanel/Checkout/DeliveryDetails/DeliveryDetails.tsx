@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { UserAddressDataType } from "../../Type/CheckoutType";
 import { AddressFormType } from "../../../../store/address/reducer/reducer";
 import AddressForm from "./AddressForm/AddressForm";
-
+import FullScreenModal from "../../../../components/FullScreenModel";
 
 interface DeliveryDetailsTypeProps {
 
@@ -57,11 +57,18 @@ const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
                  </button>
                </div>
                {addNewAddress && intialValue &&
-                  <AddressForm 
+                <FullScreenModal
+                  closeHandler={setAddNewAddress}
+                >
+                  <div>
+                    Hello World
+                  </div>
+                  {/* <AddressForm 
                     user={user}
                     // setAddNewAddress={setAddNewAddress}
                     intialValue={intialValue}
-                  />
+                  /> */}
+                </FullScreenModal>
                }
             </div>
             
