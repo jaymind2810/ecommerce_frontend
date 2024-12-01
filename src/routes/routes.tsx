@@ -22,7 +22,29 @@ import Cart from "../pages/WebPanel/Cart/Cart"
 import Payment from "../pages/WebPanel/Payment/Payment"
 import PaymentSuccess from "../pages/WebPanel/Checkout/SuccessPayment"
 import PaymentFail from "../pages/WebPanel/Checkout/FailPayment"
+import PageNotFound from "../components/ErrorBoundary/PageNotFound"
 
+
+enum ErrorType {
+    CART = "CART",
+    CHECKOUT = "CHECKOUT",
+    PAYMENT = "PAYMENT",
+  }
+
+
+const ErrorBoundary = (source: any) => {
+    // Uncaught ReferenceError: path is not defined
+    switch (source.source) {
+      case ErrorType.CART:
+        return <div>Cart Page Issue..!</div>;
+      case ErrorType.CHECKOUT:
+        return <div>Checkout Page Issue..!!</div>;
+      case ErrorType.PAYMENT:
+        return <div>Payment Issue..!!.</div>;
+      default:
+        return <PageNotFound />;
+    }
+  };
 
 export default function RouterList () {
     return (
@@ -106,7 +128,8 @@ export default function RouterList () {
                                 <React.Suspense fallback={<></>}>
                                     <Cart />
                                 </React.Suspense>           
-                            } 
+                            }
+                            errorElement={<ErrorBoundary source={ErrorType.CART} />}
                         />
                         <Route  
                             path="/product/checkout" 
@@ -114,7 +137,8 @@ export default function RouterList () {
                                 <React.Suspense fallback={<></>}>
                                     <Checkout />
                                 </React.Suspense>           
-                            } 
+                            }
+                            errorElement={<ErrorBoundary source={ErrorType.CHECKOUT} />}
                         />
                         <Route  
                             path="/payment" 
@@ -122,7 +146,8 @@ export default function RouterList () {
                                 <React.Suspense fallback={<></>}>
                                     <Payment />
                                 </React.Suspense>           
-                            } 
+                            }
+                            errorElement={<ErrorBoundary source={ErrorType.PAYMENT} />}
                         />
                         <Route  
                             path="/paymentSuccess/" 

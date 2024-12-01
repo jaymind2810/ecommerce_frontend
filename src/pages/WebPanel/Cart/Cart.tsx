@@ -20,40 +20,40 @@ const Cart: React.FC<CartProps> = ({
   const cart = useSelector((state: State) => state.cart)
   const [subTotal, setSubTotal] = useState<any>()
   const [currentActive, setCurrentActive] = useState<any>('Cart')
-  
+
   console.log(cart, "----------cart------------")
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-      user &&
-          getCartItemsDetails({
-              user_id: user.id
-          }).then((res) => {
-              if (res.status === 200) {
-                  dispatch({ type: ActionType.SET_CART, payload: res.data.data })
-              }
-          })
+    user &&
+      getCartItemsDetails({
+        user_id: user.id
+      }).then((res) => {
+        if (res.status === 200) {
+          dispatch({ type: ActionType.SET_CART, payload: res.data.data })
+        }
+      })
   }, []);
 
-  const calculateSubtotal = (items:any) => {
-      return items.reduce((total:any, item:any) => total + item?.product?.unit_price * item?.quantity, 0);
+  const calculateSubtotal = (items: any) => {
+    return items.reduce((total: any, item: any) => total + item?.product?.unit_price * item?.quantity, 0);
   };
-  
+
   useEffect(() => {
-      setSubTotal(calculateSubtotal(cart.cart))
+    setSubTotal(calculateSubtotal(cart.cart))
   }, [cart])
 
   return (
     <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
-      <CheckoutProgressBar/>
+      <CheckoutProgressBar />
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0 py-8">
         <h2 className="text-2xl font-semibold text-gray-700  dark:text-white sm:text-xl">SHOPPING CART</h2>
 
         <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
           <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
             {cart?.cart?.map((item) => (
-                <CartItem key={item.id} item={item}/>
+              <CartItem key={item.id} item={item} />
             ))}
             <div className="hidden xl:mt-8 xl:block">
               <h3 className="text-xl font-semibold text-gray-700  dark:text-white">PEOPLE ALSO BUY</h3>

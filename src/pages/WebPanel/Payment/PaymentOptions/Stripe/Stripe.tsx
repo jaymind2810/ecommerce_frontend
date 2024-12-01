@@ -6,8 +6,8 @@ import { createCardToken } from "../../../../../requests/WebPanel/PaymentRequest
 
 const StripeForm = () => {
 
-    const stripe:any = useStripe();
-    const elements:any = useElements();
+    const stripe: any = useStripe();
+    const elements: any = useElements();
 
     const [clientSecret, setClientSecret] = useState("");
     const [paymentIntentData, setPaymentIntentData] = useState("");
@@ -15,7 +15,7 @@ const StripeForm = () => {
     const [cardInfo, setCardInfo] = useState<any>(null);
 
 
-    const fetchCardDetail = (data:any) => {
+    const fetchCardDetail = (data: any) => {
         if (data.complete) {
             setCardInfo(data)
         } else {
@@ -23,7 +23,7 @@ const StripeForm = () => {
         }
     }
 
-    const onSubmitHandler = async (e:any) => {
+    const onSubmitHandler = async (e: any) => {
         console.log(cardInfo, "------On onSubmitHandler--------")
         if (!!cardInfo) {
             try {
@@ -35,7 +35,7 @@ const StripeForm = () => {
                 stripe.customers.create({
                     name: 'Jenny Rosen',
                     email: 'jennyrosen@example.com',
-                }).then((res:any) => {
+                }).then((res: any) => {
 
                     console.log(res, "---------Customer-----Created-------")
 
@@ -44,72 +44,72 @@ const StripeForm = () => {
                         card: cardElement,
                         customer: res?.id,
                         billing_details: {
-                        name: 'Jenny Rosen',
+                            name: 'Jenny Rosen',
                         },
                     })
-                    .then((result:any) => {
-                        console.log('--------result-------', result)
-                        // Handle result.error or result.paymentMethod
-                    });
+                        .then((result: any) => {
+                            console.log('--------result-------', result)
+                            // Handle result.error or result.paymentMethod
+                        });
                 });
 
 
-                
-                
+
+
 
                 // stripe.createToken(cardElement)
                 // .then((payload:any) => {
                 //     console.log('[token]', payload)
                 // });
 
-            } catch(error) {
+            } catch (error) {
 
             }
         }
-        
-        
+
+
     }
 
     const cardStyle = {
         marginTop: '15px',
     };
 
-    const cardOptions:any = {
+    const cardOptions: any = {
         style: {
             base: {
-              margin: '5px',
-              fontSize: '16px',
-              color: '#424770',
-              '::placeholder': {
-                color: '#aab7c4',
-              },
+                margin: '5px',
+                fontSize: '16px',
+                color: '#424770',
+                '::placeholder': {
+                    color: '#aab7c4',
+                },
             },
             // invalid: {
             //   color: '#9e2146',
             // },
-          },
-        classes:{
+        },
+        classes: {
             base: "mt-4",
             invalid: "text-red"
         }
-    } 
+    }
 
-    
+
 
 
     return (
         <>
             <h2> This is Stripe Form</h2>
             {/* {stripePromise &&  */}
-                {/* // <Elements stripe={stripePromise}> */}
-                    <CardElement 
-                        // onReady={onReadyHandler} 
-                        onChange={(cardDetails) => {
-                            fetchCardDetail(cardDetails)
-                        }}
-                        options={cardOptions}
-                    />
-                    {/* <CardNumberElement 
+            {/* // <Elements stripe={stripePromise}> */}
+            <CardElement
+                // onReady={onReadyHandler} 
+                onChange={(cardDetails) => {
+                    fetchCardDetail(cardDetails)
+                }}
+                options={cardOptions}
+            />
+            {/* <CardNumberElement 
                         onReady={onReadyHandler} 
                         onChange={onChangeHandler}
                         options={cardOptions}
@@ -124,15 +124,14 @@ const StripeForm = () => {
                         onChange={onChangeHandler}
                         options={cardOptions}
                         /> */}
-                {/* // </Elements> */}
+            {/* // </Elements> */}
             {/* } */}
-            <button 
-                onClick={(e)=> onSubmitHandler(e)}
-                className={`mt-4 p-2 border-rounded-lg ${
-                    cardInfo ? "bg-indigo-600" : "bg-gray-600"
-                } rounded-lg`}
+            <button
+                onClick={(e) => onSubmitHandler(e)}
+                className={`mt-4 p-2 border-rounded-lg ${cardInfo ? "bg-indigo-600" : "bg-gray-600"
+                    } rounded-lg`}
             >
-                     Pay now   
+                Pay now
             </button>
         </>
     )

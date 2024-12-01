@@ -11,7 +11,7 @@ const Payment = () => {
     const [stripePromise, setStripePromise] = useState<any>("");
 
     const getStripe = () => {
-        const publishable_key:any = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
+        const publishable_key: any = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
         setStripePromise(loadStripe(publishable_key))
     };
 
@@ -19,8 +19,8 @@ const Payment = () => {
         if (selectedPaymentOption === 'stripe') {
             getStripe()
         }
-    },[selectedPaymentOption])
-    
+    }, [selectedPaymentOption])
+
 
 
     return (
@@ -29,16 +29,12 @@ const Payment = () => {
 
                 <CheckoutProgressBar />
 
-                <form action="#" className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-
-                    <h2 className="text-xl font-semibold text-gray-700 dark:text-white mt-6 sm:mt-8 mb-4">PAYMET METHOD</h2>
-                    <div className="lg:flex lg:items-start md:gap-6 mt-6 sm:mt-8 xl:gap-8">
-                        <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl space-y-8">
-
-
-                            <div className="space-y-4 p-6 rounded-lg">
+                <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+                    <h2 className="text-xl font-semibold text-gray-700 dark:text-white mt-6 sm:mt-8 mb-4">PAYMENT METHODS</h2>
+                    <div className="mx-auto lg:flex lg:items-start md:gap-6 mt-6 sm:mt-8 xl:gap-8">
+                        <div className="w-full flex-none lg:max-w-2xl xl:max-w-4xl space-y-8">
+                            <div className="space-y-4 p-6 rounded-lg border border-gray-200">
                                 <h3 className="text-xl font-semibold text-gray-700 dark:text-white">PAYMENT</h3>
-
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                                     <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
                                         <div className="flex items-start">
@@ -57,14 +53,6 @@ const Payment = () => {
                                                 <label className="font-medium leading-none text-gray-700 dark:text-white"> Stripe </label>
                                                 <p id="credit-card-text" className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Pay with your cards</p>
                                             </div>
-                                        </div>
-
-                                        <div className="mt-4 flex items-center gap-2">
-                                            <button type="button" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Delete</button>
-
-                                            <div className="h-3 w-px shrink-0 bg-gray-200 dark:bg-gray-700"></div>
-
-                                            <button type="button" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Edit</button>
                                         </div>
                                     </div>
 
@@ -86,14 +74,6 @@ const Payment = () => {
                                                 <p id="paypal-text" className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Connect to your account</p>
                                             </div>
                                         </div>
-
-                                        <div className="mt-4 flex items-center gap-2">
-                                            <button type="button" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Delete</button>
-
-                                            <div className="h-3 w-px shrink-0 bg-gray-200 dark:bg-gray-700"></div>
-
-                                            <button type="button" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Edit</button>
-                                        </div>
                                     </div>
 
                                     <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
@@ -107,25 +87,17 @@ const Payment = () => {
                                                 <p id="pay-on-delivery-text" className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">+$15 payment processing fee</p>
                                             </div>
                                         </div>
-
-                                        <div className="mt-4 flex items-center gap-2">
-                                            <button type="button" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Delete</button>
-
-                                            <div className="h-3 w-px shrink-0 bg-gray-200 dark:bg-gray-700"></div>
-
-                                            <button type="button" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Edit</button>
-                                        </div>
                                     </div>
 
                                 </div>
 
                                 <div>
                                     {/* <button 
-                                    className="bg-gray-800 flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700"
-                                    onClick={() => navigate('/payment') }
-                                >
-                                    Pay
-                                </button> */}
+                                className="bg-gray-800 flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700"
+                                onClick={() => navigate('/payment') }
+                            >
+                                Pay
+                            </button> */}
                                 </div>
                                 <div>
                                     {selectedPaymentOption &&
@@ -149,18 +121,18 @@ const Payment = () => {
                                                                 <p>PayPal Payment</p>
 
                                                                 {/* <PayPalCheckOut
-                                                                    amountToPay={amountToPay}
-                                                                    cartData={cartData}
-                                                                    user={user}
-                                                                    setAmountToPay={setAmountToPay}
-                                                                    setAddBox={setAddBox}
-                                                                    setNewFullScreen={setNewFullScreen}
-                                                                    setBoxMarker={setBoxMarker}
-                                                                    setIsSmallBoxOverlap={setIsSmallBoxOverlap}
-                                                                    setOverlappedSmallBox={setOverlappedSmallBox}
-                                                                    setAddABoxFunction={setAddABoxFunction}
-                                                                    setPaymentId={setPaymentId}
-                                                                /> */}
+                                                                amountToPay={amountToPay}
+                                                                cartData={cartData}
+                                                                user={user}
+                                                                setAmountToPay={setAmountToPay}
+                                                                setAddBox={setAddBox}
+                                                                setNewFullScreen={setNewFullScreen}
+                                                                setBoxMarker={setBoxMarker}
+                                                                setIsSmallBoxOverlap={setIsSmallBoxOverlap}
+                                                                setOverlappedSmallBox={setOverlappedSmallBox}
+                                                                setAddABoxFunction={setAddABoxFunction}
+                                                                setPaymentId={setPaymentId}
+                                                            /> */}
                                                             </div>
                                                         </>
                                                     ) : ''
@@ -171,8 +143,51 @@ const Payment = () => {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full border border-gray-200 p-6 rounded-lg ">
+                            <p className="text-xl font-semibold text-gray-700  dark:text-white">ORDER SUMMARY</p>
+                            <div className="space-y-4">
+                                <div className=" space-y-2">
+                                    <dl className="flex items-center justify-between gap-4 ">
+                                        <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
+                                        <dd className="text-base font-medium text-gray-700 dark:text-white">$8,094.00</dd>
+                                    </dl>
+
+                                    <dl className="flex items-center justify-between gap-4 ">
+                                        <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Savings</dt>
+                                        <dd className="text-base font-medium text-green-500">0</dd>
+                                    </dl>
+
+                                    <dl className="flex items-center justify-between gap-4 ">
+                                        <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Store Pickup</dt>
+                                        <dd className="text-base font-medium text-gray-700 dark:text-white">$99</dd>
+                                    </dl>
+
+                                    <dl className="flex items-center justify-between gap-4 ">
+                                        <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Tax</dt>
+                                        <dd className="text-base font-medium text-gray-700 dark:text-white">$199</dd>
+                                    </dl>
+                                </div>
+                                <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+                                    <dt className="text-base font-bold text-gray-700  dark:text-white">Total</dt>
+                                    <dd className="text-base font-bold text-indigo-600 dark:text-white">$8,191.00</dd>
+                                </dl>
+                            </div>
+
+                            <div className="space-y-3">
+                                <button
+                                    className="bg-gray-800 flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700"
+                                // onClick={() => navigate('/payment') }
+                                >Pay </button>
+
+                                <p className="text-sm font-normal text-gray-500 dark:text-gray-400">One or more items in your cart require an account. <a href="#" title="" className="font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">Sign in or create an account now.</a>.</p>
+                            </div>
+                        </div>
                     </div>
-                </form>
+
+
+
+                </div>
             </section>
         </>
     )
