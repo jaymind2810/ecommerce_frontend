@@ -5,6 +5,7 @@ import { removeItemsFromCart, updateCartItemsDetails } from "../../../requests/W
 import { ActionType } from "../../../store/cart/action-Types";
 
 import { CartItem as CartItemType } from "../../../store/cart/reducer/reducer";
+import { removeFromCart, updateQuantity } from "../../../store/cart/action-Creation";
 
 interface CartItemProps {
   item: CartItemType;
@@ -26,30 +27,39 @@ const CartItem: React.FC<CartItemProps> = ({
       id: item.id,
       quantity: item.quantity + 1
     }).then((res) => {
-      dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
+      // dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
+      if (res.data.status === 200) {
+          dispatch(updateQuantity(res.data.data))
+      }
     })
   };
 
 
   const decrementQuantity = () => {
-    updateCartItemsDetails({
-      user_id: user?.id,
-      id: item.id,
-      quantity: item.quantity - 1
-    }).then((res) => {
-      dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
-    })
+    if (item.quantity > 1) {
+      updateCartItemsDetails({
+        user_id: user?.id,
+        id: item.id,
+        quantity: item.quantity - 1
+      }).then((res) => {
+        // dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
+        if (res.data.status === 200) {
+          dispatch(updateQuantity(res.data.data))
+      }
+      })
+    }
   };
 
 
-  const removeFromCart = (item: CartItemType) => {
+  const removeProductFromCart = (item: CartItemType) => {
     removeItemsFromCart({
       user_id: user?.id,
       id: item.id,
       quantity: item.quantity - 1
     }).then((res) => {
-      if (res.status === 204) {
-        dispatch({ type: ActionType.REMOVE_FROM_CART, payload: item });
+      if (res.data.status === 200) {
+          dispatch({ type: ActionType.REMOVE_FROM_CART, payload: item });
+          // dispatch(removeFromCart(res.data.data))
       }
     })
   };
@@ -106,7 +116,7 @@ const CartItem: React.FC<CartItemProps> = ({
 
                 <button type="button"
                   className="bg-gray-100 border border-gray-400 dark:text-red-500 font-medium hover:bg-gray-200 inline-flex items-center px-2 py-1 rounded-lg text-red-600 text-sm"
-                  onClick={() => removeFromCart(item)}>
+                  onClick={() => removeProductFromCart(item)}>
                   <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6" />
                   </svg>

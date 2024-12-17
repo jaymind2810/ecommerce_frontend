@@ -30,15 +30,13 @@ import { useNavigate } from "react-router";
 import { CgProfile } from "react-icons/cg";
 import UserIcon from "./../../../../images/user.png";
 import CartIcon from "./../../../../images/cart.png";
-import SearchIcon from "./../../../../images/search.png";
+import Icon from "./../../../../images/mark.svg";
 import LogOutIcon from "./../../../../images/logout.svg";
 import CartPopup from "../../Cart/CartPopup/CartPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "./../../../../store"
 import { logout } from "../../../../store/user/action-Creation";
 import { successToast } from "../../../../store/toast/actions-creation";
-import { getCartItemsDetails } from "../../../../requests/WebPanel/CartRequests";
-import { ActionType } from "../../../../store/cart/action-Types";
 
 
 const products = [
@@ -115,7 +113,6 @@ const WebHeader = () => {
   }, [isProfileMenu, isCartPopupOpen]); // Re-attach listener on state change
 
   const logoutHandler = () => {
-    console.log("Here---")
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
     dispatch(logout())
@@ -144,10 +141,9 @@ const WebHeader = () => {
                 navigate("/");
               }}
             >
-              <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src={Icon}
                 alt=""
               />
             </a>
@@ -295,17 +291,17 @@ const WebHeader = () => {
             {user.isLoggedIn && isProfileMenu &&
               <>
                 <div
-                  className="absolute z-10 mt-8 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute z-10 mt-8 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
                   ref={ProfilePopupRef}>
                   <div className="py-1" role="none">
-                    <p className="block px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 hover:text-indigo-700">{user?.first_name}{" "}{user?.last_name}</p>
+                    <p className="block px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 hover:text-indigo-700">Welcome {user?.first_name}{" "}{user?.last_name}</p>
                   </div>
-                  <div className="py-1" role="none">
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-indigo-700" role="menuitem" id="menu-item-0">Edit</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-indigo-700" role="menuitem" id="menu-item-1">Duplicate</a>
+                  <div className="py-1 px-2" role="none">
+                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-700" role="menuitem" id="menu-item-0">Profile</a>
+                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-700" role="menuitem" id="menu-item-1">Orders</a>
                   </div>
                   <div className="py-1" role="none">
                     <a

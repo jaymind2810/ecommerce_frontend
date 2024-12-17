@@ -29,11 +29,10 @@ export default function SignIn() {
         onSubmit: (values) => {
           dispatch(actionStart());
           signInRequest(values).then((res) => {
-            console.log(res, "-----------ssssdsd")
-            if (res.status === 200) {
-                localStorage.setItem("token", res.data.access)
-                localStorage.setItem("userId", res.data.userId)
-                localStorage.setItem("user", res.data.user)
+            if (res.data.success) {
+                localStorage.setItem("token", res.data.data.access)
+                localStorage.setItem("userId", res.data.data.userId)
+                localStorage.setItem("user", res.data.data.user)
                 dispatch(loginSuccess(true))
                 dispatch(actionEnd());
                 dispatch(
@@ -47,7 +46,7 @@ export default function SignIn() {
                 dispatch(
                     errorToast({
                     toast: true,
-                    message: res.data.detail,
+                    message: res.data.message,
                     })
                 );
             }

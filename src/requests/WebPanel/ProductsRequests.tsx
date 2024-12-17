@@ -19,3 +19,7 @@ export const getProductDetail = async (data: ProductData) => {
     return await axiosGet(`/products/${data['product_id']}/`);
 };
   
+
+export const getRelatedProducts = async () => {
+    return await axiosGet("/products/related/");
+};

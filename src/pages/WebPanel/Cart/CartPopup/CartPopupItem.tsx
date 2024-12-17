@@ -5,6 +5,7 @@ import { updateCartItemsDetails, removeItemsFromCart } from '../../../../request
 import { useSelector, useDispatch } from 'react-redux';
 import { ActionType } from '../../../../store/cart/action-Types';
 import { State } from '../../../../store';
+import { removeFromCart, updateQuantity } from '../../../../store/cart/action-Creation';
 
 interface CartPopupItemProps {
     item: CartItemType;
@@ -22,30 +23,37 @@ const CartPopupItem: React.FC<CartPopupItemProps> = ({ item }) => {
             id: item.id,
             quantity: item.quantity + 1
         }).then((res) => {
-            dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
+            if (res.data.status === 200) {
+                dispatch(updateQuantity(res.data.data))
+            }
         })
     };
 
 
     const decrementQuantity = () => {
-        updateCartItemsDetails({
-            user_id: user?.id,
-            id: item.id,
-            quantity: item.quantity - 1
-        }).then((res) => {
-            dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
-        })
+        if (item.quantity > 1) {
+            updateCartItemsDetails({
+                user_id: user?.id,
+                id: item.id,
+                quantity: item.quantity - 1
+            }).then((res) => {
+                if (res.data.status === 200) {
+                    dispatch(updateQuantity(res.data.data))
+                }
+            })
+        }
     };
 
 
-    const removeFromCart = (item: CartItemType) => {
+    const removeProductFromCart = (item: CartItemType) => {
         removeItemsFromCart({
             user_id: user?.id,
             id: item.id,
             quantity: item.quantity - 1
         }).then((res) => {
-            if (res.status === 204) {
+            if (res.data.status === 200) {
                 dispatch({ type: ActionType.REMOVE_FROM_CART, payload: item });
+                // dispatch(removeFromCart(item))
             }
         })
     };
@@ -106,7 +114,7 @@ const CartPopupItem: React.FC<CartPopupItemProps> = ({ item }) => {
                     $ {item?.product?.unit_price * item.quantity}</h6>
                 <div
                     className="text-indigo-600 font-manrope font-bold text-lg leading-9 px-4 text-center cursor-pointer"
-                    onClick={() => removeFromCart(item)}
+                    onClick={() => removeProductFromCart(item)}
                 >
                     <svg fill="#ff1919"
                         version="1.1" className="h-5 w-5" viewBox="0 0 482.43 482.43" stroke="#ff1919"

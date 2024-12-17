@@ -33,24 +33,21 @@ export default function SignUp() {
             .max(20, '** Must be 20 characters or less. **'),
           email: Yup.string().email('Invalid email address').required('** Required **'),
           password: Yup.string()
-            .max(20, '** Must be 6 characters or more. **')
+            .max(20, '** Must be 20 characters or less. **')
             .required('** Required **'),
           password2: Yup.string()
-            .max(20, '** Must be 6 characters or more. **')
+            .max(20, '** Must be 20 characters or less. **')
             .required('** Required **')
             .oneOf([Yup.ref('password')], '** Passwords Must Match. **'),
         }),
         onSubmit: (values: SignupFormValues) => {
         //   alert(JSON.stringify(values, null, 2));
-          console.log(values, "--------_Values--Confirm --------")
           const { password2, ...rest } = values;
           dispatch(actionStart());
           signupRequest(values)
             .then((res) => {
                 dispatch(actionEnd());
-                console.log(res, "=======res========")
-                if (res.status === 201) {
-                    console.log("HERE-----")
+                if (res.data.success) {
                     dispatch(
                         successToast({
                         toast: true,

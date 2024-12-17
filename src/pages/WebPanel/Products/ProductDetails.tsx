@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import { useParams, useNavigate } from "react-router";
 import CustomerReview from "./CustomerReview/CustomerReview";
-import TrendingProducts from "./TrendingProducts/TrendingProducts";
 import { getProductDetail, getAllProducts } from "../../../requests/WebPanel/ProductsRequests";
 import { ProductsDataType, ProductImagesType } from "../Type/ProductTypes";
 import AddToCartButton from "./AddToCart/AddToCart";
+import RelatedProducts from "./RelatedProducts/RelatedProducts";
 
 interface ProductDetailProps {
     currentProduct: any,
@@ -22,14 +22,22 @@ const ProductDetail = () => {
         navigate('/product/checkout')
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     useEffect(()=> {
-        getProductDetail({
-            'product_id' : params.productID
-        }).then((res)=> {
-            if (res.data.status === "success") {
-                setCurrentProduct(res.data.data)
-            }
-        })
+        try {
+            getProductDetail({
+                'product_id' : params.productID
+            }).then((res)=> {
+                if (res.data.status === 200) {
+                    setCurrentProduct(res.data.data)
+                }
+            })
+        } catch (error) {
+            console.error("An error occurred while fetching product", error);
+        }
     }, [params.productID])
 
 
@@ -184,7 +192,7 @@ const ProductDetail = () => {
                         {currentProduct?.short_text}
                     </p>
                     <div className="block w-full">
-                        <p className="font-medium text-lg leading-8 text-gray-700  mb-4">Bag Color</p>
+                        <p className="font-medium text-lg leading-8 text-gray-700  mb-4">{currentProduct?.name} Color</p>
                         <div className="text">
                             <div className="flex items-center justify-start gap-3 md:gap-6 relative mb-6 ">
                                 <button data-ui=" active"
@@ -219,7 +227,7 @@ const ProductDetail = () => {
 
                             </div>
                             <div className="block w-full mb-6">
-                                <p className="font-medium text-lg leading-8 text-gray-700  mb-4">Bag size</p>
+                                <p className="font-medium text-lg leading-8 text-gray-700  mb-4">{currentProduct?.name} size</p>
                                 <div className="grid grid-cols-2 min-[100px]:grid-cols-4 gap-3">
                                     <button
                                         className="border border-gray-200 text-gray-700 py-2 rounded-md px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
@@ -292,7 +300,9 @@ const ProductDetail = () => {
         </div>
     </section>
     <CustomerReview />
-    <TrendingProducts/>
+    {currentProduct && (
+        <RelatedProducts product={currentProduct}/>
+    )}
 
 {/* <script>
         var swiper = new Swiper(".product-thumb", {

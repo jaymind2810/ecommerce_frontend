@@ -38,8 +38,8 @@ const WebBanner = () => {
   return (
     <>
     { webBanner &&
-    
-      <div className="relative isolate flex gap-x-6 overflow-hidden bg-gray-800 px-6 py-1 sm:px-3.5">
+
+      <div className="relative isolate flex gap-x-6 overflow-hidden bg-gray-800 px-6 sm:px-3.5">
         <div className="mx-64 flex max-w-7xl w-full" aria-label="Global">
           <div className="flex justify-between grid grid-cols-3 w-full">
             <div className="flex flex-1 justify-start col-start-1">
@@ -56,7 +56,7 @@ const WebBanner = () => {
                   <>
                     <p className="px-4 font-normal py-1 text-white">Welcome, {user?.first_name}{" "}{user?.last_name} ..!!</p>
                     <a 
-                      className="block cursor-pointer text-sm py-1 font-semibold" role="menuitem" id="menu-item-6"
+                      className="block cursor-pointer content-center text-sm py-1 font-semibold" role="menuitem" id="menu-item-6"
                       onClick={logoutHandler}>
                         <svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Capa_1"  viewBox="-18.85 -18.85 508.90 508.90" stroke="#FFFFFF" strokeWidth="23.56">
                           <g id="SVGRepo_bgCarrier" strokeWidth="0"/>

@@ -5,6 +5,7 @@ import { addCartItems } from '../../../../requests/WebPanel/CartRequests';
 import { State } from '../../../../store';
 import { successToast, errorToast } from '../../../../store/toast/actions-creation';
 import { ActionType } from '../../../../store/cart/action-Types';
+import { addToCart } from '../../../../store/cart/action-Creation';
 
 interface AddToCartButtonProps {
   currentProduct: ProductsDataType | any;
@@ -20,9 +21,9 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ currentProduct }) => 
         product: currentProduct.id,
         quantity: 1
     }).then((res) => {
-      if (res.data.status === "success") {
-        console.log(res.data, "=====resData--")
-        // dispatch({ type: ActionType.ADD_TO_CART, payload: res.data })
+      if (res.data.status === 200) {
+        // dispatch({ type: ActionType.ADD_TO_CART, payload: res.data.data })
+        dispatch(addToCart(res.data.data))
         dispatch(
           successToast({
           toast: true,

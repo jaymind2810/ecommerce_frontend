@@ -105,7 +105,7 @@ const AddressForm: React.FC<AddressFormProps> = (
           .then((res: any) => {
               dispatch(actionEnd());
               console.log(res, "=======res========")
-              if (res.status === 201) {
+              if (res.data.status === 201) {
                   console.log("HERE-----")
                   dispatch(addNewAddress(res.data.data))
                   dispatch(

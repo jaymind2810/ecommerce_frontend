@@ -12,6 +12,19 @@ import TrendingProducts from "./Products/TrendingProducts/TrendingProducts";
 import { setUserAllAddress } from "../../store/address/action-Creation";
 import { setCartData } from "../../store/cart/action-Creation";
 
+// Imaeges & Svgs
+import HomePageImage1 from "../../images/homepage/home-page-03-hero-image-tile-01.jpg";
+import HomePageImage2 from "../../images/homepage/home-page-03-hero-image-tile-02.jpg";
+import HomePageImage3 from "../../images/homepage/home-page-03-hero-image-tile-03.jpg";
+import HomePageImage4 from "../../images/homepage/home-page-03-hero-image-tile-04.jpg";
+import HomePageImage5 from "../../images/homepage/home-page-03-hero-image-tile-05.jpg";
+import HomePageImage6 from "../../images/homepage/home-page-03-hero-image-tile-06.jpg";
+import HomePageImage7 from "../../images/homepage/home-page-03-hero-image-tile-07.jpg";
+import HomePageCollectionImage1 from "../../images/homepage/home-page-02-edition-01.jpg";
+import HomePageCollectionImage2 from "../../images/homepage/home-page-02-edition-02.jpg";
+import HomePageCollectionImage3 from "../../images/homepage/home-page-02-edition-03.jpg";
+import { getAllHomePageData } from "../../requests/WebPanel/HomePageRequest";
+
 
 const Home = () => {
   const navigate = useNavigate()
@@ -19,50 +32,58 @@ const Home = () => {
 
   const [trendingProductsData, setTrendingProductsData] = useState<ProductsDataType[]>([]);
   const user = useSelector((state: State) => state.user);
-
-  useEffect(()=> {
-    const userId:any = localStorage.getItem("userId");
-    if (userId) {
-      actionStart()
-      getUserAllData({
-        user_id : userId
-      }).then((res) => {
-        console.log(res, "----------res---data----------")
-        if (res.status === 200 ) {
-          res.data.data['user']['isLoggedIn'] = true
-          dispatch(setCurrentUser(res.data.data['user']))
-          dispatch(setUserAllAddress(res.data.data['address_details']))
-          dispatch(setCartData(res.data.data['cart_items']))
-          actionEnd()
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId: any = localStorage.getItem("userId");
+      console.log(userId, "-------userId--------")
+      if (userId) {
+        try {
+          actionStart();
+          const res = await getUserAllData({ user_id: userId });
+          if (res.data.status === 200) {
+            res.data.data['user']['isLoggedIn'] = true;
+            dispatch(setCurrentUser(res.data.data['user']));
+            dispatch(setUserAllAddress(res.data.data['address_details']));
+            dispatch(setCartData(res.data.data['cart_items']));
+          } else {
+            console.error(`Unexpected response status: ${res.data.status}`);
+          }
+        } catch (error) {
+          console.error("An error occurred while fetching user data:", error);
+        } finally {
+          actionEnd();
         }
-      })
-      // userProfileData({
-      //   user_id : userId
-      // }).then((res) => {
-      //   if (res.data.status === 'success' ) {
-      //     res.data.data['isLoggedIn'] = true
-      //     dispatch(setCurrentUser(res.data.data)) 
-      //     actionEnd()
-      //   }
-      // })
-      
-    }
-  }, [user?.isLoggedIn])
+      }
+    };
+
+    fetchUserData();
+  }, [user?.isLoggedIn]);
 	
-	useEffect(() => {
-		getAllTrendingProducts().then((res) => {
-			if (res.status === 200) {
-				setTrendingProductsData(res.data.data)
-			} 
-		});
-	}, [])
+  useEffect(() => {
+    const fetchAllHomePageData = async () => {
+      try {
+        const res = await getAllHomePageData();
+        if (res.data.status === 200) {
+          console.log(res.data.data)
+          setTrendingProductsData(res.data.data['trending_products']);
+        } else {
+          console.error(`Unexpected response status: ${res.data.status}`);
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching trending products:", error);
+      }
+    };
+    fetchAllHomePageData();
+  }, []);
 
   const callouts = [
     {
       name: "Desk and Office",
       description: "Work from home accessories",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg",
+      imageSrc:HomePageCollectionImage1,
+      // imageSrc:
+      //   "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg",
       imageAlt:
         "Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.",
       href: "#",
@@ -70,8 +91,9 @@ const Home = () => {
     {
       name: "Self-Improvement",
       description: "Journals and note-taking",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg",
+      imageSrc:HomePageCollectionImage2,
+      // imageSrc:
+      //   "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg",
       imageAlt:
         "Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.",
       href: "#",
@@ -79,8 +101,9 @@ const Home = () => {
     {
       name: "Travel",
       description: "Daily commute essentials",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg",
+      imageSrc:HomePageCollectionImage3,
+      // imageSrc:
+      //   "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg",
       imageAlt: "Collection of four insulated travel bottles on wooden shelf.",
       href: "#",
     },
@@ -114,37 +137,16 @@ const Home = () => {
                         <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                           <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
                             <img
-                              src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
+                              // src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
+                              src={HomePageImage1} 
                               alt=""
                               className="h-full w-full object-cover object-center"
                             />
                           </div>
                           <div className="h-64 w-44 overflow-hidden rounded-lg">
                             <img
-                              src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-                              alt=""
-                              className="h-full w-full object-cover object-center"
-                            />
-                          </div>
-                        </div>
-                        <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                          <div className="h-64 w-44 overflow-hidden rounded-lg">
-                            <img
-                              src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-                              alt=""
-                              className="h-full w-full object-cover object-center"
-                            />
-                          </div>
-                          <div className="h-64 w-44 overflow-hidden rounded-lg">
-                            <img
-                              src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                              alt=""
-                              className="h-full w-full object-cover object-center"
-                            />
-                          </div>
-                          <div className="h-64 w-44 overflow-hidden rounded-lg">
-                            <img
-                              src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
+                              // src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
+                              src={HomePageImage2}
                               alt=""
                               className="h-full w-full object-cover object-center"
                             />
@@ -153,14 +155,42 @@ const Home = () => {
                         <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                           <div className="h-64 w-44 overflow-hidden rounded-lg">
                             <img
-                              src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
+                              // src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
+                              src={HomePageImage3}
                               alt=""
                               className="h-full w-full object-cover object-center"
                             />
                           </div>
                           <div className="h-64 w-44 overflow-hidden rounded-lg">
                             <img
-                              src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
+                              // src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
+                              src={HomePageImage4}
+                              alt=""
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </div>
+                          <div className="h-64 w-44 overflow-hidden rounded-lg">
+                            <img
+                              // src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
+                              src={HomePageImage5}
+                              alt=""
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </div>
+                        </div>
+                        <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                          <div className="h-64 w-44 overflow-hidden rounded-lg">
+                            <img
+                              // src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
+                              src={HomePageImage6}
+                              alt=""
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </div>
+                          <div className="h-64 w-44 overflow-hidden rounded-lg">
+                            <img
+                              // src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
+                              src={HomePageImage7}
                               alt=""
                               className="h-full w-full object-cover object-center"
                             />
@@ -173,6 +203,7 @@ const Home = () => {
                   <a
                     href="#"
                     className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+                    onClick={() => navigate("/products")}
                   >
                     Shop Collection
                   </a>
@@ -215,8 +246,12 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <TrendingProducts/>
+      {trendingProductsData && (
+        <TrendingProducts
+          trendingProductsData={trendingProductsData}
+          setTrendingProductsData={setTrendingProductsData}
+        />
+      )}
 
       <section className="py-24 bg-gray-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">

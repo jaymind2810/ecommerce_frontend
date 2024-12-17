@@ -30,7 +30,7 @@ const Cart: React.FC<CartProps> = ({
       getCartItemsDetails({
         user_id: user.id
       }).then((res) => {
-        if (res.status === 200) {
+        if (res.data.status === 200) {
           dispatch({ type: ActionType.SET_CART, payload: res.data.data })
         }
       })
@@ -54,7 +54,12 @@ const Cart: React.FC<CartProps> = ({
           <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
             {cart?.cart?.map((item) => (
               <CartItem key={item.id} item={item} />
-            ))}
+            ))}  
+            {cart?.cart.length === 0 && (
+              <>
+                <p className="text-gray-700">Your Cart Is Empty.</p>
+              </>
+            )}
             <div className="hidden xl:mt-8 xl:block">
               <h3 className="text-xl font-semibold text-gray-700  dark:text-white">PEOPLE ALSO BUY</h3>
               <div className="mt-6 grid grid-cols-3 gap-4 sm:mt-8">

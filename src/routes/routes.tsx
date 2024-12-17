@@ -1,28 +1,29 @@
-import React from "react"
+import React, { lazy } from "react"
 import { BrowserRouter, Router, Routes, Route } from 'react-router-dom'
 
 // ============== For AdminPanel ==================
-import Layout from '../pages/AdminPanel/components/shared/Layout'
-import Dashboard from '../pages/AdminPanel/Dashboard'
-import AllProducts from "../pages/AdminPanel/Products/Products"
-import Allorders from "../pages/AdminPanel/Orders/Orders"
-import AllUsers from "../pages/AdminPanel/Users/Users"
+const Layout = lazy(() => import("../pages/AdminPanel/components/shared/Layout"));
+const Dashboard = lazy(() => import("../pages/AdminPanel/Dashboard"));
+const AllProducts = lazy(() => import("../pages/AdminPanel/Products/Products"));
+const Allorders = lazy(() => import("../pages/AdminPanel/Orders/Orders"));
+const AllUsers = lazy(() => import("../pages/AdminPanel/Users/Users"));
 
 // ============== For Authentication ==================
-import SignIn from "../pages/Auth/Login"
-import SignUp from "../pages/Auth/Register"
-import WebLayout from "../pages/WebPanel/components/WebLayout"
+const SignIn = lazy(() => import("../pages/Auth/Login"));
+const SignUp = lazy(() => import("../pages/Auth/Register"));
+const WebLayout = lazy(() => import("../pages/WebPanel/components/WebLayout"));
 
 // ============== For WebSite ==================\
-import Home from "../pages/WebPanel/Home"
-import ProductDetail from "../pages/WebPanel/Products/ProductDetails"
-import Checkout from "../pages/WebPanel/Checkout/Checkout"
-import Cart from "../pages/WebPanel/Cart/Cart"
+const Home = lazy(() => import("../pages/WebPanel/Home"));
+const ProductDetail = lazy(() => import("../pages/WebPanel/Products/ProductDetails"));
+const Checkout = lazy(() => import("../pages/WebPanel/Checkout/Checkout"));
+const Cart = lazy(() => import("../pages/WebPanel/Cart/Cart"));
 
-import Payment from "../pages/WebPanel/Payment/Payment"
-import PaymentSuccess from "../pages/WebPanel/Checkout/SuccessPayment"
-import PaymentFail from "../pages/WebPanel/Checkout/FailPayment"
-import PageNotFound from "../components/ErrorBoundary/PageNotFound"
+const Payment = lazy(() => import("../pages/WebPanel/Payment/Payment"));
+const PaymentSuccess = lazy(() => import("../pages/WebPanel/Checkout/SuccessPayment"));
+const PaymentFail = lazy(() => import("../pages/WebPanel/Checkout/FailPayment"));
+const PageNotFound = lazy(() => import("../components/ErrorBoundary/PageNotFound"));
+const ProductsCatalogs = lazy(() => import("../pages/WebPanel/ProductCatalogs/ProductsCatalogs"));
 
 
 enum ErrorType {
@@ -51,19 +52,29 @@ export default function RouterList () {
         <BrowserRouter>
                 <Routes>
                     {/* ============== Admin Panel ================== */}
-                    <Route path="/panel" element={<Layout />}>
+                    <Route 
+                        path="/panel" 
+                        element={
+                            <React.Suspense fallback={<></>}>
+                                <Layout />
+                            </React.Suspense>
+                        }
+                        errorElement={<ErrorBoundary/>}
+                    >
                         <Route 
                             index 
                             element={
                                 <Dashboard />
-                            } 
+                            }
+                            errorElement={<ErrorBoundary/>}
                         />
                         <Route 
                             path="products" 
                             // path="/panel/products" 
                             element={
                                 <AllProducts />
-                            } 
+                            }
+                            errorElement={<ErrorBoundary/>}
                         />
                         <Route  
                             path="/panel/orders" 
@@ -71,7 +82,8 @@ export default function RouterList () {
                                 <React.Suspense fallback={<></>}>
                                     <Allorders />
                                 </React.Suspense>           
-                            } 
+                            }
+                            errorElement={<ErrorBoundary/>}
                         />
                         <Route  
                             path="/panel/users" 
@@ -79,7 +91,8 @@ export default function RouterList () {
                                 <React.Suspense fallback={<></>}>
                                     <AllUsers />
                                 </React.Suspense>           
-                            } 
+                            }
+                            errorElement={<ErrorBoundary/>}
                         />
                         {/* <Route  
                             path="/panel/orders" 
@@ -97,22 +110,32 @@ export default function RouterList () {
                         path="/login"
                         element={
                             <SignIn />
-                        } 
+                        }
+                        errorElement={<ErrorBoundary/>}
                     />
                     <Route 
                         path="/register" 
                         element={
                             <SignUp />
-                        } 
+                        }
+                        errorElement={<ErrorBoundary/>}
                     />
 
                     {/* ================= Web Panel ========================= */}
-                    <Route path="/" element={<WebLayout />}>
+                    <Route path="/" 
+                        element={
+                            <React.Suspense fallback={<></>}>
+                                <WebLayout />
+                            </React.Suspense>
+                        }
+                        errorElement={<ErrorBoundary/>}
+                    >
                         <Route 
                             index 
                             element={
                                 <Home />
                             } 
+                            errorElement={<ErrorBoundary/>}
                         />
                         <Route  
                             path="/product-detail/:productID" 
@@ -121,6 +144,16 @@ export default function RouterList () {
                                     <ProductDetail />
                                 </React.Suspense>           
                             } 
+                            errorElement={<ErrorBoundary/>}
+                        />
+                        <Route  
+                            path="/products" 
+                            element={
+                                <React.Suspense fallback={<></>}>
+                                    <ProductsCatalogs />
+                                </React.Suspense>           
+                            }
+                            errorElement={<ErrorBoundary source={ErrorType.CART} />}
                         />
                         <Route  
                             path="/product/cart" 
@@ -155,7 +188,8 @@ export default function RouterList () {
                                 <React.Suspense fallback={<></>}>
                                     <PaymentSuccess />
                                 </React.Suspense>           
-                            } 
+                            }
+                            errorElement={<ErrorBoundary/>}
                         />
 
                         <Route  
@@ -164,7 +198,8 @@ export default function RouterList () {
                                 <React.Suspense fallback={<></>}>
                                     <PaymentFail />
                                 </React.Suspense>           
-                            } 
+                            }
+                            errorElement={<ErrorBoundary/>}
                         />
 
                     </Route>

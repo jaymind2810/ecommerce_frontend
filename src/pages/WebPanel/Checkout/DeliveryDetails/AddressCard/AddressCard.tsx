@@ -24,7 +24,7 @@ const AddressCard:React.FC<AddressCardProps> = ({
         dispatch(actionStart());
         deleteUserAddress(address?.id)
         .then((res) => {
-            if (res.status === 204) {
+            if (res.data.status === 204) {
                 dispatch(
                     successToast({
                     toast: true,

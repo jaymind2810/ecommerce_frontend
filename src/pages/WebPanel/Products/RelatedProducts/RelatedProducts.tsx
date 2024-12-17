@@ -2,28 +2,44 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ProductsDataType } from "../../Type/ProductTypes";
-import { getAllTrendingProducts } from "../../../../requests/WebPanel/ProductsRequests";
+import { getRelatedProducts } from "../../../../requests/WebPanel/ProductsRequests";
 
-interface TrendingProductsTypeProps {
-  trendingProductsData?: ProductsDataType[];
-  setTrendingProductsData?: (trendingProductsData: ProductsDataType[]) => void;
+interface RelatedProductsTypeProps {
+  product?: ProductsDataType | undefined;
 }
 
-const TrendingProducts: React.FC<TrendingProductsTypeProps> = ({ 
-  trendingProductsData,
-  setTrendingProductsData
+const RelatedProducts: React.FC<RelatedProductsTypeProps> = ({ 
+  product
 }) => {
     const navigate = useNavigate()
+    const [relatedProductsData, setRelatedProductsData] = useState<ProductsDataType[]>([]);
+
+    useEffect(() => {
+    const fetchRelatedProductsDatas = async () => {
+        try {
+            const res = await getRelatedProducts();
+            if (res.data.status === 200) {
+                setRelatedProductsData(res.data.data);
+            } else {
+                console.error(`Unexpected response status: ${res.data.status}`);
+            }
+        } catch (error) {
+            console.error("An error occurred while fetching related products:", error);
+        }
+    };
+    fetchRelatedProductsDatas();
+    }, []);
+
     return (
       <section className="py-8">
         <div className="bg-white">
           <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-center">
-              Trending products
+              PEOPLE ALSO BUY
             </h2>
 
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              {trendingProductsData?.map((product:ProductsDataType, index: number) => (
+              {relatedProductsData && relatedProductsData?.map((product:ProductsDataType, index: number) => (
                 <div key={index} className="group relative">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                     <img
@@ -62,4 +78,4 @@ const TrendingProducts: React.FC<TrendingProductsTypeProps> = ({
     )
 }
 
-export default TrendingProducts
+export default RelatedProducts
