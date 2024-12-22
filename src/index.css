@@ -24,3 +24,7 @@
     --tw-border-opacity: 1;
     border-color: rgb(79 70 229 / var(--tw-border-opacity));
 }
+
+.no-scrollbar {
+    scrollbar-width: none;
+}

@@ -109,14 +109,18 @@ export default function RouterList () {
                     <Route 
                         path="/login"
                         element={
-                            <SignIn />
+                            <React.Suspense fallback={<></>}>
+                                <SignIn />
+                            </React.Suspense>
                         }
                         errorElement={<ErrorBoundary/>}
                     />
                     <Route 
                         path="/register" 
                         element={
-                            <SignUp />
+                            <React.Suspense fallback={<></>}>
+                                <SignUp />
+                            </React.Suspense>
                         }
                         errorElement={<ErrorBoundary/>}
                     />
@@ -133,7 +137,9 @@ export default function RouterList () {
                         <Route 
                             index 
                             element={
-                                <Home />
+                                <React.Suspense fallback={<></>}>
+                                    <Home />
+                                </React.Suspense>
                             } 
                             errorElement={<ErrorBoundary/>}
                         />
