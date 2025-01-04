@@ -21,7 +21,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ currentProduct }) => 
         product: currentProduct.id,
         quantity: 1
     }).then((res) => {
-      if (res.data.status === 200) {
+      console.log(res, "------res-------------")
+      if (res.data.success === true) {
         // dispatch({ type: ActionType.ADD_TO_CART, payload: res.data.data })
         dispatch(addToCart(res.data.data))
         dispatch(
@@ -30,7 +31,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ currentProduct }) => 
           message: "Item Added to Cart..!!",
           })
       );
-      } else if (res.data.non_field_errors[0] === "The fields product, user must make a unique set.") {
+      } else if (res.data.data.non_field_errors[0] === "The fields product, user must make a unique set.") {
         dispatch(
           successToast({
           toast: true,

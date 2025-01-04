@@ -1,5 +1,6 @@
 export interface UserAddressDataType {
-    id: string;
+    user_id?: number | any,
+    id?: string;
     name?: string
     street?: string;
     city?: string;
@@ -11,7 +12,8 @@ export interface UserAddressDataType {
 } 
 
 export interface AddressFormValueType {
-    user_id: number | any,
+    user_id?: number | any,
+    id?: string;
     name?: string
     street?: string;
     city?: string;

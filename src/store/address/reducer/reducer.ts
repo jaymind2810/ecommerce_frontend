@@ -2,8 +2,8 @@ import { Action } from "../action/action";
 import { ActionType } from "../action-Types/index";
 
 export interface AddressFormType {
-  user_id: number | any,
-  id: number | any,
+  user_id?: number | any,
+  id?: number | any,
   name?: string
   street?: string;
   city?: string;
@@ -40,6 +40,9 @@ const addressReducer = (state:AddressState = initialAddressDataState, action: Ac
       return {
         ...state,
         ...action.payload,
+        address_details: state.address_details.map(add => {
+          return add.id === action.payload.id ? action.payload : add;
+        }) 
       };
     case ActionType.DELETE_ADDRESS:
       return {

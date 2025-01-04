@@ -21,10 +21,14 @@ const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
     const user = useSelector((state: State) => state.user)
     const address = useSelector((state: State) => state.address)
 
-    const [addNewAddress, setAddNewAddress] = useState(false);
-    const [intialValue, setIntialValue] = useState<AddressFormType>();
+    const [addressData, setAddressData] = useState<AddressFormType[]>([]);
+    const [addNewAddress, setAddNewAddress] = useState<boolean>(false);
+    const [intialValue, setIntialValue] = useState<AddressFormType>({});
 
-    console.log(intialValue, "-------Initial Value00000000000")
+    useEffect(() => {
+      address && address?.address_details && setAddressData(address?.address_details)
+    }, [address])
+
 
     return (
         <>
@@ -32,7 +36,7 @@ const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
               <h3 className="text-xl font-semibold text-gray-700 dark:text-white">SHIPPING ADDRESS</h3>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                { address && address?.address_details?.map((add:AddressFormType) => {
+                { addressData && addressData?.map((add:AddressFormType) => {
                     return (
                             <AddressCard 
                               key={add.id}
@@ -51,7 +55,7 @@ const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
                     className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
                     // onClick={()=> setAddNewAddress(true)}
                     onClick={()=> {
-                      // setIntialValue(address)
+                      setIntialValue({})
                       setAddNewAddress(true)
                     }}
                 >
@@ -66,13 +70,12 @@ const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
                   closeHandler={setAddNewAddress}
                   className="px-32 items-center flex justify-center"
                 >
-                  {/* <h2>Hello</h2> */}
-                  <NewAddressForm/>
-                  {/* <AddressForm 
+                  {/* <NewAddressForm/> */}
+                  <AddressForm
                     user={user}
-                    // setAddNewAddress={setAddNewAddress}
+                    setAddNewAddress={setAddNewAddress}
                     intialValue={intialValue}
-                  /> */}
+                  />
                 </FullScreenModal>
                }
             </div>

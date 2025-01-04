@@ -35,8 +35,8 @@ const SelectFormikField: React.FC<SelectFormikFieldProps> = ({
                 <label key={labelName} className={labelClassName}> {labelName} </label>
                 <select 
                     className={selectClassName}
-                    onChange={(e)=> handleChange(e)}
-                    // onChange={onChange}
+                    // onChange={(e)=> handleChange(e)}
+                    onChange={onChange}
                     value={selectedSelectValue}
                 >
                 <option value="Select">-- Select {labelName} --</option>
