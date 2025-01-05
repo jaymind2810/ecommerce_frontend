@@ -188,7 +188,7 @@ const StripeForm = () => {
                             ADD CARD
                         </div>
                         <div
-                            className="shadow-md rounded-lg space-y-4"
+                            className="rounded-lg space-y-4"
                             // style={paymentCard && { pointerEvents: "none" }}
                         >
                             <div className="border mt-2 rounded-lg">

@@ -7,15 +7,17 @@ import { UserAddressDataType } from "../../Type/CheckoutType";
 import { AddressFormType } from "../../../../store/address/reducer/reducer";
 import AddressForm from "./AddressForm/AddressForm";
 import FullScreenModal from "../../../../components/FullScreenModel";
-import NewAddressForm from "./AddressForm/AddressForm2";
+import NewAddressForm from "../../components/other/AddressForm2";
 
 interface DeliveryDetailsTypeProps {
-
+  currentSelectedAdd: number | any;
+  setCurrentSelectedAdd: ((value: number) => void);
 }
 
 
 const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
-  
+  currentSelectedAdd,
+  setCurrentSelectedAdd
 ) => {
 
     const user = useSelector((state: State) => state.user)
@@ -26,7 +28,10 @@ const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
     const [intialValue, setIntialValue] = useState<AddressFormType>({});
 
     useEffect(() => {
-      address && address?.address_details && setAddressData(address?.address_details)
+      if (address && address?.address_details) {  
+        setAddressData(address?.address_details)
+        // setCurrentSelectedAdd(address?.address_details[0].id)    
+      }
     }, [address])
 
 
@@ -43,6 +48,8 @@ const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
                               address={add}
                               setIntialValue={setIntialValue}
                               setAddNewAddress={setAddNewAddress}
+                              setCurrentSelectedAdd={setCurrentSelectedAdd}
+                              currentSelectedAdd={currentSelectedAdd}
                             />
                         )
                     })

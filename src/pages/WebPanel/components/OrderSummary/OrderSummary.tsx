@@ -4,7 +4,13 @@ import { useNavigate } from "react-router";
 import { State } from "../../../../store";
 
 
-const OrderSummarySideBar = () => {
+interface OrderSummarySideBarProps {
+    currentSelectedAdd?: number | any;
+  }
+
+const OrderSummarySideBar: React.FC<OrderSummarySideBarProps> = ({
+    currentSelectedAdd
+}) => {
     
     const cart = useSelector((state: State) => state.cart)
 

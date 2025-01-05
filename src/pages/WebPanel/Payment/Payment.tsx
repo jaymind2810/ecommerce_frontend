@@ -37,19 +37,23 @@ const Payment = () => {
                             <div className="space-y-4 p-6 rounded-lg border border-gray-200">
                                 <h3 className="text-xl font-semibold text-gray-700 dark:text-white">PAYMENT</h3>
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+                                    <div 
+                                        className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800"
+                                        onClick={() => {
+                                            selectedPaymentOption && selectedPaymentOption === 'stripe'
+                                                ? setSelectedPaymentOption('')
+                                                : setSelectedPaymentOption('stripe')
+                                        }}
+                                    >
                                         <div className="flex items-start">
                                             <div className="flex h-5 items-center">
-                                                <input id="credit-card" aria-describedby="credit-card-text" type="radio" name="payment-method" value="" className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
+                                                <input id="credit-card" aria-describedby="credit-card-text" type="radio" name="payment-method"
+                                                    checked={selectedPaymentOption && selectedPaymentOption === 'stripe' ? true : false}
+                                                    className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
                                             </div>
 
                                             <div
                                                 className="ms-4 text-sm"
-                                                onClick={() => {
-                                                    selectedPaymentOption && selectedPaymentOption === 'stripe'
-                                                        ? setSelectedPaymentOption('')
-                                                        : setSelectedPaymentOption('stripe')
-                                                }}
                                             >
                                                 <label className="font-medium leading-none text-gray-700 dark:text-white"> Stripe </label>
                                                 <p id="credit-card-text" className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Pay with your cards</p>
@@ -57,19 +61,25 @@ const Payment = () => {
                                         </div>
                                     </div>
 
-                                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+                                    <div 
+                                        className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800"
+                                        onClick={() => {
+                                            selectedPaymentOption && selectedPaymentOption === 'paypal'
+                                                ? setSelectedPaymentOption('')
+                                                : setSelectedPaymentOption('paypal')
+                                        }}
+                                    >
                                         <div className="flex items-start">
                                             <div className="flex h-5 items-center">
-                                                <input id="paypal-2" aria-describedby="paypal-text" type="radio" name="payment-method" value="" className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
+                                                <input 
+                                                    id="paypal-2" aria-describedby="paypal-text" type="radio" name="payment-method" 
+                                                    checked={selectedPaymentOption && selectedPaymentOption === 'paypal' ? true : false} 
+                                                    // value={selectedPaymentOption && selectedPaymentOption === 'paypal' ? selected : false} 
+                                                    className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
                                             </div>
 
                                             <div
                                                 className="ms-4 text-sm"
-                                                onClick={() => {
-                                                    selectedPaymentOption && selectedPaymentOption === 'paypal'
-                                                        ? setSelectedPaymentOption('')
-                                                        : setSelectedPaymentOption('paypal')
-                                                }}
                                             >
                                                 <label className="font-medium leading-none text-gray-700 dark:text-white"> Paypal account </label>
                                                 <p id="paypal-text" className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Connect to your account</p>
@@ -77,10 +87,19 @@ const Payment = () => {
                                         </div>
                                     </div>
 
-                                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+                                    <div 
+                                        className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800"
+                                        onClick={() => {
+                                            selectedPaymentOption && selectedPaymentOption === 'cash'
+                                                ? setSelectedPaymentOption('')
+                                                : setSelectedPaymentOption('cash')
+                                        }}
+                                    >
                                         <div className="flex items-start">
                                             <div className="flex h-5 items-center">
-                                                <input id="pay-on-delivery" aria-describedby="pay-on-delivery-text" type="radio" name="payment-method" value="" className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
+                                                <input id="pay-on-delivery" aria-describedby="pay-on-delivery-text" type="radio" name="payment-method" 
+                                                checked={selectedPaymentOption && selectedPaymentOption === 'cash' ? true : false} 
+                                                className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
                                             </div>
 
                                             <div className="ms-4 text-sm">

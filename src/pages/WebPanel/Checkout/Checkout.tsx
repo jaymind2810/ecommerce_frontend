@@ -22,6 +22,8 @@ import OrderSummarySideBar from "../components/OrderSummary/OrderSummary";
 
 export default function Checkout() {
 
+  const [currentSelectedAdd, setCurrentSelectedAdd] = useState<Number | null>(null);
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -35,10 +37,15 @@ export default function Checkout() {
         <h2 className="text-xl font-semibold text-gray-700 dark:text-white mt-6 sm:mt-8 mb-4">CHECKOUT</h2>
         <div className="lg:flex lg:items-start md:gap-6 mt-6 sm:mt-8 xl:gap-8">
           <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl space-y-8">
-            <DeliveryDetails />
+            <DeliveryDetails 
+              currentSelectedAdd={currentSelectedAdd}
+              setCurrentSelectedAdd={setCurrentSelectedAdd}
+            />
           </div>
 
-          <OrderSummarySideBar/>
+          <OrderSummarySideBar 
+            currentSelectedAdd={currentSelectedAdd}
+          />
         </div>
       </div>
     </section>
