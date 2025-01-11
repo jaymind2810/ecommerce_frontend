@@ -1,11 +1,13 @@
 // src/CartItem.tsx
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartItem as CartItemType } from '../../../../store/cart/reducer/reducer';
 import { updateCartItemsDetails, removeItemsFromCart } from '../../../../requests/WebPanel/CartRequests';
 import { useSelector, useDispatch } from 'react-redux';
 import { ActionType } from '../../../../store/cart/action-Types';
 import { State } from '../../../../store';
 import { removeFromCart, updateQuantity } from '../../../../store/cart/action-Creation';
+import Loader from '../../../../components/Loader';
+import { loaderActionEnd, loaderActionStart } from '../../../../store/loader/actions-creations';
 
 interface CartPopupItemProps {
     item: CartItemType;
@@ -18,48 +20,75 @@ const CartPopupItem: React.FC<CartPopupItemProps> = ({ item }) => {
     const dispatch = useDispatch()
 
     const incrementQuantity = () => {
-        updateCartItemsDetails({
-            user_id: user?.id,
-            id: item.id,
-            quantity: item.quantity + 1
-        }).then((res) => {
-            if (res.data.status === 200) {
-                dispatch(updateQuantity(res.data.data))
-            }
-        })
-    };
-
-
-    const decrementQuantity = () => {
-        if (item.quantity > 1) {
+        try {
+            dispatch(loaderActionStart())
             updateCartItemsDetails({
                 user_id: user?.id,
                 id: item.id,
-                quantity: item.quantity - 1
+                quantity: item.quantity + 1
             }).then((res) => {
                 if (res.data.status === 200) {
                     dispatch(updateQuantity(res.data.data))
                 }
             })
+        } catch(error) {
+            console.log(error)
+            dispatch(loaderActionEnd())
+        } finally {
+            dispatch(loaderActionEnd())
         }
+        
+    };
+
+
+    const decrementQuantity = () => {
+        try {
+            dispatch(loaderActionStart())
+            if (item.quantity > 1) {
+                updateCartItemsDetails({
+                    user_id: user?.id,
+                    id: item.id,
+                    quantity: item.quantity - 1
+                }).then((res) => {
+                    if (res.data.status === 200) {
+                        dispatch(updateQuantity(res.data.data))
+                    }
+                })
+            }
+        } catch(error) {
+            console.log(error)
+            dispatch(loaderActionEnd())
+        } finally {
+            dispatch(loaderActionEnd())
+        }
+        
     };
 
 
     const removeProductFromCart = (item: CartItemType) => {
-        removeItemsFromCart({
-            user_id: user?.id,
-            id: item.id,
-            quantity: item.quantity - 1
-        }).then((res) => {
-            if (res.data.status === 200) {
-                dispatch({ type: ActionType.REMOVE_FROM_CART, payload: item });
-                // dispatch(removeFromCart(item))
-            }
-        })
+        try {
+            dispatch(loaderActionStart())
+            removeItemsFromCart({
+                user_id: user?.id,
+                id: item.id,
+                quantity: item.quantity - 1
+            }).then((res) => {
+                if (res.data.status === 200) {
+                    dispatch({ type: ActionType.REMOVE_FROM_CART, payload: item });
+                    // dispatch(removeFromCart(item))
+                }
+            })
+            dispatch(loaderActionEnd())
+        } catch(error) {
+            console.log(error)
+            dispatch(loaderActionEnd())
+        } finally {
+            dispatch(loaderActionEnd())
+        }
     };
 
     return (
-
+        <>
         <div className="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-4">
             <div
                 className="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
@@ -132,6 +161,7 @@ const CartPopupItem: React.FC<CartPopupItemProps> = ({ item }) => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

@@ -6,6 +6,7 @@ import { State } from '../../../../store';
 import { successToast, errorToast } from '../../../../store/toast/actions-creation';
 import { ActionType } from '../../../../store/cart/action-Types';
 import { addToCart } from '../../../../store/cart/action-Creation';
+import { loaderActionEnd, loaderActionStart } from '../../../../store/loader/actions-creations';
 
 interface AddToCartButtonProps {
   currentProduct: ProductsDataType | any;
@@ -16,37 +17,47 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ currentProduct }) => 
   const dispatch = useDispatch()
 
   const handleAddToCart = () => {
-    addCartItems({
-        user: user?.id,
-        product: currentProduct.id,
-        quantity: 1
-    }).then((res) => {
-      console.log(res, "------res-------------")
-      if (res.data.success === true) {
-        // dispatch({ type: ActionType.ADD_TO_CART, payload: res.data.data })
-        dispatch(addToCart(res.data.data))
-        dispatch(
-          successToast({
-          toast: true,
-          message: "Item Added to Cart..!!",
-          })
-      );
-      } else if (res.data.data.non_field_errors[0] === "The fields product, user must make a unique set.") {
-        dispatch(
-          successToast({
-          toast: true,
-          message: "Item already Added to Cart..!!",
-          })
-        );
-      } else {
-        dispatch(
-          errorToast({
-          toast: true,
-          message: "Something went wrong..!!",
-          })
-        );
-      }
-    })
+    try {
+        dispatch(loaderActionStart())
+        addCartItems({
+            user: user?.id,
+            product: currentProduct.id,
+            quantity: 1
+        }).then((res) => {
+          console.log(res, "------res-------------")
+          if (res.data.success === true) {
+            // dispatch({ type: ActionType.ADD_TO_CART, payload: res.data.data })
+            dispatch(addToCart(res.data.data))
+            dispatch(
+              successToast({
+              toast: true,
+              message: "Item Added to Cart..!!",
+              })
+          );
+          } else if (res.data.data.non_field_errors[0] === "The fields product, user must make a unique set.") {
+            dispatch(
+              successToast({
+              toast: true,
+              message: "Item already Added to Cart..!!",
+              })
+            );
+          } else {
+            dispatch(
+              errorToast({
+              toast: true,
+              message: "Something went wrong..!!",
+              })
+            );
+          }
+        })
+        dispatch(loaderActionEnd())
+    } catch(error) {
+        console.log(error)
+        dispatch(loaderActionEnd())
+    } finally {
+        dispatch(loaderActionEnd())
+    }
+    
 };
 
   return (

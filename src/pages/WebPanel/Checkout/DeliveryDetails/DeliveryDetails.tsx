@@ -7,7 +7,7 @@ import { UserAddressDataType } from "../../Type/CheckoutType";
 import { AddressFormType } from "../../../../store/address/reducer/reducer";
 import AddressForm from "./AddressForm/AddressForm";
 import FullScreenModal from "../../../../components/FullScreenModel";
-import NewAddressForm from "../../components/other/AddressForm2";
+import NewAddressForm from "../../components/Other/AddressForm2";
 
 interface DeliveryDetailsTypeProps {
   currentSelectedAdd: number | any;
@@ -15,10 +15,10 @@ interface DeliveryDetailsTypeProps {
 }
 
 
-const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = (
+const DeliveryDetails: React.FC<DeliveryDetailsTypeProps> = ({
   currentSelectedAdd,
   setCurrentSelectedAdd
-) => {
+}) => {
 
     const user = useSelector((state: State) => state.user)
     const address = useSelector((state: State) => state.address)

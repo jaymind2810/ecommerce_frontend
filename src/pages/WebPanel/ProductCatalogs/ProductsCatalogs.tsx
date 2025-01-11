@@ -2,15 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ProductsDataType } from "../Type/ProductTypes";
 import { getAllProducts } from "../../../requests/WebPanel/ProductsRequests";
+import { useDispatch } from "react-redux";
+import { loaderActionEnd, loaderActionStart } from "../../../store/loader/actions-creations";
 
 
 const ProductsCatalogs = () => {
   const navigate = useNavigate()
   const [products, setProducts] = useState<ProductsDataType[]>([]);
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     const fetchAllCatalogPageData = async () => {
       try {
+        dispatch(loaderActionStart())
         const res = await getAllProducts();
         if (res.data.status === 200) {
           console.log(res.data.data)
@@ -20,6 +25,8 @@ const ProductsCatalogs = () => {
         }
       } catch (error) {
         console.error("An error occurred while fetching trending products:", error);
+      } finally {
+        dispatch(loaderActionEnd())
       }
     };
     fetchAllCatalogPageData();

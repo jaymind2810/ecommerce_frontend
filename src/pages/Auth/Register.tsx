@@ -5,7 +5,7 @@ import Logo from "./../../images/logo.png"
 import { Link, useNavigate } from "react-router-dom"
 import { signupRequest } from '../../requests/Auth/AuthRequest';
 import { SignupFormValues } from '../../requests/Auth/AuthType';
-import { actionStart, actionEnd } from '../../store/loader/actions-creations';
+import { loaderActionStart, loaderActionEnd } from '../../store/loader/actions-creations';
 import { useDispatch } from 'react-redux';
 import { successToast, errorToast } from '../../store/toast/actions-creation';
 
@@ -43,10 +43,10 @@ export default function SignUp() {
         onSubmit: (values: SignupFormValues) => {
         //   alert(JSON.stringify(values, null, 2));
           const { password2, ...rest } = values;
-          dispatch(actionStart());
+          dispatch(loaderActionStart())
           signupRequest(values)
             .then((res) => {
-                dispatch(actionEnd());
+                dispatch(loaderActionEnd())
                 if (res.data.success) {
                     dispatch(
                         successToast({
@@ -59,13 +59,15 @@ export default function SignUp() {
             })
             .catch((error) => {
                 console.log(error)
-                dispatch(actionEnd());
+                dispatch(loaderActionEnd())
                 dispatch(
                 errorToast({
                     toast: true,
                     message: "Something went wrong",
                 })
                 );
+            }).finally(() => {
+                dispatch(loaderActionEnd())
             });
         },
     });

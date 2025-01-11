@@ -17,6 +17,7 @@ export interface UserState {
   city?: string;
   personal_address?: string;
   mobile?: string;
+  user_stripe_id?: string;
 }
 
 export const initialUserState: UserState = {
@@ -34,6 +35,7 @@ export const initialUserState: UserState = {
   city:"",
   personal_address:"",
   mobile:"",
+  user_stripe_id:"",
 };
 
 const userReducer = (state = initialUserState, action: Action) => {

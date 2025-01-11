@@ -5,6 +5,8 @@ import { getProductDetail, getAllProducts } from "../../../requests/WebPanel/Pro
 import { ProductsDataType, ProductImagesType } from "../Type/ProductTypes";
 import AddToCartButton from "./AddToCart/AddToCart";
 import RelatedProducts from "./RelatedProducts/RelatedProducts";
+import { useDispatch } from "react-redux";
+import { loaderActionEnd, loaderActionStart } from "../../../store/loader/actions-creations";
 
 interface ProductDetailProps {
     currentProduct: any,
@@ -15,6 +17,7 @@ interface ProductDetailProps {
 const ProductDetail = () => {
     const navigate = useNavigate()
     const params = useParams()
+    const dispatch = useDispatch()
     const [productQuantity, setProductQuantity] = useState(1);
     const [currentProduct, setCurrentProduct] = useState<ProductsDataType>();
 
@@ -28,6 +31,7 @@ const ProductDetail = () => {
 
     useEffect(()=> {
         try {
+            dispatch(loaderActionStart())
             getProductDetail({
                 'product_id' : params.productID
             }).then((res)=> {
@@ -37,6 +41,8 @@ const ProductDetail = () => {
             })
         } catch (error) {
             console.error("An error occurred while fetching product", error);
+        } finally {
+            dispatch(loaderActionEnd())
         }
     }, [params.productID])
 

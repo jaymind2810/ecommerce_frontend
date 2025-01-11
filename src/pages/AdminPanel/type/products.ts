@@ -3,6 +3,7 @@ export interface ProductsDataType {
     name: string;
     short_text: string;
     amount: string;
+    unit_price: string;
     publish_status: string;
     visibility: string;
     category_id: number;

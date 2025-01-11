@@ -250,7 +250,7 @@ const WebHeader = () => {
                   <path d="M408.5 842.1c7.2 0 13.1 5.9 13.1 13.1s-5.9 13.1-13.1 13.1-13.1-5.9-13.1-13.1 5.9-13.1 13.1-13.1m0-60c-40.4 0-73.1 32.7-73.1 73.1s32.7 73.1 73.1 73.1 73.1-32.7 73.1-73.1-32.7-73.1-73.1-73.1zM823.1 842.1c7.2 0 13.1 5.9 13.1 13.1s-5.9 13.1-13.1 13.1-13.1-5.9-13.1-13.1 5.9-13.1 13.1-13.1m0-60c-40.4 0-73.1 32.7-73.1 73.1s32.7 73.1 73.1 73.1 73.1-32.7 73.1-73.1-32.7-73.1-73.1-73.1z" fill="#45484C"></path>
                 </g>
               </svg>
-              <span className="align-middle bg-sky-500 h-5 item-center rounded-full text-sm text-center w-5 z-50">{cartCount}</span>
+              <span className="align-middle bg-sky-500 h-5 item-center rounded-full text-sm text-center w-5 z-10">{cartCount}</span>
             </div>
             {
               isCartPopupOpen &&

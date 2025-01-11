@@ -12,15 +12,17 @@ export const initialLoaderState: LoaderState = {
 const loaderReducer = (state = initialLoaderState, action: Action) => {
   switch (action.type) {
     case LoaderType.ACTION_START:
+      console.log(state, "---------State-START---------")
       return {
         ...state,
-        isLoading: true,
+        isLoading: action.payload
       };
 
     case LoaderType.ACTION_END:
+      console.log(state, "---------State-END---------")
       return {
         ...state,
-        isLoading: false,
+        isLoading: action.payload
       };
     default:
       return state;

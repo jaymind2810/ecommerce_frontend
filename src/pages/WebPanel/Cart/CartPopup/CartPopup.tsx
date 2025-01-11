@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { State } from "./../../../../store"
 import CartPopupItem from "./CartPopupItem";
 import { ActionType } from "../../../../store/cart/action-Types";
+import Loader from "../../../../components/Loader";
+import { loaderActionStart, loaderActionEnd } from "../../../../store/loader/actions-creations";
 
 interface CartPopupProps {
     setIsCartPopupOpen: any
@@ -23,14 +25,24 @@ const CartPopup: React.FC<CartPopupProps> = ({
     console.log(cart, "-----Cart-------")
 
     useEffect(() => {
-        user &&
-            getCartItemsDetails({
-                user_id: user.id
-            }).then((res) => {
-                if (res.data.status === 200) {
-                    dispatch({ type: ActionType.SET_CART, payload: res.data.data })
-                }
-            })
+        try {
+            dispatch(loaderActionStart())
+            user &&
+                getCartItemsDetails({
+                    user_id: user.id
+                }).then((res) => {
+                    if (res.data.status === 200) {
+                        dispatch({ type: ActionType.SET_CART, payload: res.data.data })
+                        dispatch(loaderActionEnd())
+                    }
+                    dispatch(loaderActionEnd())
+                })
+        } catch(error) {
+            console.error(error)
+            dispatch(loaderActionEnd())
+        } finally {
+            dispatch(loaderActionEnd())
+        }
     }, []);
 
     const calculateSubtotal = (items:any) => {

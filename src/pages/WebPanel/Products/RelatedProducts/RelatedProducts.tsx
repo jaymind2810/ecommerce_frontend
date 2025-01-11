@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ProductsDataType } from "../../Type/ProductTypes";
 import { getRelatedProducts } from "../../../../requests/WebPanel/ProductsRequests";
+import { useDispatch } from "react-redux";
+import { loaderActionEnd, loaderActionStart } from "../../../../store/loader/actions-creations";
 
 interface RelatedProductsTypeProps {
   product?: ProductsDataType | undefined;
@@ -14,9 +16,12 @@ const RelatedProducts: React.FC<RelatedProductsTypeProps> = ({
     const navigate = useNavigate()
     const [relatedProductsData, setRelatedProductsData] = useState<ProductsDataType[]>([]);
 
+    const dispatch = useDispatch()
+
     useEffect(() => {
     const fetchRelatedProductsDatas = async () => {
         try {
+            dispatch(loaderActionStart())
             const res = await getRelatedProducts();
             if (res.data.status === 200) {
                 setRelatedProductsData(res.data.data);
@@ -25,6 +30,8 @@ const RelatedProducts: React.FC<RelatedProductsTypeProps> = ({
             }
         } catch (error) {
             console.error("An error occurred while fetching related products:", error);
+        } finally {
+          dispatch(loaderActionEnd())
         }
     };
     fetchRelatedProductsDatas();

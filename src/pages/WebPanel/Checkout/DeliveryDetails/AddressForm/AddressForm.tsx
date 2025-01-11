@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast, warningToast } from "../../../../../store/toast/actions-creation";
-import { actionEnd, actionStart } from "../../../../../store/loader/actions-creations";
+import { loaderActionStart, loaderActionEnd } from "../../../../../store/loader/actions-creations";
 import { AddressFormValueType } from "../../../Type/CheckoutType";
 import InputFormikField from "../components/InputFormikField";
 import SelectFormikField from "../components/SelectionFormikField";
@@ -107,81 +107,88 @@ const AddressForm: React.FC<AddressFormProps> = ({
           .required('** Required **'),
       }),
       onSubmit: (values: AddressFormValueType) => {
-        dispatch(actionStart());
-        if (JSON.stringify(intialValue) !== '{}') {
-          values.id = intialValue && intialValue['id'] 
-          updateUserAddress(values)
-            .then((res: any) => {
-                dispatch(actionEnd());
-                console.log(res, "=======res========")
-                if (res.data.success === true) {
-                    console.log("HERE-----")
-                    dispatch(updateAddress(res.data.data))
-                    dispatch(
-                        successToast({
-                        toast: true,
-                        message: res.data.message,
-                        })
-                    );
-                    formik.resetForm()
-                    setAddNewAddress(false)
-                } else {
-                  dispatch(
-                      warningToast({
-                      toast: true,
-                      message: res.data.message,
-                      })
-                  );
-                  dispatch(actionEnd());
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-                dispatch(actionEnd());
-                dispatch(
-                errorToast({
-                    toast: true,
-                    message: "Something went wrong",
+        try {
+            dispatch(loaderActionStart())
+            if (JSON.stringify(intialValue) !== '{}') {
+              values.id = intialValue && intialValue['id'] 
+              updateUserAddress(values)
+                .then((res: any) => {
+                    dispatch(loaderActionEnd())
+                    console.log(res, "=======res========")
+                    if (res.data.success === true) {
+                        console.log("HERE-----")
+                        dispatch(updateAddress(res.data.data))
+                        dispatch(
+                            successToast({
+                            toast: true,
+                            message: res.data.message,
+                            })
+                        );
+                        formik.resetForm()
+                        setAddNewAddress(false)
+                    } else {
+                      dispatch(
+                          warningToast({
+                          toast: true,
+                          message: res.data.message,
+                          })
+                      );
+                      dispatch(loaderActionEnd())
+                    }
                 })
-                );
-            });
-        } else {
-          addUserAddress(values)
-            .then((res: any) => {
-                dispatch(actionEnd());
-                console.log(res, "=======res========")
-                if (res.data.success === true) {
-                    console.log("HERE-----")
-                    dispatch(addNewAddress(res.data.data))
+                .catch((error) => {
+                    console.log(error)
+                    dispatch(loaderActionEnd())
                     dispatch(
-                        successToast({
+                    errorToast({
                         toast: true,
-                        message: res.data.message,
-                        })
+                        message: "Something went wrong",
+                    })
                     );
-                    formik.resetForm()
-                    setAddNewAddress(false)
-                } else if (res.data.status === 500) {
-                  dispatch(
-                      warningToast({
-                      toast: true,
-                      message: res.data.message,
-                      })
-                  );
-                  dispatch(actionEnd());
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-                dispatch(actionEnd());
-                dispatch(
-                errorToast({
-                    toast: true,
-                    message: "Something went wrong",
+                });
+            } else {
+              addUserAddress(values)
+                .then((res: any) => {
+                    dispatch(loaderActionEnd())
+                    if (res.data.success === true) {
+                        dispatch(addNewAddress(res.data.data))
+                        dispatch(
+                            successToast({
+                            toast: true,
+                            message: res.data.message,
+                            })
+                        );
+                        formik.resetForm()
+                        setAddNewAddress(false)
+                    } else if (res.data.status === 500) {
+                      dispatch(
+                          warningToast({
+                          toast: true,
+                          message: res.data.message,
+                          })
+                      );
+                      dispatch(loaderActionEnd())
+                    }
                 })
-                );
-            });
+                .catch((error) => {
+                    console.log(error)
+                    dispatch(loaderActionEnd())
+                    dispatch(
+                    errorToast({
+                        toast: true,
+                        message: "Something went wrong",
+                    })
+                    );
+                });
+            }
+            dispatch(loaderActionEnd())
+        } catch(error) {
+            console.log(error)
+            dispatch(loaderActionEnd())
+        } finally {
+            dispatch(loaderActionEnd())
         }
+        
       },
     });
 

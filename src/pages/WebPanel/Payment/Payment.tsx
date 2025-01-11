@@ -4,10 +4,14 @@ import { loadStripe } from "@stripe/stripe-js";
 import StripeForm from "./PaymentOptions/Stripe/Stripe";
 import { Elements } from "@stripe/react-stripe-js";
 import OrderSummarySideBar from "../components/OrderSummary/OrderSummary";
+import Cash from "./PaymentOptions/Cash/Cash";
+import Loader from "../../../components/Loader";
+import { State } from "../../../store";
+import { useSelector } from "react-redux";
 
 
 const Payment = () => {
-
+    // const loader = useSelector((state: State) => state.loader);
     const [selectedPaymentOption, setSelectedPaymentOption] = useState('');
     const [stripePromise, setStripePromise] = useState<any>("");
 
@@ -17,15 +21,23 @@ const Payment = () => {
     };
 
     useEffect(() => {
-        if (selectedPaymentOption === 'stripe') {
-            getStripe()
+        try {
+            if (selectedPaymentOption === 'stripe') {
+                getStripe()
+            }
+        } catch(error) {
+            console.log(error)
         }
+        
     }, [selectedPaymentOption])
 
 
 
     return (
         <>
+            {/* { loader && (
+                <Loader/>
+            )} */}
             <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
 
                 <CheckoutProgressBar />
@@ -122,8 +134,7 @@ const Payment = () => {
                                 <div>
                                     {selectedPaymentOption &&
                                         <div className="mx-auto my-6 max-w-xl flex-1 space-y-6 lg:mt-0 lg:w-full p-6 rounded-lg justify-center border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
-                                            {selectedPaymentOption === 'stripe'
-                                                ? (
+                                            {selectedPaymentOption === 'stripe' ? (
                                                     <>
                                                         <div className="">
                                                             {stripePromise &&
@@ -133,28 +144,31 @@ const Payment = () => {
                                                             }
                                                         </div>
                                                     </>
-                                                ) : selectedPaymentOption === 'paypal'
-                                                    ? (
-                                                        <>
-                                                            <div className="p-4 w-full text-black bg-white mb-2 rounded-lg h-80 overflow-y-auto">
-                                                                <p>PayPal Payment</p>
+                                                ) : selectedPaymentOption === 'paypal' ? (
+                                                    <>
+                                                        <div className="p-4 w-full text-black bg-white mb-2 rounded-lg h-80 overflow-y-auto">
+                                                            <p>PayPal Payment</p>
 
-                                                                {/* <PayPalCheckOut
-                                                                amountToPay={amountToPay}
-                                                                cartData={cartData}
-                                                                user={user}
-                                                                setAmountToPay={setAmountToPay}
-                                                                setAddBox={setAddBox}
-                                                                setNewFullScreen={setNewFullScreen}
-                                                                setBoxMarker={setBoxMarker}
-                                                                setIsSmallBoxOverlap={setIsSmallBoxOverlap}
-                                                                setOverlappedSmallBox={setOverlappedSmallBox}
-                                                                setAddABoxFunction={setAddABoxFunction}
-                                                                setPaymentId={setPaymentId}
-                                                            /> */}
-                                                            </div>
-                                                        </>
-                                                    ) : ''
+                                                            {/* <PayPalCheckOut
+                                                            amountToPay={amountToPay}
+                                                            cartData={cartData}
+                                                            user={user}
+                                                            setAmountToPay={setAmountToPay}
+                                                            setAddBox={setAddBox}
+                                                            setNewFullScreen={setNewFullScreen}
+                                                            setBoxMarker={setBoxMarker}
+                                                            setIsSmallBoxOverlap={setIsSmallBoxOverlap}
+                                                            setOverlappedSmallBox={setOverlappedSmallBox}
+                                                            setAddABoxFunction={setAddABoxFunction}
+                                                            setPaymentId={setPaymentId}
+                                                        /> */}
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Cash/>
+                                                    </>
+                                                )
 
                                             }
                                         </div>

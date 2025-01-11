@@ -113,7 +113,7 @@ const AllProducts = () => {
 						<td className="px-6 py-4">
 							<Link to={`/product/${product.id}`}>#{product.id}</Link>
 						</td>
-						<th scope="row" className="flex items-center px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+						<th scope="row" className="flex items-center px-4 py-4 text-gray-900 dark:text-white">
 							<img 
 								className="w-10 h-10 rounded-full" 
 								src={`${
@@ -123,11 +123,11 @@ const AllProducts = () => {
 								alt="Product Image"/>
 								<div className="ps-3">
 									<div className="text-base font-semibold">{product.name}</div>
-									<div className="font-normal text-gray-500">{product.short_text}</div>
+									<div className="font-normal text-gray-500 w-80">{product.short_text}</div>
 								</div>
 						</th>
 						<td className="px-6 py-4">
-							{product.amount}
+							$ {product.unit_price}
 						</td>
 						<td className="px-6 py-4">
 							{format(new Date(product.create_date), 'dd MMM yyyy')}

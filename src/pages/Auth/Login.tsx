@@ -5,7 +5,7 @@ import Logo from "./../../images/logo.png"
 import { Link, useNavigate } from "react-router-dom"
 import { signInRequest } from "../../requests/Auth/AuthRequest";
 import { useDispatch } from "react-redux";
-import { actionStart, actionEnd } from "../../store/loader/actions-creations";
+import { loaderActionStart, loaderActionEnd } from "../../store/loader/actions-creations";
 import { successToast, errorToast } from "../../store/toast/actions-creation";
 import { loginSuccess } from "../../store/user/action-Creation";
 
@@ -27,14 +27,14 @@ export default function SignIn() {
             .required('** Required **')
         }),
         onSubmit: (values) => {
-          dispatch(actionStart());
+          dispatch(loaderActionStart())
           signInRequest(values).then((res) => {
             if (res.data.success) {
                 localStorage.setItem("token", res.data.data.access)
                 localStorage.setItem("userId", res.data.data.userId)
                 localStorage.setItem("user", res.data.data.user)
                 dispatch(loginSuccess(true))
-                dispatch(actionEnd());
+                dispatch(loaderActionEnd())
                 dispatch(
                     successToast({
                     toast: true,
@@ -55,6 +55,8 @@ export default function SignIn() {
                 toast: true,
                 message: "Something went wrong",
             }))
+          }).finally(() => {
+            dispatch(loaderActionEnd())
           })
         },
     });

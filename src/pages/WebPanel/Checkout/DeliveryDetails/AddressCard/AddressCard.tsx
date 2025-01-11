@@ -1,6 +1,6 @@
 import React from "react";
 import { deleteUserAddress } from "../../../../../requests/WebPanel/CheckoutRequests";
-import { actionEnd, actionStart } from "../../../../../store/loader/actions-creations";
+import { loaderActionEnd, loaderActionStart } from "../../../../../store/loader/actions-creations";
 import { successToast, warningToast } from "../../../../../store/toast/actions-creation";
 import { useDispatch } from "react-redux";
 import { AddressFormType } from "../../../../../store/address/reducer/reducer";
@@ -25,32 +25,38 @@ const AddressCard:React.FC<AddressCardProps> = ({
     const dispatch = useDispatch();
 
     const handleDeleteAddress = (address: AddressFormType) =>{
-        dispatch(actionStart());
-        deleteUserAddress(address?.id)
-        .then((res) => {
-            if (res.data.status === 204) {
-                dispatch(
-                    successToast({
-                    toast: true,
-                    message: "Address deleted Successfully...!!",
-                    })
-                );
-                dispatch(deleteAddress(address));
-                dispatch(actionEnd());
-            } else {
-                dispatch(
-                    warningToast({
-                    toast: true,
-                    message: "Something Went Wrong",
-                    })
-                );
-                dispatch(actionEnd());
-            }
-        })
+        try {
+            dispatch(loaderActionStart())
+            deleteUserAddress(address?.id)
+            .then((res) => {
+                if (res.data.status === 204) {
+                    dispatch(
+                        successToast({
+                        toast: true,
+                        message: "Address deleted Successfully...!!",
+                        })
+                    );
+                    dispatch(deleteAddress(address));
+                } else {
+                    dispatch(
+                        warningToast({
+                        toast: true,
+                        message: "Something Went Wrong",
+                        })
+                    );
+                }
+            })
+            dispatch(loaderActionEnd())
+        } catch(error) {
+            console.log(error)
+            dispatch(loaderActionEnd())
+        } finally {
+            dispatch(loaderActionEnd())
+        }
+        
     }
 
     const handleOnClick = (address: AddressFormType) => {
-        console.log(address, "-------handleOnClick----------------")
         address && setCurrentSelectedAdd(address?.id)
     }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../../store";
 import { removeItemsFromCart, updateCartItemsDetails } from "../../../requests/WebPanel/CartRequests";
@@ -6,6 +6,7 @@ import { ActionType } from "../../../store/cart/action-Types";
 
 import { CartItem as CartItemType } from "../../../store/cart/reducer/reducer";
 import { removeFromCart, updateQuantity } from "../../../store/cart/action-Creation";
+import { loaderActionEnd, loaderActionStart } from "../../../store/loader/actions-creations";
 
 interface CartItemProps {
   item: CartItemType;
@@ -22,46 +23,74 @@ const CartItem: React.FC<CartItemProps> = ({
   const dispatch = useDispatch()
 
   const incrementQuantity = () => {
-    updateCartItemsDetails({
-      user_id: user?.id,
-      id: item.id,
-      quantity: item.quantity + 1
-    }).then((res) => {
-      // dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
-      if (res.data.status === 200) {
-          dispatch(updateQuantity(res.data.data))
-      }
-    })
-  };
-
-
-  const decrementQuantity = () => {
-    if (item.quantity > 1) {
-      updateCartItemsDetails({
-        user_id: user?.id,
-        id: item.id,
-        quantity: item.quantity - 1
-      }).then((res) => {
-        // dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
-        if (res.data.status === 200) {
-          dispatch(updateQuantity(res.data.data))
-      }
-      })
+    try {
+        dispatch(loaderActionStart())
+        updateCartItemsDetails({
+          user_id: user?.id,
+          id: item.id,
+          quantity: item.quantity + 1
+        }).then((res) => {
+          // dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
+          if (res.data.status === 200) {
+              dispatch(updateQuantity(res.data.data))
+          }
+        })
+        dispatch(loaderActionEnd())
+    } catch(error) {
+        console.log(error)
+        dispatch(loaderActionEnd())
+    } finally {
+        dispatch(loaderActionEnd())
     }
   };
 
 
+  const decrementQuantity = () => {
+    try {
+        dispatch(loaderActionStart())
+        if (item.quantity > 1) {
+          updateCartItemsDetails({
+            user_id: user?.id,
+            id: item.id,
+            quantity: item.quantity - 1
+          }).then((res) => {
+            // dispatch({ type: ActionType.UPDATE_QUANTITY, payload: res.data })
+            if (res.data.status === 200) {
+              dispatch(updateQuantity(res.data.data))
+            }
+          })
+        }
+        dispatch(loaderActionEnd())
+    } catch(error) {
+        console.log(error)
+        dispatch(loaderActionEnd())
+    } finally {
+        dispatch(loaderActionEnd())
+    }
+    
+  };
+
+
   const removeProductFromCart = (item: CartItemType) => {
-    removeItemsFromCart({
-      user_id: user?.id,
-      id: item.id,
-      quantity: item.quantity - 1
-    }).then((res) => {
-      if (res.data.status === 200) {
-          dispatch({ type: ActionType.REMOVE_FROM_CART, payload: item });
-          // dispatch(removeFromCart(res.data.data))
-      }
-    })
+    try {
+        dispatch(loaderActionStart())
+        removeItemsFromCart({
+          user_id: user?.id,
+          id: item.id,
+          quantity: item.quantity - 1
+        }).then((res) => {
+          if (res.data.status === 200) {
+              dispatch({ type: ActionType.REMOVE_FROM_CART, payload: item });
+              // dispatch(removeFromCart(res.data.data))
+          }
+        })
+        dispatch(loaderActionEnd())
+    } catch(error) {
+        console.log(error)
+        dispatch(loaderActionEnd())
+    } finally {
+        dispatch(loaderActionEnd())
+    }
   };
 
 

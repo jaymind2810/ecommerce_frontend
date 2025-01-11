@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { State } from "./../../store";
 import { getUserAllData, userProfileData } from "./../../requests/WebPanel/UserRequest"
 import { logout, setCurrentUser } from "../../store/user/action-Creation";
-import { actionEnd, actionStart } from "../../store/loader/actions-creations";
+import { loaderActionStart, loaderActionEnd } from "../../store/loader/actions-creations";
 import { getAllTrendingProducts } from "../../requests/WebPanel/ProductsRequests";
 import { ProductsDataType } from "./Type/ProductTypes";
 import TrendingProducts from "./Products/TrendingProducts/TrendingProducts";
@@ -36,10 +36,9 @@ const Home = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const userId: any = localStorage.getItem("userId");
-      console.log(userId, "-------userId--------")
       if (userId) {
         try {
-          actionStart();
+          dispatch(loaderActionStart())
           const res = await getUserAllData({ user_id: userId });
           if (res.data.status === 200) {
             res.data.data['user']['isLoggedIn'] = true;
@@ -52,7 +51,7 @@ const Home = () => {
         } catch (error) {
           console.error("An error occurred while fetching user data:", error);
         } finally {
-          actionEnd();
+          dispatch(loaderActionEnd())
         }
       }
     };
@@ -63,6 +62,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAllHomePageData = async () => {
       try {
+        dispatch(loaderActionStart())
         const res = await getAllHomePageData();
         if (res.data.status === 200) {
           console.log(res.data.data)
@@ -72,6 +72,8 @@ const Home = () => {
         }
       } catch (error) {
         console.error("An error occurred while fetching trending products:", error);
+      } finally {
+        dispatch(loaderActionEnd())
       }
     };
     fetchAllHomePageData();
