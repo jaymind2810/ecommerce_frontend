@@ -23,9 +23,15 @@ interface DeleteAddress {
   payload: AddressFormType
 }
 
+interface ClearAddress {
+  type: ActionType.CLEAR_ADDRESS
+  payload: AddressFormType
+}
+
 export type Action =
   // ====== Address =============
   | SetUserAllAddress
   | AddNewAddress
   | UpdateAddress
   | DeleteAddress
+  | ClearAddress

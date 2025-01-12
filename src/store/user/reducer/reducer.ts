@@ -75,6 +75,11 @@ const userReducer = (state = initialUserState, action: Action) => {
         ...state,
         ...action.payload,
       };
+    case ActionType.CLEARUSER:
+      return {
+        ...state,
+        ...initialUserState
+      };
     default:
       return state;
   }

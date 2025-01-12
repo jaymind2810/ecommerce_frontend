@@ -1,5 +1,6 @@
 import React, { lazy } from "react"
 import { BrowserRouter, Router, Routes, Route } from 'react-router-dom'
+import ContactUs from "../pages/WebPanel/ContactUs/ContactUs";
 
 // ============== For AdminPanel ==================
 const Layout = lazy(() => import("../pages/AdminPanel/components/shared/Layout"));
@@ -144,6 +145,15 @@ export default function RouterList () {
                             errorElement={<ErrorBoundary/>}
                         />
                         <Route  
+                            path="/contact-us" 
+                            element={
+                                <React.Suspense fallback={<></>}>
+                                    <ContactUs />
+                                </React.Suspense>           
+                            } 
+                            errorElement={<ErrorBoundary/>}
+                        />
+                        <Route  
                             path="/product-detail/:productID" 
                             element={
                                 <React.Suspense fallback={<></>}>
@@ -209,6 +219,11 @@ export default function RouterList () {
                         />
 
                     </Route>
+
+                    <Route
+                        path="*"
+                        element={<PageNotFound />}
+                    />
                 </Routes>
         </BrowserRouter>
     )

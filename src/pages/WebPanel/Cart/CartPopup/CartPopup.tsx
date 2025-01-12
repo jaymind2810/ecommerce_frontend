@@ -22,7 +22,7 @@ const CartPopup: React.FC<CartPopupProps> = ({
 
     const dispatch = useDispatch()
 
-    console.log(cart, "-----Cart-------")
+    console.log(user, "-----user-------")
 
     useEffect(() => {
         try {

@@ -5,5 +5,6 @@ export enum ActionType {
     LOGIN_FAIL = "LOGIN_FAIL",
     LOGOUT = "LOGOUT",
     SETUSER = "SETUSER",
-    UPDATEUSER = "UPDATEUSER"
+    UPDATEUSER = "UPDATEUSER",
+    CLEARUSER = "CLEARUSER",
   }

@@ -49,3 +49,10 @@ export const updateCurrentUser = (user: UserState) => {
   };
 };
 
+export const clearCurrentUser = () => {
+  return {
+    type: ActionType.CLEARUSER,
+    // payload: user,
+  };
+};
+

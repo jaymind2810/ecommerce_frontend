@@ -31,3 +31,10 @@ export const deleteAddress = (address: AddressFormType) => {
     payload: address,
   };
 };
+
+export const clearAddress = () => {
+  return {
+    type: ActionType.CLEAR_ADDRESS,
+    // payload: address,
+  };
+};

@@ -50,6 +50,11 @@ const addressReducer = (state:AddressState = initialAddressDataState, action: Ac
         ...action.payload,
         address_details: state.address_details.filter(add => add.id !== action.payload.id) 
       };
+    case ActionType.CLEAR_ADDRESS:
+      return {
+        ...state,
+        ...initialAddressDataState,
+      };
 
     default:
       return state;

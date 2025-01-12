@@ -277,7 +277,11 @@ const StripeForm = () => {
                             onClick={(e) => {
                                 onAddCardHandler(e);
                             }}
-                            className={`bg-gray-800 items-center justify-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white border dark:border-gray-600 hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700`}
+                            className={`items-center justify-center rounded-lg px-5 py-2 text-sm font-medium text-white 
+                                border dark:border-gray-600 hover:bg-indigo-700
+                                focus:outline-none focus:ring-4 focus:ring-primary-300 
+                                dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800
+                                ${paymentCard ? "bg-gray-600" : "bg-gray-800 cursor-pointer"}`}
                             disabled={!cardInfo}
                         >
                             Add Card
@@ -340,13 +344,22 @@ const StripeForm = () => {
                                     ***{card?.card?.last4}
                                 </div>
                                 <div 
-                                    className="mx-2 dark:text-red-700 text-gray-400 text-sm cursor-pointer text-right container"
+                                    className="mx-2 dark:text-red-600 text-gray-600 text-red-600 text-sm cursor-pointer items-right"
                                     onClick={() => {
                                         setCurrentCard(card)
                                         setIsModelOpen(true)
                                     }}
                                 >
-                                    Delete
+                                    {/* Delete */}
+                                    <svg fill="#FF0000" version="1.1" id="Capa_1" viewBox="0 0 482.428 482.429" className="w-5 h-5">
+                                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier"> <g> <g> 
+                                            <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098 c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117 h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828 C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879 C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096 c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266 c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979 V115.744z"></path> 
+                                            <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"></path> 
+                                            <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"></path> 
+                                            <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07 c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"></path> 
+                                        </g> </g> </g></svg>
                                 </div>
                                 </div>
                             </>
@@ -358,7 +371,7 @@ const StripeForm = () => {
                                 // onPaymentSubmitHandler(e);
                             }}
                             className={`flex justify-end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 mt-4 text-white text-sm  p-2 px-4  font-bold rounded-lg border dark:border-gray-600 hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700
-                                ${paymentCard ? "bg-red_color cursor-pointer" : "bg-gray-600"} 
+                                ${paymentCard ? "bg-gray-800 cursor-pointer" : "bg-gray-600"} 
                                 rounded-lg`}
                             disabled={!paymentCard}
                         >
@@ -378,6 +391,8 @@ const StripeForm = () => {
                     <ModelDialog
                         isModelOpen={isModelOpen}
                         setIsModelOpen={setIsModelOpen}
+                        dialogTitle="Delete Card"
+                        dialogMessage="Are you sure you want to delete this card from your account. ?"
                         onConfirm={() => {
                             setPaymentCard(null);
                             onDeleteCardHandler();

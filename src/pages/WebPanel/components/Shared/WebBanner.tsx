@@ -1,12 +1,12 @@
-import { XMarkIcon } from "@heroicons/react/20/solid";
 import React, {useState} from "react";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "./../../../../store"
-import { logout } from "../../../../store/user/action-Creation";
+import { clearCurrentUser, logout } from "../../../../store/user/action-Creation";
 import { useNavigate } from "react-router-dom";
-import LogOutIcon from "./../../../../images/logout.svg";
 import { successToast } from "../../../../store/toast/actions-creation";
+import { clearCart } from "../../../../store/cart/action-Creation";
+import { clearAddress } from "../../../../store/address/action-Creation";
 
 interface WebBannerProps {
   setWebBanner: Boolean 
@@ -26,6 +26,9 @@ const WebBanner = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
     dispatch(logout())
+    dispatch(clearCart())
+    dispatch(clearCurrentUser())
+    dispatch(clearAddress())
     dispatch(
         successToast({
         toast: true,

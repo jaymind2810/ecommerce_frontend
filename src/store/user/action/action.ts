@@ -36,6 +36,11 @@ interface UpdateUser {
   payload: UserState
 }
 
+interface ClearUser {
+  type: ActionType.CLEARUSER
+  payload: UserState
+}
+
 
 export type Action =
   | LoginSuccesAction
@@ -45,3 +50,4 @@ export type Action =
   | LogoutAction
   | SetUser
   | UpdateUser
+  | ClearUser
