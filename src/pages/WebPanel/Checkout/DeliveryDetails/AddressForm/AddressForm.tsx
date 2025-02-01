@@ -114,9 +114,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
               updateUserAddress(values)
                 .then((res: any) => {
                     dispatch(loaderActionEnd())
-                    console.log(res, "=======res========")
                     if (res.data.success === true) {
-                        console.log("HERE-----")
                         dispatch(updateAddress(res.data.data))
                         dispatch(
                             successToast({

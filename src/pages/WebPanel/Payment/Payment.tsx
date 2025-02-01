@@ -26,7 +26,6 @@ const Payment = () => {
 
     const otherCharges = 249
 
-    console.log(order, "---------order--------")
 
     useEffect(() => {
         if (cart) {

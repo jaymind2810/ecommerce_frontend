@@ -22,7 +22,6 @@ const WebBanner = () => {
 
 
   const logoutHandler = () => {
-    console.log("Here---")
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
     dispatch(logout())

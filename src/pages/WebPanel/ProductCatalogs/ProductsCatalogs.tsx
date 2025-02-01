@@ -46,7 +46,6 @@ const ProductsCatalogs = () => {
         'q': query.trim()
       }
       const res = await getAllProducts(data);
-      console.log(res, "---res-----------")
       if (res.data.success === true) {
         const { data, pagination } = res.data;
         setProducts((prevProducts) =>

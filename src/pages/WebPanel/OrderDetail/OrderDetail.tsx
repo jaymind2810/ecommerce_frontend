@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CheckoutProgressBar from "../components/CheckoutProgressBar/CheckoutProgressBar";
 import OrderSummarySideBar from "../components/OrderSummary/OrderSummary";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../../store";
 import { OrdersType } from "../../../store/order/reducer/reducer";
@@ -21,10 +21,9 @@ import { errorToast } from "../../../store/toast/actions-creation";
 const OrderDetail = () => {
     const params = useParams()
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     
     const user = useSelector((state: State) => state.user);
-
-    console.log(user, "-----User00000000000000-----")
     const order = useSelector((state: State) => state.order);
 
     const [currentOrder, setCurrentOrder] = useState<OrdersType>()
@@ -33,17 +32,13 @@ const OrderDetail = () => {
     useEffect(() => {
         try {
             dispatch(loaderActionStart())
-            console.log(params.orderID, "-------params.orderID--------")
-            console.log(user.id, "-------params.user--------")
             if (params.orderID && user) {
                 const order_id = params.orderID
-                console.log(order_id, "-------order_id=-------")
                 getOrderData({
-                    user_id : user ? user.id : 0,
+                    // user_id : user ? user.id : 0,
                     order_id : order_id,
                 }).then((res) => {
-                    console.log(res, "-------res=---")
-                    if (res.data.status == true) {
+                    if (res.data.success == true) {
                         setCurrentOrder(res.data.data)
                     } else {
                         errorToast({
@@ -63,7 +58,7 @@ const OrderDetail = () => {
 
     // useEffect(() => {
     //     console.log(params, "-----Prameter------", order)
-    //     if (order.user_orders) {
+    //     if (order.user_orders.length >= 1 && params.orderID) {
     //         const current_order:any = order?.user_orders.filter((data) => {
     //             data.id == params.orderID
     //             console.log(data.id, "dsfsd")
@@ -107,8 +102,17 @@ const OrderDetail = () => {
                                         </dl>
                                     </div>
                                     <div className="flex items-center space-x-4">
-                                        <a href="#" className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Track your order</a>
-                                        <a href="#" className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Return to shopping</a>
+                                        <a 
+                                            href="#" 
+                                            className="py-2 px-5 rounded-md flex items-center bg-gray-300 justify-center transition-all text-sm font-medium text-gray-800 duration-500 hover:bg-indigo-100">
+                                                Track your order
+                                        </a>
+                                        <a  
+                                            className="py-2 px-5 bg-gray-800 flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700"
+                                            onClick={() => navigate("/products")}
+                                        >
+                                            Return to shopping
+                                        </a>
                                     </div>
                                 </div>
                                 <OrderSummarySideBar/>

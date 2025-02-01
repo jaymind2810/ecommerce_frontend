@@ -36,7 +36,6 @@ const AllProducts = () => {
 	
 	useEffect(() => {
 		getAllProducts().then((res) => {
-			console.log(res, "-----------res-------")
 			if (res.data.status === 200) {
 				setProductsData(res.data.data)
 			} 

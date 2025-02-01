@@ -35,7 +35,6 @@ const Home = () => {
   const user = useSelector((state: State) => state.user);
   const order = useSelector((state: State) => state.order);
 
-  console.log(order, "------Order----------")
   
   useEffect(() => {
     const fetchUserData = async () => {

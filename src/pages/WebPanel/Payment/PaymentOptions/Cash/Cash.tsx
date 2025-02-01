@@ -7,6 +7,7 @@ import { errorToast, successToast } from "../../../../../store/toast/actions-cre
 import { addNewUserOrders } from "../../../../../store/order/action-Creation";
 import { OrdersType } from "../../../../../store/order/reducer/reducer";
 import { useNavigate } from "react-router";
+import { clearCart } from "../../../../../store/cart/action-Creation";
 
 
 interface CashProps {
@@ -22,15 +23,11 @@ const Cash:React.FC<CashProps> = ({
     const user = useSelector((state: State) => state.user)
     const order = useSelector((state: State) => state.order)
 
-    const [currentOrder, setCurrentOrder] = useState<OrdersType>()
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-
     const onConfirmOrder = () => {
         if (amountToPay && cartItems && order.order_address) {
-            console.log("--------onConfirmPayment--------")
             createOrder({
                 user: user ? user?.id : 0,
                 order_items: cartItems,
@@ -38,24 +35,22 @@ const Cash:React.FC<CashProps> = ({
                 address: order && order?.order_address,
                 payment_method: "Cash"
             }).then((res) => {
-                console.log(res, "-------res00---000--------")
                 if (res?.data?.success === true) {
                     dispatch(addNewUserOrders(res?.data?.data))
-                    setCurrentOrder(res?.data?.data)
+                    dispatch(clearCart())
                     navigate(`/order/${res?.data?.data?.id}`)
                     dispatch(
-                    successToast({
-                        toast: true,
-                        message: "Ordered Successfully.",
-                    })
-
+                        successToast({
+                            toast: true,
+                            message: "Ordered Successfully.",
+                        })
                     );
                 } else {
                     dispatch(
-                    errorToast({
-                    toast: true,
-                    message: "Something went wrong..!!",
-                    })
+                        errorToast({
+                            toast: true,
+                            message: "Something went wrong..!!",
+                        })
                     );
                 }
             }

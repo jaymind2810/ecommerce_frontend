@@ -9,6 +9,5 @@ export const signupRequest = async (user: SignupFormValues) => {
 
 // ========== Login ==================
 export const signInRequest = async (user: SignInFormValues) => {
-    console.log(user, "--------user---_Login--------")
     return await axiosPost("/auth/login/", user);
 };

@@ -21,7 +21,6 @@ export default function Checkout1() {
         items: [{ id: "xl-tshirt" }] 
     })
       .then((res) => {
-        console.log(res, "-------res---------")
         setClientSecret(res.data.clientSecret)
       })
       // .then((data) => setClientSecret(data.clientSecret));
