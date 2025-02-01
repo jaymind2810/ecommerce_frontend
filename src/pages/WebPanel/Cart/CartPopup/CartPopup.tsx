@@ -22,8 +22,6 @@ const CartPopup: React.FC<CartPopupProps> = ({
 
     const dispatch = useDispatch()
 
-    console.log(user, "-----user-------")
-
     useEffect(() => {
         try {
             dispatch(loaderActionStart())
@@ -104,13 +102,17 @@ const CartPopup: React.FC<CartPopupProps> = ({
                                     <p className="font-normal text-md leading-8 text-gray-500">Sub Total</p>
                                     <h6 className="font-semibold text-md leading-8 text-gray-700">$ {subTotal?.toFixed(2)}</h6>
                                 </div>
-                                <div className="flex items-center justify-between w-full pb-4 border-b border-gray-200">
+                                <div className="flex items-center justify-between w-full pb-4">
                                     <p className="font-normal text-md leading-8 text-gray-500">Delivery Charge</p>
                                     <h6 className="font-semibold text-md leading-8 text-gray-700">$45.00</h6>
                                 </div>
+                                <div className="flex items-center justify-between w-full pb-4 border-b border-gray-200">
+                                    <p className="font-normal text-md leading-8 text-gray-500">Tax</p>
+                                    <h6 className="font-semibold text-md leading-8 text-gray-700">$199.00</h6>
+                                </div>
                                 <div className="flex items-center justify-between w-full py-4">
                                     <p className="font-manrope font-semibold text-md leading-9 text-gray-700">Total</p>
-                                    <h6 className="font-manrope font-medium text-md leading-9 text-indigo-500">$ {(subTotal + 45).toFixed(2)}</h6>
+                                    <h6 className="font-manrope font-medium text-md leading-9 text-indigo-500">$ {(subTotal + 45 + 199).toFixed(2)}</h6>
                                 </div>
                             </div>
                         }

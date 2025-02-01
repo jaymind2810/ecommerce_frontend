@@ -9,9 +9,19 @@ import { updateCurrentUser } from "../../../../../store/user/action-Creation";
 import Loader from "../../../../../components/Loader";
 import ModelDialog from "../../../../../components/ModelDialog/ModelDialog";
 import { loaderActionEnd, loaderActionStart } from "../../../../../store/loader/actions-creations";
+import { CartItem } from "../../../../../store/cart/reducer/reducer";
 
 
-const StripeForm = () => {
+interface StripeFromProps {
+    amountToPay: number
+    cartItems: CartItem[]
+}
+
+
+const StripeForm:React.FC<StripeFromProps> = ({
+    amountToPay,
+    cartItems
+}) => {
 
     const user = useSelector((state: State) => state.user);
     const loading = useSelector((state: State) => state.loader.isLoading);
@@ -36,6 +46,8 @@ const StripeForm = () => {
             setCardInfo(null)
         }
     }
+
+    console.log(amountToPay, "-----Pay Amount -----------")
 
     useEffect(() => {
         user && user?.user_stripe_id && (

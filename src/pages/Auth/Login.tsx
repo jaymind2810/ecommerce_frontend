@@ -23,7 +23,7 @@ export default function SignIn() {
         validationSchema: Yup.object({
           username: Yup.string().required('** Required **'),
           password: Yup.string()
-            .max(20, '** Must be 6 characters or more. **')
+            .max(40, '** Must be 40 characters or more. **')
             .required('** Required **')
         }),
         onSubmit: (values) => {
@@ -69,7 +69,7 @@ export default function SignIn() {
                     <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                         {/* <img className="w-8 h-8 mr-2" src={Logo} alt="logo"/> */}
                         {/* <img className="w-8 h-8 mr-2" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="logo"/> */}
-                        <svg className="mx-1 w-7 h-7" stroke="currentColor" fill="#4f46e5" strokeWidth="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" font-size="24" height="1em" width="1em"><g fill="#4f46e5"><rect x="40" y="21" width="4" height="23"></rect><rect x="34" y="28" width="4" height="16"></rect><rect x="28" y="23" width="4" height="21"></rect><rect x="22" y="29" width="4" height="15"></rect><rect x="16" y="32" width="4" height="12"></rect><rect x="10" y="30" width="4" height="14"></rect><rect x="4" y="34" width="4" height="10"></rect></g><g fill="#4f46e5"><polygon points="40.1,9.1 34,15.2 30,11.2 20,21.2 15,16.2 4.6,26.6 7.4,29.4 15,21.8 20,26.8 30,16.8 34,20.8 42.9,11.9"></polygon><polygon points="44,8 35,8 44,17"></polygon></g></svg>
+                        <svg className="mx-1 w-7 h-7" stroke="currentColor" fill="#4f46e5" strokeWidth="0" version="1" viewBox="0 0 48 48" enableBackground="new 0 0 48 48" fontSize="24" height="1em" width="1em"><g fill="#4f46e5"><rect x="40" y="21" width="4" height="23"></rect><rect x="34" y="28" width="4" height="16"></rect><rect x="28" y="23" width="4" height="21"></rect><rect x="22" y="29" width="4" height="15"></rect><rect x="16" y="32" width="4" height="12"></rect><rect x="10" y="30" width="4" height="14"></rect><rect x="4" y="34" width="4" height="10"></rect></g><g fill="#4f46e5"><polygon points="40.1,9.1 34,15.2 30,11.2 20,21.2 15,16.2 4.6,26.6 7.4,29.4 15,21.8 20,26.8 30,16.8 34,20.8 42.9,11.9"></polygon><polygon points="44,8 35,8 44,17"></polygon></g></svg>
                             E-commerce
                     </a>
                     <div className="w-full bg-white rounded-lg shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

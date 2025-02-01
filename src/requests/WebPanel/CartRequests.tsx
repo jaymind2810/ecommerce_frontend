@@ -24,7 +24,7 @@ export const removeItemsFromCart = async (data: GetCartItemData) => {
 };
 
 interface CartItemData {
-  user: any
+  user?: any
   product : any;
   quantity : any;
 }

@@ -24,6 +24,7 @@ import HomePageCollectionImage1 from "../../images/homepage/home-page-02-edition
 import HomePageCollectionImage2 from "../../images/homepage/home-page-02-edition-02.jpg";
 import HomePageCollectionImage3 from "../../images/homepage/home-page-02-edition-03.jpg";
 import { getAllHomePageData } from "../../requests/WebPanel/HomePageRequest";
+import { setUserAllOrders } from "../../store/order/action-Creation";
 
 
 const Home = () => {
@@ -32,6 +33,9 @@ const Home = () => {
 
   const [trendingProductsData, setTrendingProductsData] = useState<ProductsDataType[]>([]);
   const user = useSelector((state: State) => state.user);
+  const order = useSelector((state: State) => state.order);
+
+  console.log(order, "------Order----------")
   
   useEffect(() => {
     const fetchUserData = async () => {
@@ -45,6 +49,7 @@ const Home = () => {
             dispatch(setCurrentUser(res.data.data['user']));
             dispatch(setUserAllAddress(res.data.data['address_details']));
             dispatch(setCartData(res.data.data['cart_items']));
+            dispatch(setUserAllOrders(res.data.data['user_orders']));
           } else {
             console.error(`Unexpected response status: ${res.data.status}`);
           }
@@ -65,7 +70,6 @@ const Home = () => {
         dispatch(loaderActionStart())
         const res = await getAllHomePageData();
         if (res.data.status === 200) {
-          console.log(res.data.data)
           setTrendingProductsData(res.data.data['trending_products']);
         } else {
           console.error(`Unexpected response status: ${res.data.status}`);
@@ -204,7 +208,7 @@ const Home = () => {
 
                   <a
                     href="#"
-                    className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+                    className="inline-block rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-center font-medium text-white hover:bg-indigo-700"
                     onClick={() => navigate("/products")}
                   >
                     Shop Collection
@@ -220,7 +224,7 @@ const Home = () => {
         <div className="bg-gray-100">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
-              <h2 className="text-2xl font-bold text-gray-900">Collections</h2>
+              <h2 className="text-2xl font-bold text-gray-900">COLLECTIONS</h2>
 
               <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
                 {callouts.map((callout) => (

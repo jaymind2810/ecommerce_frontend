@@ -1,6 +1,7 @@
 import React, { lazy } from "react"
 import { BrowserRouter, Router, Routes, Route } from 'react-router-dom'
 import ContactUs from "../pages/WebPanel/ContactUs/ContactUs";
+import Loader from "../components/Loader";
 
 // ============== For AdminPanel ==================
 const Layout = lazy(() => import("../pages/AdminPanel/components/shared/Layout"));
@@ -25,6 +26,7 @@ const PaymentSuccess = lazy(() => import("../pages/WebPanel/Checkout/SuccessPaym
 const PaymentFail = lazy(() => import("../pages/WebPanel/Checkout/FailPayment"));
 const PageNotFound = lazy(() => import("../components/ErrorBoundary/PageNotFound"));
 const ProductsCatalogs = lazy(() => import("../pages/WebPanel/ProductCatalogs/ProductsCatalogs"));
+const OrderDetail = lazy(() => import("../pages/WebPanel/OrderDetail/OrderDetail"));
 
 
 enum ErrorType {
@@ -129,7 +131,7 @@ export default function RouterList () {
                     {/* ================= Web Panel ========================= */}
                     <Route path="/" 
                         element={
-                            <React.Suspense fallback={<></>}>
+                            <React.Suspense fallback={<><Loader/></>}>
                                 <WebLayout />
                             </React.Suspense>
                         }
@@ -138,7 +140,7 @@ export default function RouterList () {
                         <Route 
                             index 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <Home />
                                 </React.Suspense>
                             } 
@@ -147,7 +149,7 @@ export default function RouterList () {
                         <Route  
                             path="/contact-us" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <ContactUs />
                                 </React.Suspense>           
                             } 
@@ -156,7 +158,7 @@ export default function RouterList () {
                         <Route  
                             path="/product-detail/:productID" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <ProductDetail />
                                 </React.Suspense>           
                             } 
@@ -165,7 +167,7 @@ export default function RouterList () {
                         <Route  
                             path="/products" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <ProductsCatalogs />
                                 </React.Suspense>           
                             }
@@ -174,7 +176,7 @@ export default function RouterList () {
                         <Route  
                             path="/product/cart" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <Cart />
                                 </React.Suspense>           
                             }
@@ -183,7 +185,7 @@ export default function RouterList () {
                         <Route  
                             path="/product/checkout" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <Checkout />
                                 </React.Suspense>           
                             }
@@ -192,16 +194,25 @@ export default function RouterList () {
                         <Route  
                             path="/payment" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <Payment />
                                 </React.Suspense>           
                             }
                             errorElement={<ErrorBoundary source={ErrorType.PAYMENT} />}
                         />
                         <Route  
+                            path="/order/:orderID" 
+                            element={
+                                <React.Suspense fallback={<><Loader/></>}>
+                                    <OrderDetail />
+                                </React.Suspense>           
+                            }
+                            errorElement={<ErrorBoundary />}
+                        />
+                        <Route  
                             path="/paymentSuccess/" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <PaymentSuccess />
                                 </React.Suspense>           
                             }
@@ -211,7 +222,7 @@ export default function RouterList () {
                         <Route  
                             path="/paymentError/" 
                             element={
-                                <React.Suspense fallback={<></>}>
+                                <React.Suspense fallback={<><Loader/></>}>
                                     <PaymentFail />
                                 </React.Suspense>           
                             }

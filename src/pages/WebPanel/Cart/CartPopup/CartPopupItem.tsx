@@ -8,6 +8,9 @@ import { State } from '../../../../store';
 import { removeFromCart, updateQuantity } from '../../../../store/cart/action-Creation';
 import Loader from '../../../../components/Loader';
 import { loaderActionEnd, loaderActionStart } from '../../../../store/loader/actions-creations';
+import ProductQtyIncDecButton from '../ProductQtyIncDecButton/ProductQtyIncDecButton';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 interface CartPopupItemProps {
     item: CartItemType;
@@ -16,54 +19,8 @@ interface CartPopupItemProps {
 const CartPopupItem: React.FC<CartPopupItemProps> = ({ item }) => {
 
     const user = useSelector((state: State) => state.user)
-    const cart = useSelector((state: State) => state.cart)
     const dispatch = useDispatch()
-
-    const incrementQuantity = () => {
-        try {
-            dispatch(loaderActionStart())
-            updateCartItemsDetails({
-                user_id: user?.id,
-                id: item.id,
-                quantity: item.quantity + 1
-            }).then((res) => {
-                if (res.data.status === 200) {
-                    dispatch(updateQuantity(res.data.data))
-                }
-            })
-        } catch(error) {
-            console.log(error)
-            dispatch(loaderActionEnd())
-        } finally {
-            dispatch(loaderActionEnd())
-        }
-        
-    };
-
-
-    const decrementQuantity = () => {
-        try {
-            dispatch(loaderActionStart())
-            if (item.quantity > 1) {
-                updateCartItemsDetails({
-                    user_id: user?.id,
-                    id: item.id,
-                    quantity: item.quantity - 1
-                }).then((res) => {
-                    if (res.data.status === 200) {
-                        dispatch(updateQuantity(res.data.data))
-                    }
-                })
-            }
-        } catch(error) {
-            console.log(error)
-            dispatch(loaderActionEnd())
-        } finally {
-            dispatch(loaderActionEnd())
-        }
-        
-    };
-
+    const navigate = useNavigate()
 
     const removeProductFromCart = (item: CartItemType) => {
         try {
@@ -92,51 +49,33 @@ const CartPopupItem: React.FC<CartPopupItemProps> = ({ item }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-4">
             <div
                 className="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
-                <div className="img-box"><img src={process.env.REACT_APP_API_URL + item?.product?.product_photo} alt="perfume bottle image" className="xl:w-[140px]" /></div>
+                <div className="img-box">
+                    <img 
+                        src={process.env.REACT_APP_API_URL + item?.product?.product_photo} 
+                        alt="perfume bottle image" 
+                        className="xl:w-[140px]"
+                        onClick={() => navigate(`/product-detail/${item?.product?.id}`)} 
+                    />
+                </div>
                 <div className="pro-data w-full max-w-sm ">
                     <h5 className="font-semibold text-md leading-8 text-gray-700  max-[550px]:text-center">
-                        {item?.product?.name}
+                        {/* {item?.product?.name} */}
+                        <Link to={`/product-detail/${item?.product?.id}`}>{item?.product?.name}</Link>
                     </h5>
                     <p
                         className="font-normal text-gray-500 max-[550px]:text-center">
                         {item?.product?.category}</p>
-                    <h6 className="font-medium leading-8 text-indigo-600 text-sm max-[550px]:text-center">$ {item?.product?.unit_price}</h6>
+                    {/* <h6 className="font-medium leading-8 text-indigo-600 text-sm max-[550px]:text-center">$ {item?.product?.unit_price}</h6> */}
+                    <h6 className="font-medium leading-8 text-indigo-600 text-sm max-[550px]:text-center">
+                        <Link to={`/product-detail/${item?.product?.id}`}>$ {item?.product?.unit_price}</Link>
+                    </h6>
                 </div>
             </div>
             <div
                 className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-2">
-                <div className="flex items-center w-full mx-auto justify-center">
-                    <button
-                        className="group rounded-md border border-gray-200 flex bg-gray-100 hover:bg-gray-200 items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                        onClick={decrementQuantity}>
-                        <svg className="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
-                            xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
-                            fill="none">
-                            <path d="M16.5 11H5.5" stroke="" strokeWidth="1.6" strokeLinecap="round" />
-                            <path d="M16.5 11H5.5" stroke="" strokeOpacity="0.2" strokeWidth="1.6"
-                                strokeLinecap="round" />
-                            <path d="M16.5 11H5.5" stroke="" strokeOpacity="0.2" strokeWidth="1.6"
-                                strokeLinecap="round" />
-                        </svg>
-                    </button>
-                    <p className="px-2 w-10 font-semibold text-gray-700  text-sm lg:max-w-[50px] border-gray-400 bg-transparent placeholder:text-gray-700  text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0">
-                        {item?.quantity}
-                    </p>
-                    <button
-                        className="group rounded-md border border-gray-200 flex bg-gray-100 hover:bg-gray-200 items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                        onClick={incrementQuantity}>
-                        <svg className="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
-                            xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
-                            fill="none">
-                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" strokeWidth="1.6"
-                                strokeLinecap="round" />
-                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" strokeOpacity="0.2" strokeWidth="1.6"
-                                strokeLinecap="round" />
-                            <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" strokeOpacity="0.2" strokeWidth="1.6"
-                                strokeLinecap="round" />
-                        </svg>
-                    </button>
-                </div>
+                <ProductQtyIncDecButton
+                    item={item}
+                />
                 <h6
                     className="text-indigo-600 font-manrope font-bold text-md leading-9 w-full max-w-[176px] text-center"
                 >

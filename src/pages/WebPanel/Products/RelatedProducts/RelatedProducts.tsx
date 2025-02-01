@@ -5,6 +5,7 @@ import { ProductsDataType } from "../../Type/ProductTypes";
 import { getRelatedProducts } from "../../../../requests/WebPanel/ProductsRequests";
 import { useDispatch } from "react-redux";
 import { loaderActionEnd, loaderActionStart } from "../../../../store/loader/actions-creations";
+import AddToCartButton from "../AddToCart/AddToCart";
 
 interface RelatedProductsTypeProps {
   product?: ProductsDataType | undefined;
@@ -48,7 +49,7 @@ const RelatedProducts: React.FC<RelatedProductsTypeProps> = ({
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
               {relatedProductsData && relatedProductsData?.map((product:ProductsDataType, index: number) => (
                 <div key={index} className="group relative">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 cursor-pointer">
                     <img
                      
                       src={process.env.REACT_APP_API_URL + product?.product_photo}
@@ -69,12 +70,15 @@ const RelatedProducts: React.FC<RelatedProductsTypeProps> = ({
                         
                       </h3>
                       <p className="mt-1 text-sm text-gray-500">
-                        <Link to={`/product-detail/${product?.id}`}>Blue</Link>
+                        <Link to={`/product-detail/${product?.id}`}>$ {product?.unit_price}</Link>
                       </p>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <AddToCartButton
+                      currentProduct={product}
+                    />
+                    {/* <p className="text-sm font-medium text-gray-900">
                       $ {product?.unit_price}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               ))}

@@ -2,8 +2,8 @@ import { axiosGet, axiosPost, axiosPut, axiosPatch, axiosDelete } from "../../ax
 // import { axiosGet, axiosPost } from "../../../axios/axios-config";
 
 
-export const getAllProducts = async () => {
-  return await axiosGet("/products/");
+export const getAllProducts = async (data:any) => {
+  return await axiosGet("/products/", data);
 };
 
 export const getAllTrendingProducts = async () => {
@@ -18,8 +18,12 @@ interface ProductData {
 export const getProductDetail = async (data: ProductData) => {
     return await axiosGet(`/products/${data['product_id']}/`);
 };
-  
+
 
 export const getRelatedProducts = async () => {
     return await axiosGet("/products/related/");
+};
+
+export const getAllCategoriesData = async () => {
+  return await axiosGet("/categories/");
 };

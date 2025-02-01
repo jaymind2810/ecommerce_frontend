@@ -7,13 +7,40 @@ import OrderSummarySideBar from "../components/OrderSummary/OrderSummary";
 import Cash from "./PaymentOptions/Cash/Cash";
 import Loader from "../../../components/Loader";
 import { State } from "../../../store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CartItem } from "../../../store/cart/reducer/reducer";
+import { setOrderAmout } from "../../../store/order/action-Creation";
 
 
 const Payment = () => {
     // const loader = useSelector((state: State) => state.loader);
+    const cart = useSelector((state: State) => state.cart)
+    const order = useSelector((state: State) => state.order)
+
+    const dispatch = useDispatch()
+
     const [selectedPaymentOption, setSelectedPaymentOption] = useState('');
     const [stripePromise, setStripePromise] = useState<any>("");
+    const [amountToPay, setAmountToPay] = useState<number>(0);
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+    const otherCharges = 249
+
+    console.log(order, "---------order--------")
+
+    useEffect(() => {
+        if (cart) {
+            let totalAmount = 0
+            cart.cart.forEach(item => {
+                totalAmount += item.quantity * parseInt(item.product.unit_price)
+            });
+            totalAmount = totalAmount + otherCharges
+            setAmountToPay(totalAmount)
+            setCartItems(cart.cart)
+            dispatch(setOrderAmout(totalAmount))
+        }
+    }, [cart])
+
 
     const getStripe = () => {
         const publishable_key: any = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
@@ -124,12 +151,6 @@ const Payment = () => {
                                 </div>
 
                                 <div>
-                                    {/* <button 
-                                className="bg-gray-800 flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700"
-                                onClick={() => navigate('/payment') }
-                            >
-                                Pay
-                            </button> */}
                                 </div>
                                 <div>
                                     {selectedPaymentOption &&
@@ -139,7 +160,10 @@ const Payment = () => {
                                                         <div className="">
                                                             {stripePromise &&
                                                                 <Elements stripe={stripePromise}>
-                                                                    <StripeForm />
+                                                                    <StripeForm 
+                                                                        amountToPay={amountToPay}
+                                                                        cartItems={cartItems}
+                                                                    />
                                                                 </Elements>
                                                             }
                                                         </div>
@@ -149,24 +173,14 @@ const Payment = () => {
                                                         <div className="p-4 w-full text-black bg-white mb-2 rounded-lg h-80 overflow-y-auto">
                                                             <p>PayPal Payment</p>
 
-                                                            {/* <PayPalCheckOut
-                                                            amountToPay={amountToPay}
-                                                            cartData={cartData}
-                                                            user={user}
-                                                            setAmountToPay={setAmountToPay}
-                                                            setAddBox={setAddBox}
-                                                            setNewFullScreen={setNewFullScreen}
-                                                            setBoxMarker={setBoxMarker}
-                                                            setIsSmallBoxOverlap={setIsSmallBoxOverlap}
-                                                            setOverlappedSmallBox={setOverlappedSmallBox}
-                                                            setAddABoxFunction={setAddABoxFunction}
-                                                            setPaymentId={setPaymentId}
-                                                        /> */}
                                                         </div>
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <Cash/>
+                                                        <Cash
+                                                            amountToPay={amountToPay}
+                                                            cartItems={cartItems}
+                                                        />
                                                     </>
                                                 )
 

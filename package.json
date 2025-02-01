@@ -65,6 +65,8 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.14",
+    "lodash": "^4.17.21",
     "tailwindcss": "^3.4.3"
   }
 }

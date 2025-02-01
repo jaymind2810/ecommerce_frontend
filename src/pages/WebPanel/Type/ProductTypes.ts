@@ -26,4 +26,10 @@ export interface ProductsDataType {
     create_by: string;
   }
 
+export interface CategoryDataType {
+    id: string;
+    name: string;
+    description: string;
+  }
+
   
