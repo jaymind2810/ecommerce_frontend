@@ -293,12 +293,13 @@ const StripeForm:React.FC<StripeFromProps> = ({
                             order: res.data.data.order,
                             cart_items: cartItems,
                         }).then((response: any) => {
+                            console.log(response, "---------Payment Done-----")
                         e.target.disabled = true;
                         if (response.data.success === true) {
                             console.log("Payment Success....")
                             dispatch(clearCart())
                             dispatch(addNewUserOrders(res?.data?.data?.order))
-                            navigate(`/order/${res?.data?.data?.id}`)
+                            navigate(`/order/${res?.data?.data?.order?.id}`)
                             dispatch(
                                 successToast({
                                     toast: true,
