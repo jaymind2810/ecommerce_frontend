@@ -1,7 +1,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 import React, { useEffect, useState } from "react";
 import { Elements, CardElement, CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { createStripeCustomer, deleteCustomerPaymentMethod, retriveCustomerPaymentMethods } from "../../../../../requests/WebPanel/PaymentRequests";
+import { createPaymentIntent, createStripeCustomer, createStripePaymentRecord, deleteCustomerPaymentMethod, retriveCustomerPaymentMethods } from "../../../../../requests/WebPanel/PaymentRequests";
 import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast, warningToast } from "../../../../../store/toast/actions-creation";
 import { State } from "../../../../../store";
@@ -10,6 +10,10 @@ import Loader from "../../../../../components/Loader";
 import ModelDialog from "../../../../../components/ModelDialog/ModelDialog";
 import { loaderActionEnd, loaderActionStart } from "../../../../../store/loader/actions-creations";
 import { CartItem } from "../../../../../store/cart/reducer/reducer";
+import { OrdersType } from "../../../../../store/order/reducer/reducer";
+import { clearCart } from "../../../../../store/cart/action-Creation";
+import { addNewUserOrders } from "../../../../../store/order/action-Creation";
+import { useNavigate } from "react-router";
 
 
 interface StripeFromProps {
@@ -24,13 +28,17 @@ const StripeForm:React.FC<StripeFromProps> = ({
 }) => {
 
     const user = useSelector((state: State) => state.user);
+    const order = useSelector((state: State) => state.order)
+
     const loading = useSelector((state: State) => state.loader.isLoading);
     // const { isLoading } = useSelector((state: State) => state.loader);
     const stripe: any = useStripe();
     const elements: any = useElements();
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [nameFieldValue, setNameFieldValue] = useState<any>("");
+    const [isLoading, setIsLoading] = useState<any>(false)
     const [cardInfo, setCardInfo] = useState<any>(null);
     const [userStripeId, setUserStripeId] = useState<any>(null);
     const [paymentMethod, setPaymentMethod] = useState<any>(null);
@@ -38,6 +46,8 @@ const StripeForm:React.FC<StripeFromProps> = ({
     const [paymentCard, setPaymentCard] = useState<any>(null);
     const [currentCard, setCurrentCard] = useState<any>(null);
     const [isModelOpen, setIsModelOpen] = useState<any>(false)
+
+    const [currentOrder, setCurrentOrder] = useState<OrdersType>()
 
     const fetchCardDetail = (data: any) => {
         if (data.complete) {
@@ -47,7 +57,6 @@ const StripeForm:React.FC<StripeFromProps> = ({
         }
     }
 
-    console.log(amountToPay, "-----Pay Amount -----------")
 
     useEffect(() => {
         user && user?.user_stripe_id && (
@@ -55,43 +64,6 @@ const StripeForm:React.FC<StripeFromProps> = ({
         )
     }, [user?.user_stripe_id])
 
-    const onSubmitHandler = async (e: any) => {
-        console.log(cardInfo, "------On onSubmitHandler--------")
-        if (!!cardInfo) {
-            try {
-                const cardElement = elements.getElement("card");
-
-                console.log(cardElement, "----CardElement---")
-                console.log(cardInfo, "----cardInfo---")
-
-                stripe.customers.create({
-                    name: 'Jenny Rosen',
-                    email: 'jennyrosen@example.com',
-                }).then((res: any) => {
-
-                    console.log(res, "---------Customer-----Created-------")
-
-                    stripe.createPaymentMethod({
-                        type: 'card',
-                        card: cardElement,
-                        customer: res?.id,
-                        billing_details: {
-                            name: 'Jenny Rosen',
-                        },
-                    })
-                        .then((result: any) => {
-                            console.log('--------result-------', result)
-                            // Handle result.error or result.paymentMethod
-                        });
-                });
-
-            } catch (error) {
-
-            }
-        }
-
-
-    }
 
     useEffect(() => {
         try {
@@ -225,6 +197,143 @@ const StripeForm:React.FC<StripeFromProps> = ({
             dispatch(loaderActionEnd())
         }
     }
+
+
+    // const onConfirmOrder = () => {
+    //     if (amountToPay && cartItems && order.order_address) {
+    //         createOrder({
+    //             user: user ? user?.id : 0,
+    //             order_items: cartItems,
+    //             amount: amountToPay,
+    //             address: order && order?.order_address,
+    //             payment_method: "Cash"
+    //         }).then((res) => {
+    //             if (res?.data?.success === true) {
+    //                 dispatch(addNewUserOrders(res?.data?.data))
+    //                 dispatch(clearCart())
+    //                 navigate(`/order/${res?.data?.data?.id}`)
+    //                 dispatch(
+    //                     successToast({
+    //                         toast: true,
+    //                         message: "Ordered Successfully.",
+    //                     })
+    //                 );
+    //             } else {
+    //                 dispatch(
+    //                     errorToast({
+    //                         toast: true,
+    //                         message: "Something went wrong..!!",
+    //                     })
+    //                 );
+    //             }
+    //         }
+    //     )
+        
+    //     }
+    // } 
+
+
+    const onPaymentSubmitHandler = async (e: any) => {
+        e.preventDefault();
+        e.target.disabled = true;
+        if (paymentCard) {
+        setIsLoading(true);
+        if (paymentCard) {
+            createPaymentIntent({
+                amount: amountToPay,
+                user_id: user?.id,
+                customer_id: user?.user_stripe_id,
+                payment_method_id: paymentCard.id,
+                order_items: cartItems,
+                address: order && order?.order_address,
+            }).then(async (res) => {
+            if (res.data.success === true) {
+                console.log(res.data.data, "====res.data.data==========")
+                if (res.data.data.intent.client_secret) {
+                const clientSecret = res.data.data.intent.client_secret;
+                setCurrentOrder(res.data.data.order)
+                await stripe
+                    .confirmCardPayment(clientSecret)
+                    .then((result: any) => {
+                        console.log(result, "==========result---------")
+                    if (result.error) {
+                        console.error(result.error);
+                        createStripePaymentRecord({
+                            amount: amountToPay,
+                            user_id: user?.id,
+                            payment_refrence_id: res?.data?.data?.id,
+                            customer_id: user?.user_stripe_id,
+                            payment_method_id: paymentCard.id,
+                            status: "FAIL",
+                            order: res.data.data.order,
+                            cart_items: cartItems,
+                        }).then((response: any) => {
+                            console.log("Payment Error--");
+                            // setMessage(result.error);
+                            // setIsLoading(false);
+                            // e.target.disabled = false;
+                            // setAmountToPay(0);
+                            // setAddBox(true);
+                            // setNewFullScreen(true);
+                            // setBoxMarker(true);
+                            // setIsSmallBoxOverlap(false);
+                            // setOverlappedSmallBox([]);
+                            // setAddABoxFunction(GetABoxType.PAYMENT_FAIL);
+                            // setIsLoading(false);
+                        });
+                    } else if (result.paymentIntent) {
+                        console.log("-------In If000000")
+                        createStripePaymentRecord({
+                            amount: amountToPay,
+                            user_id: user?.id,
+                            payment_refrence_id: result?.paymentIntent?.id,
+                            customer_id: user?.user_stripe_id,
+                            payment_method_id: paymentCard.id,
+                            status: "DONE",
+                            order: res.data.data.order,
+                            cart_items: cartItems,
+                        }).then((response: any) => {
+                        e.target.disabled = true;
+                        if (response.data.success === true) {
+                            console.log("Payment Success....")
+                            dispatch(clearCart())
+                            dispatch(addNewUserOrders(res?.data?.data?.order))
+                            navigate(`/order/${res?.data?.data?.id}`)
+                            dispatch(
+                                successToast({
+                                    toast: true,
+                                    message: "Ordered Successfully.",
+                                })
+                            );
+                        }
+                        });
+                    }
+                    });
+                } else {
+                setIsLoading(false);
+                e.target.disabled = false;
+                dispatch(
+                    warningToast({
+                    toast: true,
+                    message: "Oops, something went wrong",
+                    })
+                );
+                }
+            } else {
+                setIsLoading(false);
+                e.target.disabled = false;
+                dispatch(
+                warningToast({
+                    toast: true,
+                    message: "Oops, something went wrong",
+                })
+                );
+            }
+            });
+        }
+        setIsLoading(false);
+        }
+    };
 
 
     const cardOptions: any = {
@@ -380,7 +489,7 @@ const StripeForm:React.FC<StripeFromProps> = ({
                         </div>
                         <button
                             onClick={(e) => {
-                                // onPaymentSubmitHandler(e);
+                                onPaymentSubmitHandler(e);
                             }}
                             className={`flex justify-end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 mt-4 text-white text-sm  p-2 px-4  font-bold rounded-lg border dark:border-gray-600 hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700
                                 ${paymentCard ? "bg-gray-800 cursor-pointer" : "bg-gray-600"} 
