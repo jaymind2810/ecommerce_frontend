@@ -8,6 +8,8 @@ import { OrdersType } from "../../../store/order/reducer/reducer";
 import { loaderActionEnd, loaderActionStart } from "../../../store/loader/actions-creations";
 import { getOrderData } from "../../../requests/WebPanel/OrderRequests";
 import { errorToast } from "../../../store/toast/actions-creation";
+import moment from "moment";
+import { capitalize } from "lodash";
 
 
 // interface OrderDetailProps {
@@ -82,15 +84,16 @@ const OrderDetail = () => {
                                     <div className="space-y-4 sm:space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800 mb-6 md:mb-8">
                                         <dl className="sm:flex items-center justify-between gap-4">
                                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Date</dt>
-                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{currentOrder?.created_at}</dd>
+                                            {/* <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{currentOrder?.created_at}</dd> */}
+                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{moment(new Date(currentOrder.created_at)).format("Do MMMM YYYY, h:mm A")}</dd>
                                         </dl>
                                         <dl className="sm:flex items-center justify-between gap-4">
                                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Payment Method</dt>
-                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{currentOrder?.payment_method}</dd>
+                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{capitalize(currentOrder?.payment_method)}</dd>
                                         </dl>
                                         <dl className="sm:flex items-center justify-between gap-4">
                                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Name</dt>
-                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{currentOrder?.status}</dd>
+                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{capitalize(currentOrder?.status)}</dd>
                                         </dl>
                                         <dl className="sm:flex items-center justify-between gap-4">
                                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Address</dt>
@@ -98,7 +101,7 @@ const OrderDetail = () => {
                                         </dl>
                                         <dl className="sm:flex items-center justify-between gap-4">
                                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Phone</dt>
-                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">+ {currentOrder?.address?.phone_number}</dd>
+                                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">+{currentOrder?.address?.phone_number}</dd>
                                         </dl>
                                     </div>
                                     <div className="flex items-center space-x-4">

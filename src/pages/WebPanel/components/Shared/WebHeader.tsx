@@ -301,8 +301,24 @@ const WebHeader = () => {
                     <p className="block px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 hover:text-indigo-700">Welcome {user?.first_name}{" "}{user?.last_name}</p>
                   </div>
                   <div className="py-1 px-2" role="none">
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-700" role="menuitem" id="menu-item-0">Profile</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-700" role="menuitem" id="menu-item-1">Orders</a>
+                    <a 
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-700 cursor-pointer" role="menuitem" id="menu-item-0"
+                      onClick={() => {
+                        navigate("/user/profile");
+                        setIsProfileMenu(false)
+                      }}
+                    >
+                      Profile
+                    </a>
+                    <a 
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-700 cursor-pointer" role="menuitem" id="menu-item-1"
+                      onClick={() => {
+                        navigate("/user/orders");
+                        setIsProfileMenu(false)
+                      }}
+                    >
+                      Orders
+                    </a>
                   </div>
                   <div className="py-1" role="none">
                     <a

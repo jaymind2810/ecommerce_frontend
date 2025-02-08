@@ -18,13 +18,13 @@ export default function PageNotFound() {
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
               onClick={() => navigate('/')}
-              className="bg-gray-800 flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700"
+              className="bg-gray-800 flex items-center justify-center cursor-pointer rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-indigo-700"
             >
               Go back home
             </a>
             <a
               onClick={() => navigate('/contact-us')} 
-              className="bg-gray-300 duration-500 flex font-semibold hover:bg-indigo-100 items-center justify-center px-5 py-2 rounded-lg rounded-md text-sm transition-all cursor-pointer"
+              className="bg-gray-300 duration-500 flex font-semibold hover:bg-indigo-100 cursor-pointer items-center justify-center px-5 py-2 rounded-lg rounded-md text-sm transition-all cursor-pointer"
               >
               Contact support <span aria-hidden="true">&rarr;</span>
             </a>

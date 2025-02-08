@@ -1,10 +1,11 @@
 import React from "react";
 
 
-const Profile = () => {
+const UserProfile = () => {
     return (
         <>
-        <h2> Profile Page</h2>
+            <h2> Profile Page</h2>
         </>
     )
 }
+export default UserProfile

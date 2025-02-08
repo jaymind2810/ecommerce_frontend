@@ -17,6 +17,9 @@ const WebLayout = lazy(() => import("../pages/WebPanel/components/WebLayout"));
 
 // ============== For WebSite ==================\
 const Home = lazy(() => import("../pages/WebPanel/Home"));
+const UserProfile = lazy(() => import("../pages/WebPanel/Profile/Profile"));
+const UserOrders = lazy(() => import("../pages/WebPanel/Orders/UserOrders"));
+
 const ProductDetail = lazy(() => import("../pages/WebPanel/Products/ProductDetails"));
 const Checkout = lazy(() => import("../pages/WebPanel/Checkout/Checkout"));
 const Cart = lazy(() => import("../pages/WebPanel/Cart/Cart"));
@@ -143,6 +146,24 @@ export default function RouterList () {
                                 <React.Suspense fallback={<><Loader/></>}>
                                     <Home />
                                 </React.Suspense>
+                            } 
+                            errorElement={<ErrorBoundary/>}
+                        />
+                        <Route  
+                            path="/user/profile" 
+                            element={
+                                <React.Suspense fallback={<><Loader/></>}>
+                                    <UserProfile />
+                                </React.Suspense>           
+                            } 
+                            errorElement={<ErrorBoundary/>}
+                        />
+                        <Route  
+                            path="/user/orders" 
+                            element={
+                                <React.Suspense fallback={<><Loader/></>}>
+                                    <UserOrders />
+                                </React.Suspense>           
                             } 
                             errorElement={<ErrorBoundary/>}
                         />

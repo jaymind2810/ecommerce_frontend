@@ -36,9 +36,9 @@ const Cash:React.FC<CashProps> = ({
                 payment_method: "Cash"
             }).then((res) => {
                 if (res?.data?.success === true) {
-                    dispatch(addNewUserOrders(res?.data?.data))
+                    dispatch(addNewUserOrders(res?.data?.data?.order))
                     dispatch(clearCart())
-                    navigate(`/order/${res?.data?.data?.id}`)
+                    navigate(`/order/${res?.data?.data?.order?.id}`)
                     dispatch(
                         successToast({
                             toast: true,
