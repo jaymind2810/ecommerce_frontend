@@ -319,6 +319,15 @@ const WebHeader = () => {
                     >
                       Orders
                     </a>
+                    <a 
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-700 cursor-pointer" role="menuitem" id="menu-item-1"
+                      onClick={() => {
+                        navigate("/user/message");
+                        setIsProfileMenu(false)
+                      }}
+                    >
+                      Messages
+                    </a>
                   </div>
                   <div className="py-1" role="none">
                     <a

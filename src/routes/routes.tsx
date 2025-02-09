@@ -19,6 +19,7 @@ const WebLayout = lazy(() => import("../pages/WebPanel/components/WebLayout"));
 const Home = lazy(() => import("../pages/WebPanel/Home"));
 const UserProfile = lazy(() => import("../pages/WebPanel/Profile/Profile"));
 const UserOrders = lazy(() => import("../pages/WebPanel/Orders/UserOrders"));
+const Message = lazy(() => import("../pages/WebPanel/Message/Message"));
 
 const ProductDetail = lazy(() => import("../pages/WebPanel/Products/ProductDetails"));
 const Checkout = lazy(() => import("../pages/WebPanel/Checkout/Checkout"));
@@ -154,6 +155,15 @@ export default function RouterList () {
                             element={
                                 <React.Suspense fallback={<><Loader/></>}>
                                     <UserProfile />
+                                </React.Suspense>           
+                            } 
+                            errorElement={<ErrorBoundary/>}
+                        />
+                        <Route  
+                            path="/user/message" 
+                            element={
+                                <React.Suspense fallback={<><Loader/></>}>
+                                    <Message />
                                 </React.Suspense>           
                             } 
                             errorElement={<ErrorBoundary/>}
