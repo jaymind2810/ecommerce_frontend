@@ -1,11 +1,47 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loaderActionEnd, loaderActionStart } from "../../../store/loader/actions-creations";
+import { State } from "../../../store";
+import { getAllMessagesData } from "../../../requests/WebPanel/MessageRequesrs";
+import { errorToast } from "../../../store/toast/actions-creation";
 
-const SOCKET_URL: string | URL | any = process.env.REACT_APP_SOCKET_URL;
+const SOCKET_URL: string | URL | any = process.env.REACT_APP_SOCKET_MESSAGE_URL;
 
 function Message() {
+
+  const dispatch = useDispatch()
+
+  const user = useSelector((state: State) => state.user)
+
   const [socket, setSocket] = useState<any>();
   const [messages, setMessages] = useState([]);
   const [newMessageValue, setNewMessageValue] = useState<string>("");
+
+
+  useEffect(() => {
+    try {
+        dispatch(loaderActionStart())
+        if (user && user.id) {
+            getAllMessagesData({
+              sender : user ? user.id : 0,
+              reciever : 2,
+            }).then((res) => {
+                if (res.data.success == true) {
+                  setMessages(res.data.data)
+                } else {
+                    errorToast({
+                        toast: true,
+                        message: res.data.message,
+                    })
+                }
+            })
+        }
+    } catch(error) {
+        console.log(error)
+    } finally {
+        dispatch(loaderActionEnd())
+    }
+  }, [user.id])
 
   useEffect(() => {
     const ws:any = new WebSocket(SOCKET_URL);
@@ -35,8 +71,8 @@ function Message() {
     <section className="bg-white py-8 mx-auto antialiased dark:bg-gray-900 md:py-16 mx-auto max-w-7xl px-4 ">
       <div>
         <ul>
-          {messages.map((msg, index) => (
-            <li key={index}>{msg}</li>
+          {messages && messages.map((msg, index) => (
+            <li key={index}>{msg['message_text']}</li>
           ))}
         </ul>
         <h2>WebSocket Chat</h2>
