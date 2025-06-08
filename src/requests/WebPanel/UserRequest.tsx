@@ -10,3 +10,7 @@ export const userProfileData = async (data: GetUserData) => {
 export const getUserAllData = async (data: GetUserData) => {
     return await axiosGet(`/auth/getuseralldata/${data['user_id']}/`);
 };
+
+export const getUsersListData = async () => {
+  return await axiosGet("/auth/getAllUsers/");
+};

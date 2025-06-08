@@ -13,13 +13,15 @@ const AllUsers = lazy(() => import("../pages/AdminPanel/Users/Users"));
 // ============== For Authentication ==================
 const SignIn = lazy(() => import("../pages/Auth/Login"));
 const SignUp = lazy(() => import("../pages/Auth/Register"));
-const WebLayout = lazy(() => import("../pages/WebPanel/components/WebLayout"));
+const WebLayout = lazy(() => import("../pages/WebPanel/components/Layout/WebLayout"));
+const WebPageLayout = lazy(() => import("../pages/WebPanel/components/Layout/WebPage"));
 
 // ============== For WebSite ==================\
 const Home = lazy(() => import("../pages/WebPanel/Home"));
 const UserProfile = lazy(() => import("../pages/WebPanel/Profile/Profile"));
 const UserOrders = lazy(() => import("../pages/WebPanel/Orders/UserOrders"));
 const Message = lazy(() => import("../pages/WebPanel/Message/Message"));
+const UserListsPage = lazy(() => import("../pages/WebPanel/UsersLists"));
 
 const ProductDetail = lazy(() => import("../pages/WebPanel/Products/ProductDetails"));
 const Checkout = lazy(() => import("../pages/WebPanel/Checkout/Checkout"));
@@ -160,15 +162,6 @@ export default function RouterList () {
                             errorElement={<ErrorBoundary/>}
                         />
                         <Route  
-                            path="/user/message" 
-                            element={
-                                <React.Suspense fallback={<><Loader/></>}>
-                                    <Message />
-                                </React.Suspense>           
-                            } 
-                            errorElement={<ErrorBoundary/>}
-                        />
-                        <Route  
                             path="/user/orders" 
                             element={
                                 <React.Suspense fallback={<><Loader/></>}>
@@ -266,6 +259,39 @@ export default function RouterList () {
                         path="*"
                         element={<PageNotFound />}
                     />
+
+                    <Route path="/" 
+                        element={
+                            <React.Suspense fallback={<><Loader/></>}>
+                                <WebPageLayout />
+                            </React.Suspense>
+                        }
+                        errorElement={<ErrorBoundary/>}
+                    >
+                        {/* ---------Message Page---------- */}
+                        <Route  
+                            path="/user/message/:userID" 
+                            element={
+                                <React.Suspense fallback={<><Loader/></>}>
+                                    <Message />
+                                </React.Suspense>           
+                            } 
+                            errorElement={<ErrorBoundary/>}
+                        />
+
+                        {/* ----------User List Page---------- */}
+                        <Route  
+                            path="/users" 
+                            element={
+                                <React.Suspense fallback={<><Loader/></>}>
+                                    <UserListsPage />
+                                </React.Suspense>           
+                            } 
+                            errorElement={<ErrorBoundary/>}
+                        />
+                    </Route>
+
+
                 </Routes>
         </BrowserRouter>
     )
