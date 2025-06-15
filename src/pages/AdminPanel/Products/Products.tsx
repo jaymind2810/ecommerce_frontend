@@ -44,7 +44,7 @@ const AllProducts = () => {
 
 	return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-			<div className="p-4 flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+			<div className="p-4 flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white">
 				<div>
 					<button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
 						<span className="sr-only">Action button</span>
@@ -82,7 +82,7 @@ const AllProducts = () => {
 				</div>
 			</div>
 			<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-				<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+				<thead className="text-xs text-gray-600 uppercase bg-gray-200 border-gray-700">
 					<tr>
 						<th scope="col" className="p-4">
 							<div className="flex items-center">
@@ -102,7 +102,7 @@ const AllProducts = () => {
 				</thead>
 				<tbody>
 					{productsData.map((product) => (
-					<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={product?.id}>
+					<tr className="bg-white border-b bg-gray-800 text-gray-700 hover:bg-gray-50" key={product?.id}>
 						<td className="w-4 p-4">
 							<div className="flex items-center">
 								<input id="checkbox-table-search-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>

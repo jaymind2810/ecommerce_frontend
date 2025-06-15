@@ -2,6 +2,7 @@ import React, { lazy } from "react"
 import { BrowserRouter, Router, Routes, Route } from 'react-router-dom'
 import ContactUs from "../pages/WebPanel/ContactUs/ContactUs";
 import Loader from "../components/Loader";
+import { WebSocketProvider } from "../components/WebSocket";
 
 // ============== For AdminPanel ==================
 const Layout = lazy(() => import("../pages/AdminPanel/components/shared/Layout"));
@@ -57,7 +58,11 @@ const ErrorBoundary = (source: any) => {
   };
 
 export default function RouterList () {
+
+    const token:any = localStorage.getItem("token");
+
     return (
+        <WebSocketProvider token={token}>
         <BrowserRouter>
                 <Routes>
                     {/* ============== Admin Panel ================== */}
@@ -135,6 +140,9 @@ export default function RouterList () {
                     />
 
                     {/* ================= Web Panel ========================= */}
+
+                    
+
                     <Route path="/" 
                         element={
                             <React.Suspense fallback={<><Loader/></>}>
@@ -291,8 +299,12 @@ export default function RouterList () {
                         />
                     </Route>
 
+                   
+
 
                 </Routes>
         </BrowserRouter>
+         </WebSocketProvider>
+
     )
 }

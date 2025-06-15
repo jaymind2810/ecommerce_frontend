@@ -3,10 +3,19 @@ import { ActionType } from "../action-Types/index";
 import { AddressFormType } from "../../address/reducer/reducer";
 
 
+export interface CustomerDataType {
+  id: number,
+  first_name?: string,
+  last_name?: string,
+  username?: string,
+  email?: string,
+}
+
+
 export interface OrdersType {
   id: number | any,
-  customer?: any,
-  status?: string
+  customer?: CustomerDataType,
+  status?: string;
   address?: AddressFormType;
   payment_method?: string;
   payment_confirmed?: bigint;

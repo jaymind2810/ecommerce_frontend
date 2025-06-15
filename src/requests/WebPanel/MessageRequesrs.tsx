@@ -18,6 +18,8 @@ import { AddressFormType } from "../../store/address/reducer/reducer";
 interface getAllMessagesData {
   sender? : number | any;
   receiver? : number | any;
+  page?: number;
+  page_size?: number;
 }
 
 export const getAllMessagesData = async (data: getAllMessagesData) => {

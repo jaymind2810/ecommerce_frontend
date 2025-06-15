@@ -6,6 +6,18 @@ export const getAllProducts = async () => {
   return await axiosGet("/products/");
 };
 
+
+interface getOrderType {
+   page: number;
+   page_size: number;
+   query: any;
+}
+
+
+export const getAdminAllOrders = async (data: getOrderType) => {
+  return await axiosGet("/all/orders/", data);
+};
+
 // export const getCoords = async () => {
 //   return await axiosGet("/box/getCoords/");
 // };
